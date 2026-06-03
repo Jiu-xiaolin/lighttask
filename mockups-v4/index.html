@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>轻协同 v4 前端 UI</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="side">
+        <div class="brand">
+          <div class="logo">LT</div>
+          <div>
+            <strong>轻协同</strong>
+            <span>Project OS</span>
+          </div>
+        </div>
+        <nav class="nav">
+          <a href="?view=dashboard" data-view="dashboard"><i></i><span>仪表盘</span><b>12</b></a>
+          <a href="?view=projects" data-view="projects"><i></i><span>项目工作台</span><b>8</b></a>
+          <a href="?view=docs" data-view="docs"><i></i><span>文档表格</span><b>34</b></a>
+          <a href="?view=messages" data-view="messages"><i></i><span>消息同步</span><b>2</b></a>
+          <a href="?view=permissions" data-view="permissions"><i></i><span>权限管理</span></a>
+        </nav>
+        <section class="side-block">
+          <span>项目分组</span>
+          <button>客户交付 <b>5</b></button>
+          <button>产品研发 <b>7</b></button>
+          <button>内部运营 <b>3</b></button>
+        </section>
+        <section class="side-block compact">
+          <span>提醒队列</span>
+          <p><strong>9</strong> 条待处理动作</p>
+          <p><strong>3</strong> 个项目需要介入</p>
+        </section>
+        <div class="account">
+          <div class="avatar">林</div>
+          <div>
+            <strong>林初</strong>
+            <span>超级管理员</span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">LightTask / 多人任务协同</p>
+            <h1 id="title">仪表盘</h1>
+          </div>
+          <div class="command">
+            <label class="search">搜索项目、任务、文档</label>
+            <button class="btn">导入</button>
+            <button class="btn">导出</button>
+            <button class="btn primary">新建项目</button>
+          </div>
+        </header>
+
+        <section id="dashboard" class="page">
+          <div class="metric-grid">
+            <article class="metric"><span>进行中项目</span><strong>18</strong><em>较上周 +4</em></article>
+            <article class="metric warning"><span>待处理动作</span><strong>9</strong><em>3 条需要今天完成</em></article>
+            <article class="metric success"><span>本周完成</span><strong>64</strong><em>任务完成率 82%</em></article>
+            <article class="metric violet"><span>文档协作</span><strong>127</strong><em>今日 21 次修改</em></article>
+          </div>
+
+          <div class="layout-2-1">
+            <section class="panel gantt-panel">
+              <div class="panel-head">
+                <div>
+                  <h2>任务甘特图</h2>
+                  <p>按日、月、季度、年查看任务排期与依赖</p>
+                </div>
+                <div class="segmented">
+                  <button class="active">日</button><button>月</button><button>季度</button><button>年</button>
+                </div>
+              </div>
+              <div class="gantt">
+                <div class="gantt-head"><span>任务</span><b>06/01</b><b>06/02</b><b>06/03</b><b>06/04</b><b>06/05</b><b>06/06</b></div>
+                <div class="gantt-row"><span>需求确认</span><i class="bar teal" style="--x: 1; --w: 2">92% · 陈</i></div>
+                <div class="gantt-row"><span>文档模板</span><i class="bar violet" style="--x: 2; --w: 3">多人协作中</i></div>
+                <div class="gantt-row"><span>接口联调</span><i class="bar blue" style="--x: 3; --w: 2">58% · 王</i></div>
+                <div class="gantt-row"><span>提醒规则</span><i class="bar amber" style="--x: 4; --w: 2">风险 · 待确认</i></div>
+                <div class="gantt-row"><span>上线验收</span><i class="bar rose" style="--x: 5; --w: 1">阻塞</i></div>
+              </div>
+              <div class="conflict-card">
+                <b class="tag risk">排期冲突</b>
+                <strong>“上线验收”依赖“接口联调”，最早只能调整到 06/06 之后。</strong>
+                <span>负责人王晨本周已有 6 个任务，建议转交或延后 1 天。</span>
+                <button class="btn small">查看依赖</button>
+                <button class="btn small primary">调整排期</button>
+              </div>
+            </section>
+
+            <aside class="panel work-queue">
+              <div class="panel-head slim"><h2>待处理工作队列</h2><button class="link-btn">全部</button></div>
+              <div class="queue-list">
+                <article class="queue-item urgent">
+                  <b class="tag risk">阻塞</b>
+                  <strong>上线验收被接口联调阻塞</strong>
+                  <span>已持续 6 小时 · 负责人 王晨</span>
+                  <div><button>打开任务</button><button>提醒负责人</button></div>
+                </article>
+                <article class="queue-item">
+                  <b class="tag wait">重试</b>
+                  <strong>公众号提醒发送失败</strong>
+                  <span>模板消息触发限流 · 预计 12:45 自动重试</span>
+                  <div><button>查看日志</button><button>立即重试</button></div>
+                </article>
+                <article class="queue-item">
+                  <b class="tag ok">协作</b>
+                  <strong>预算排期表待确认格式兼容</strong>
+                  <span>WPS 样式保留率 92% · 需人工确认</span>
+                  <div><button>预览差异</button><button>确认导入</button></div>
+                </article>
+              </div>
+            </aside>
+          </div>
+
+          <section class="panel">
+            <div class="panel-head slim"><h2>项目进度详情</h2><button class="link-btn">筛选风险</button></div>
+            <div class="progress-list">
+              <div class="progress-row actionable"><strong>客户交付平台</strong><span>需求 8/8 · 开发 12/16 · 验收 2/6</span><meter min="0" max="100" value="74"></meter><em>74%</em><button>处理风险</button></div>
+              <div class="progress-row actionable"><strong>内部知识库迁移</strong><span>文档 43 篇 · 表格 12 个 · 附件 7.8GB</span><meter min="0" max="100" value="61"></meter><em>61%</em><button>查看文档</button></div>
+              <div class="progress-row actionable"><strong>运营自动化</strong><span>提醒规则 11 条 · 机器人 2 个</span><meter min="0" max="100" value="88"></meter><em>88%</em><button>查看规则</button></div>
+            </div>
+          </section>
+        </section>
+
+        <section id="projects" class="page">
+          <div class="project-layout">
+            <section class="panel project-list">
+              <div class="panel-head slim"><h2>项目列表</h2><button class="btn small primary">创建</button></div>
+              <div class="project-item active"><strong>客户交付平台</strong><span>负责人：陈艺 · 74%</span><b>进行中</b></div>
+              <div class="project-item"><strong>内部知识库迁移</strong><span>负责人：林初 · 61%</span><b class="risk">风险</b></div>
+              <div class="project-item"><strong>运营自动化</strong><span>负责人：王晨 · 88%</span><b>进行中</b></div>
+              <div class="project-item"><strong>财务流程优化</strong><span>负责人：周然 · 45%</span><b class="hold">暂停</b></div>
+            </section>
+
+            <section class="panel project-main">
+              <div class="panel-head">
+                <div><h2>客户交付平台</h2><p>任务、成员、附件、文档和日志统一管理</p></div>
+                <div class="actions"><button class="btn">邀请成员</button><button class="btn primary">新建任务</button></div>
+              </div>
+              <div class="project-content-split">
+                <div class="task-board">
+                  <div><span>待处理</span><article>补充验收标准 <b>今天</b></article><article>导入历史表格 <b>2 天</b></article></div>
+                  <div><span>进行中</span><article class="selected">飞书提醒联调 <b>58%</b></article><article>文档权限设计 <b>72%</b></article></div>
+                  <div><span>已完成</span><article>需求评审记录 <b>完成</b></article><article>项目初始化 <b>完成</b></article></div>
+                </div>
+                <aside class="task-drawer">
+                  <div class="drawer-head">
+                    <span class="tag wait">正在处理</span>
+                    <strong>飞书提醒联调</strong>
+                    <p>将任务到期、阻塞、文档评论同步到项目群机器人。</p>
+                  </div>
+                  <div class="drawer-meta">
+                    <div><span>负责人</span><b>王晨</b></div>
+                    <div><span>截止</span><b>今天 18:00</b></div>
+                    <div><span>依赖</span><b>接口联调完成</b></div>
+                  </div>
+                  <div class="drawer-progress"><span>完成度</span><meter min="0" max="100" value="58"></meter><b>58%</b></div>
+                  <div class="drawer-actions">
+                    <button class="btn small">添加评论</button>
+                    <button class="btn small primary">标记完成</button>
+                  </div>
+                </aside>
+              </div>
+              <div class="asset-row">
+                <div><strong>附件</strong><span>合同.pdf · 需求截图.zip · 预算.xlsx</span></div>
+                <div><strong>在线文档</strong><span>验收说明 · 会议纪要 · 风险登记表</span></div>
+              </div>
+            </section>
+
+            <aside class="panel timeline">
+              <div class="panel-head slim"><h2>变更时间线</h2><button class="link-btn">筛选</button></div>
+              <article class="log task"><time>12:42</time><strong>任务变更</strong><p>接口联调进度从 42% 更新到 58%</p><div class="diff"><span>42%</span><b>→</b><span>58%</span></div></article>
+              <article class="log doc"><time>11:18</time><strong>文档版本</strong><p>林初恢复“验收说明”至版本 17，已写入项目日志</p><button>查看差异</button></article>
+              <article class="log member"><time>10:06</time><strong>成员加入</strong><p>周然被邀请为项目编辑者</p><div class="diff"><span>只读</span><b>→</b><span>编辑</span></div></article>
+              <article class="log file"><time>09:34</time><strong>附件上传</strong><p>新增“预算排期.xlsx”，兼容性检查通过 92%</p><button>预览文件</button></article>
+            </aside>
+          </div>
+        </section>
+
+        <section id="docs" class="page">
+          <div class="editor-layout">
+            <section class="panel editor">
+              <div class="editor-toolbar">
+                <strong>验收说明 / 在线文档</strong>
+                <div class="tool-group"><button>B</button><button>I</button><button>H1</button><button>表格</button><button>评论</button></div>
+                <span class="sync-state">已同步 · 23 秒前</span>
+              </div>
+              <div class="presence">
+                <span class="user teal">陈</span><span class="user violet">林</span><span class="user amber">王</span>
+                <b>3 人正在编辑 · 林初正在输入</b>
+              </div>
+              <div class="collab-strip">
+                <span><b class="dot teal"></b>实时同步正常</span>
+                <span><b class="dot violet"></b>2 个评论锚点</span>
+                <span><b class="dot amber"></b>1 处格式兼容待确认</span>
+                <button>查看协作记录</button>
+              </div>
+              <article class="doc-body">
+                <h2>客户交付平台验收说明</h2>
+                <p>本文件用于记录项目验收范围、任务状态、待确认事项和上线前检查项。多人协作时，用户光标、评论和版本记录会实时同步。</p>
+                <p class="selection">上线前必须完成飞书机器人、微信公众号提醒、在线表格导入导出和权限审计四项检查。<button class="comment-pin">2</button></p>
+                <div class="cursor teal" style="left: 58%; top: 215px">陈艺</div>
+                <div class="cursor violet typing" style="left: 42%; top: 308px">林初正在输入</div>
+                <table>
+                  <thead><tr><th>模块</th><th>负责人</th><th>状态</th><th>验收结果</th></tr></thead>
+                  <tbody>
+                    <tr><td>任务甘特图</td><td>陈艺</td><td><b class="tag ok">通过</b></td><td>拖拽排期正常</td></tr>
+                    <tr><td>在线表格</td><td>林初</td><td><b class="tag wait">待复核</b></td><td>需确认 WPS 样式兼容</td></tr>
+                    <tr><td>消息提醒</td><td>王晨</td><td><b class="tag risk">风险</b></td><td>微信公众号限流重试</td></tr>
+                  </tbody>
+                </table>
+              </article>
+            </section>
+
+            <aside class="panel editor-side">
+              <div class="panel-head slim"><h2>评论与版本</h2><button class="link-btn">回溯</button></div>
+              <article class="comment"><strong>王晨</strong><p>公众号模板消息需要补充失败后的人工确认。</p><button>标记已处理</button></article>
+              <article class="version diff-version"><time>12:08</time><strong>版本 18</strong><p>新增验收检查表，来自林初。</p><div class="diff"><span>3 项</span><b>→</b><span>4 项</span></div></article>
+              <article class="version"><time>10:27</time><strong>版本 17</strong><p>恢复接口验收段落，已写入项目日志。</p><button>回滚到此版本</button></article>
+              <div class="import-card"><strong>Office / WPS 导入预检</strong><span>支持 docx、xlsx、pptx 导入导出，当前文件样式保留率 92%。</span><div class="compat"><span>表格样式</span><meter min="0" max="100" value="96"></meter><b>96%</b></div><div class="compat"><span>批注</span><meter min="0" max="100" value="88"></meter><b>88%</b></div></div>
+            </aside>
+          </div>
+        </section>
+
+        <section id="messages" class="page">
+          <div class="layout-2-1">
+            <section class="panel">
+              <div class="panel-head"><div><h2>消息同步规则</h2><p>飞书机器人与微信公众号提醒配置</p></div><button class="btn primary">新增规则</button></div>
+              <div class="channel-grid">
+                <article class="channel on"><strong>飞书机器人</strong><span>已连接 · 8 条规则</span><button>测试发送</button></article>
+                <article class="channel on green"><strong>微信公众号</strong><span>已连接 · 5 条规则</span><button>测试发送</button></article>
+                <article class="channel"><strong>邮件备用通道</strong><span>未启用 · 失败兜底</span><button>启用</button></article>
+              </div>
+              <div class="template-row">
+                <button class="active">到期提醒模板</button>
+                <button>阻塞升级模板</button>
+                <button>文档评论模板</button>
+                <button>成员变更模板</button>
+              </div>
+              <div class="rule-builder">
+                <div><label>当</label><b>任务到期前 24 小时</b></div>
+                <div><label>且</label><b>状态不是已完成</b></div>
+                <div><label>发送到</label><b>负责人 + 项目管理员</b></div>
+                <div><label>静默</label><b>22:00 - 08:00</b></div>
+                <div><label>限频</label><b>同一任务 2 小时内最多提醒 1 次</b></div>
+              </div>
+            </section>
+            <aside class="panel">
+              <div class="panel-head slim"><h2>发送日志</h2><button class="link-btn">导出</button></div>
+              <div class="delivery-list">
+                <div><b class="tag ok">成功</b><span>飞书 / 接口联调提醒</span><time>12:36</time></div>
+                <div><b class="tag risk">失败</b><span>公众号 / 验收阻塞提醒</span><time>12:18</time></div>
+                <div><b class="tag wait">重试</b><span>飞书 / 文档评论提醒</span><time>11:54</time></div>
+                <div><b class="tag ok">成功</b><span>公众号 / 成员加入通知</span><time>10:21</time></div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section id="permissions" class="page">
+          <div class="layout-2-1">
+            <section class="panel">
+              <div class="panel-head"><div><h2>权限矩阵</h2><p>全局角色与项目级覆写同时可见</p></div><button class="btn primary">邀请用户</button></div>
+              <table class="perm-table">
+                <thead><tr><th>角色</th><th>查看全部</th><th>创建项目</th><th>管理成员</th><th>删除项目</th><th>导出数据</th><th>审计日志</th></tr></thead>
+                <tbody>
+                  <tr><td>超级管理员</td><td>允许</td><td>允许</td><td>允许</td><td>允许</td><td>允许</td><td>允许</td></tr>
+                  <tr><td>普通用户</td><td>仅参与</td><td>允许</td><td>项目内</td><td>创建者</td><td>项目内</td><td>不可见</td></tr>
+                  <tr><td>项目创建者</td><td>项目内</td><td>已拥有</td><td>允许</td><td>允许</td><td>允许</td><td>项目内</td></tr>
+                  <tr><td>项目成员</td><td>项目内</td><td>不可用</td><td>不可用</td><td>不可用</td><td>按授权</td><td>不可见</td></tr>
+                </tbody>
+              </table>
+            </section>
+            <aside class="panel">
+              <div class="panel-head slim"><h2>审计日志</h2><button class="link-btn">筛选</button></div>
+              <div class="permission-preview">
+                <span>以用户身份预览</span>
+                <strong>周然 · 项目编辑者</strong>
+                <p>可编辑任务、评论文档、导出项目内表格；不可查看全局用户列表。</p>
+              </div>
+              <article class="audit"><strong>林初调整权限</strong><span>将周然设为项目编辑者</span><time>12:22</time></article>
+              <article class="audit"><strong>陈艺导出表格</strong><span>导出“预算排期.xlsx”</span><time>11:47</time></article>
+              <article class="audit"><strong>系统拒绝访问</strong><span>成员尝试查看全局用户列表</span><time>10:02</time></article>
+              <div class="scope-note"><strong>项目级管理权</strong><span>普通用户创建项目后自动成为项目创建者，拥有该项目完整管理能力；超级管理员仍可查看全部数据。</span></div>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script>
+      const params = new URLSearchParams(location.search);
+      const view = params.get("view") || "dashboard";
+      const titles = {
+        dashboard: "仪表盘",
+        projects: "项目工作台",
+        docs: "多人协作文档与表格",
+        messages: "消息同步",
+        permissions: "权限管理",
+      };
+      document.querySelectorAll(".page").forEach((page) => page.classList.toggle("active", page.id === view));
+      document.querySelectorAll("[data-view]").forEach((item) => item.classList.toggle("active", item.dataset.view === view));
+      document.querySelector("#title").textContent = titles[view] || titles.dashboard;
+    </script>
+  </body>
+</html>

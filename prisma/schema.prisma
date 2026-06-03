@@ -1,0 +1,369 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  MEMBER
+}
+
+enum ProjectStatus {
+  ACTIVE
+  ARCHIVED
+  DELETED
+}
+
+enum TaskStatus {
+  TODO
+  DOING
+  DONE
+  BLOCKED
+  ARCHIVED
+  DELETED
+}
+
+enum ProgressStatus {
+  TODO
+  DOING
+  DELAYED
+  BLOCKED
+  COMPLETED
+  ABANDONED
+  DELETED
+}
+
+enum FileType {
+  WORD_DOC
+  SHEET
+  ATTACHMENT
+  SUBMISSION
+}
+
+enum SubmissionStatus {
+  SUBMITTED
+  NEEDS_REVISION
+  ACCEPTED
+  WITHDRAWN
+  DELETED
+}
+
+enum AcceptanceStatus {
+  PENDING
+  IN_REVIEW
+  PASSED
+  NEEDS_REWORK
+  REJECTED
+}
+
+model User {
+  id             String          @id @default(cuid())
+  username       String          @unique
+  passwordHash   String
+  name           String
+  role           UserRole        @default(MEMBER)
+  enabled        Boolean         @default(true)
+  avatar         String?
+  signature      String?
+  theme          String          @default("letter")
+  cardBackground String          @default("letter-paper")
+  themeConfig    Json            @default("{}")
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  sessions       Session[]
+  memberships    ProjectMember[]
+  progressItems  TaskProgress[]
+  auditLogs      AuditLog[]      @relation("ActorAuditLogs")
+}
+
+model Session {
+  id             String    @id @default(cuid())
+  tokenHash      String    @unique
+  userId         String
+  ip             String
+  userAgent      String?
+  revoked        Boolean   @default(false)
+  revokedReason  String?
+  createdAt      DateTime  @default(now())
+  lastActivityAt DateTime  @default(now())
+  user           User      @relation(fields: [userId], references: [id])
+}
+
+model UserIpPolicy {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  enabled   Boolean  @default(false)
+  updatedBy String?
+  updatedAt DateTime @updatedAt
+}
+
+model UserIpWhitelistEntry {
+  id        String   @id @default(cuid())
+  userId    String
+  value     String
+  note      String?
+  enabled   Boolean  @default(true)
+  createdBy String
+  createdAt DateTime @default(now())
+}
+
+model Project {
+  id                   String            @id @default(cuid())
+  name                 String
+  group                String
+  description          String?
+  ownerId              String
+  status               ProjectStatus     @default(ACTIVE)
+  progress             Int               @default(0)
+  risk                 String            @default("low")
+  start                DateTime
+  baselineEnd          DateTime
+  currentEnd           DateTime
+  settings             Json              @default("{}")
+  acceptanceStatus     String            @default("pending")
+  acceptanceStartedAt  DateTime?
+  acceptanceApprovedAt DateTime?
+  archivedAt           DateTime?
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+  members              ProjectMember[]
+  tasks                Task[]
+  files                ProjectFile[]
+  timeline             TimelineEvent[]
+  acceptanceItems      AcceptanceItem[]
+  acceptanceReports    AcceptanceReport[]
+}
+
+model ProjectMember {
+  id        String   @id @default(cuid())
+  projectId String
+  userId    String
+  role      String
+  joinedAt  DateTime @default(now())
+  project   Project  @relation(fields: [projectId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  @@unique([projectId, userId])
+}
+
+model Task {
+  id             String         @id @default(cuid())
+  projectId      String
+  title          String
+  status         TaskStatus     @default(TODO)
+  priority       String         @default("medium")
+  baselineStart  DateTime
+  baselineEnd    DateTime
+  currentStart   DateTime
+  currentEnd     DateTime
+  dependencyIds  String[]       @default([])
+  note           String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  project        Project        @relation(fields: [projectId], references: [id])
+  progressItems  TaskProgress[]
+  submissions    TaskSubmission[]
+}
+
+model TaskProgress {
+  id          String           @id @default(cuid())
+  taskId      String
+  projectId   String
+  userId      String
+  status      ProgressStatus   @default(TODO)
+  planStart   DateTime
+  planEnd     DateTime
+  currentEnd  DateTime
+  actualStart DateTime?
+  actualEnd   DateTime?
+  deltaDays   Int?
+  progress    Int              @default(0)
+  note        String?
+  nextAction  String?
+  task        Task             @relation(fields: [taskId], references: [id])
+  user        User             @relation(fields: [userId], references: [id])
+  submissions TaskSubmission[]
+}
+
+model ProjectFile {
+  id            String        @id @default(cuid())
+  projectId     String
+  name          String
+  type          FileType
+  folder        String        @default("项目资料")
+  storagePath   String?
+  content       String?
+  version       Int           @default(1)
+  frozenVersion Int?
+  ownerId       String
+  deleted       Boolean       @default(false)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  project       Project       @relation(fields: [projectId], references: [id])
+  versions      FileVersion[]
+}
+
+model FileVersion {
+  id         String      @id @default(cuid())
+  fileId     String
+  projectId  String
+  version    Int
+  content    String?
+  storagePath String?
+  kind       String
+  createdBy  String
+  createdAt  DateTime    @default(now())
+  file       ProjectFile @relation(fields: [fileId], references: [id])
+}
+
+model TaskSubmission {
+  id          String           @id @default(cuid())
+  projectId   String
+  taskId      String
+  progressId  String
+  userId      String
+  name        String
+  fileType    String
+  content     String?
+  storagePath String?
+  status      SubmissionStatus @default(SUBMITTED)
+  note        String?
+  reviewNote  String?
+  reviewedBy  String?
+  deleted     Boolean          @default(false)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  task        Task             @relation(fields: [taskId], references: [id])
+  progress    TaskProgress     @relation(fields: [progressId], references: [id])
+}
+
+model AcceptanceItem {
+  id         String           @id @default(cuid())
+  projectId  String
+  title      String
+  status     AcceptanceStatus @default(PENDING)
+  note       String?
+  reviewedBy String?
+  reviewedAt DateTime?
+  project    Project          @relation(fields: [projectId], references: [id])
+}
+
+model AcceptanceReport {
+  id          String   @id @default(cuid())
+  projectId   String
+  generatedBy String
+  note        String?
+  data        Json
+  createdAt   DateTime @default(now())
+  project     Project  @relation(fields: [projectId], references: [id])
+}
+
+model NotificationRule {
+  id         String   @id @default(cuid())
+  event      String
+  channel    String
+  targetMode String
+  targets    String[] @default([])
+  enabled    Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model NotificationChannel {
+  id        String   @id @default(cuid())
+  name      String
+  type      String
+  enabled   Boolean  @default(true)
+  config    Json     @default("{}")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model NotificationKey {
+  id              String   @id @default(cuid())
+  name            String
+  channelId       String
+  type            String
+  secretEncrypted String
+  secretMasked    String
+  enabled         Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model NotificationLog {
+  id         String   @id @default(cuid())
+  ruleId     String?
+  event      String
+  projectId  String?
+  channel    String
+  targetMode String
+  targets    String[] @default([])
+  status     String
+  message    String
+  retryCount Int      @default(0)
+  createdAt  DateTime @default(now())
+}
+
+model TimelineEvent {
+  id        String   @id @default(cuid())
+  projectId String
+  type      String
+  actorId   String
+  actorName String
+  message   String
+  color     String   @default("blue")
+  createdAt DateTime @default(now())
+  project   Project  @relation(fields: [projectId], references: [id])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  type      String
+  actorId   String
+  message   String
+  metadata  Json     @default("{}")
+  createdAt DateTime @default(now())
+  actor     User?    @relation("ActorAuditLogs", fields: [actorId], references: [id])
+}
+
+model RoleTemplate {
+  id          String   @id @default(cuid())
+  name        String
+  role        String
+  permissions String[] @default([])
+}
+
+model PermissionScope {
+  id      String  @id @default(cuid())
+  key     String  @unique
+  name    String
+  target  String
+  enabled Boolean @default(true)
+}
+
+model ImportExportJob {
+  id          String    @id @default(cuid())
+  type        String
+  projectId   String
+  fileId      String?
+  status      String
+  requestedBy String
+  payload     Json      @default("{}")
+  createdAt   DateTime  @default(now())
+  finishedAt  DateTime?
+}
+
+model CollaborationEvent {
+  id        String   @id @default(cuid())
+  projectId String
+  fileId    String?
+  type      String
+  actorId   String
+  actorName String
+  payload   Json     @default("{}")
+  createdAt DateTime @default(now())
+}

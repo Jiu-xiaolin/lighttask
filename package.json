@@ -1,0 +1,32 @@
+{
+  "name": "lighttask-v12-rewrite",
+  "version": "0.2.0",
+  "private": true,
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w apps/api & npm run dev -w apps/web",
+    "dev:api": "npm run dev -w apps/api",
+    "dev:web": "npm run dev -w apps/web",
+    "build": "npm run build -w apps/api && npm run build -w apps/web",
+    "start": "npm run start -w apps/api",
+    "test": "npm run test -w apps/api",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "legacy:start": "node --preserve-symlinks --preserve-symlinks-main app/run-server.cjs",
+    "legacy:test": "node --preserve-symlinks --preserve-symlinks-main -e \"require('./tests/lighttask-api.test.cjs')\"",
+    "legacy:smoke": "node --preserve-symlinks --preserve-symlinks-main -e \"require('./scripts/smoke-test-lighttask.cjs')\"",
+    "legacy:smoke:ui": "node --preserve-symlinks --preserve-symlinks-main -e \"require('./scripts/visual-smoke-lighttask.cjs')\""
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@prisma/client": "6.19.0",
+    "prisma": "6.19.0",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

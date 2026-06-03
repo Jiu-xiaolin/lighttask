@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>轻协同 v2 系统效果图</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="stage">
+      <div class="ambient ambient-a"></div>
+      <div class="ambient ambient-b"></div>
+
+      <aside class="icon-rail">
+        <div class="mark">LT</div>
+        <a data-view="dashboard" href="?view=dashboard" title="仪表盘">D</a>
+        <a data-view="projects" href="?view=projects" title="项目">P</a>
+        <a data-view="docs" href="?view=docs" title="文档表格">F</a>
+        <a data-view="messages" href="?view=messages" title="消息">M</a>
+        <a data-view="permissions" href="?view=permissions" title="权限">R</a>
+        <span class="rail-line"></span>
+        <a title="设置">S</a>
+      </aside>
+
+      <aside class="glass-sidebar">
+        <div class="brand-line">
+          <div>
+            <strong>轻协同</strong>
+            <span>LightTask OS</span>
+          </div>
+          <button class="icon-btn">⌘</button>
+        </div>
+        <div class="side-search">搜索项目、任务、成员</div>
+        <nav class="menu-list">
+          <a data-view="dashboard" href="?view=dashboard"><i></i><span>仪表盘</span><b>11</b></a>
+          <a data-view="projects" href="?view=projects"><i></i><span>项目工作台</span><b>4</b></a>
+          <a data-view="docs" href="?view=docs"><i></i><span>文档与表格</span><b>28</b></a>
+          <a data-view="messages" href="?view=messages"><i></i><span>消息同步</span><b>2</b></a>
+          <a data-view="permissions" href="?view=permissions"><i></i><span>权限管理</span><b></b></a>
+        </nav>
+        <div class="folder-block">
+          <span class="block-title">项目分组</span>
+          <button>研发项目 <b>6</b></button>
+          <button>客户交付 <b>3</b></button>
+          <button>内部流程 <b>2</b></button>
+        </div>
+        <div class="profile-card">
+          <div class="avatar">林</div>
+          <div>
+            <strong>林初</strong>
+            <span>超级管理员</span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <span class="crumb">工作台 / 多人任务协同</span>
+            <h1 id="pageTitle">仪表盘</h1>
+          </div>
+          <div class="top-actions">
+            <button class="soft-btn">导入</button>
+            <button class="soft-btn">导出</button>
+            <button class="dark-btn">新建项目</button>
+          </div>
+        </header>
+
+        <section id="dashboard" class="page">
+          <div class="hero-grid">
+            <section class="glass-panel hero-panel">
+              <div class="section-head">
+                <div>
+                  <h2>任务甘特图</h2>
+                  <p>按日、月、季度、年切换，拖拽任务条可更新排期</p>
+                </div>
+                <div class="segments">
+                  <button class="active">日</button>
+                  <button>月</button>
+                  <button>季度</button>
+                  <button>年</button>
+                </div>
+              </div>
+              <div class="metric-strip">
+                <div><span>进行中</span><strong>34</strong><em>任务</em></div>
+                <div><span>本期完成</span><strong>74%</strong><em>+8%</em></div>
+                <div><span>今日到期</span><strong>6</strong><em>待确认</em></div>
+                <div><span>风险</span><strong>3</strong><em>需处理</em></div>
+              </div>
+              <div class="gantt">
+                <div class="date empty"></div>
+                <div class="date">06/01</div><div class="date">06/03</div><div class="date">06/05</div><div class="date">06/07</div><div class="date">06/09</div><div class="date">06/11</div><div class="date">06/13</div>
+                <div class="row-title">需求评审</div><div class="bar blue s1 w2">核心流程</div>
+                <div class="row-title">接口开发</div><div class="bar mint s2 w3">任务服务</div>
+                <div class="row-title">文档联动</div><div class="bar amber s4 w2">在线表格</div>
+                <div class="row-title">灰度发布</div><div class="bar rose s6 w2">风险复核</div>
+                <div class="now">今天</div>
+              </div>
+            </section>
+
+            <aside class="floating-card today-card">
+              <span class="eyebrow">今日流程</span>
+              <h3>6 个任务需要动作</h3>
+              <div class="flow-step done"><b></b><span>飞书摘要已发送</span></div>
+              <div class="flow-step active"><b></b><span>审批流程风险确认</span></div>
+              <div class="flow-step"><b></b><span>CRM 文档版本回溯</span></div>
+              <button class="dark-wide">打开工作流</button>
+            </aside>
+          </div>
+
+          <section class="glass-panel progress-panel">
+            <div class="section-head">
+              <div>
+                <h2>项目进度详情</h2>
+                <p>项目子项显示任务进度、负责人、更新时间和文档变更</p>
+              </div>
+              <button class="soft-btn">查看全部</button>
+            </div>
+            <div class="progress-grid">
+              <article class="soft-card">
+                <header><strong>智能客服上线</strong><span class="tag mint">健康</span></header>
+                <div class="progress-line"><i style="width: 82%"></i></div>
+                <p>知识库导入 100% · 会话路由 76% · 质检面板 42%</p>
+                <small>2 份在线文档 · 1 张需求表格 · 最近更新 10:42</small>
+              </article>
+              <article class="soft-card">
+                <header><strong>CRM 数据迁移</strong><span class="tag amber">关注</span></header>
+                <div class="progress-line"><i style="width: 58%"></i></div>
+                <p>字段映射 90% · 增量同步 54% · 回滚脚本 30%</p>
+                <small>3 个附件 · 表格导入校验中 · 最近更新 09:30</small>
+              </article>
+              <article class="soft-card">
+                <header><strong>审批流程优化</strong><span class="tag rose">延期</span></header>
+                <div class="progress-line"><i style="width: 36%"></i></div>
+                <p>权限矩阵 66% · 流程配置器 28% · 审计日志 18%</p>
+                <small>版本回溯 2 次 · 飞书已提醒项目管理员</small>
+              </article>
+            </div>
+          </section>
+        </section>
+
+        <section id="projects" class="page">
+          <div class="project-shell">
+            <section class="glass-panel project-board">
+              <div class="section-head">
+                <div>
+                  <h2>项目工作台</h2>
+                  <p>任务、附件、在线文档、在线表格在一个项目空间中协作</p>
+                </div>
+                <div class="top-actions">
+                  <button class="soft-btn">邀请用户</button>
+                  <button class="dark-btn">创建任务</button>
+                </div>
+              </div>
+              <div class="tabs">
+                <button class="active">全部</button><button>我负责的</button><button>有风险</button><button>文档更新</button><button>已归档</button>
+              </div>
+              <div class="project-list">
+                <article class="project-card selected">
+                  <div><strong>智能客服上线</strong><span>12 个任务 · 6 名成员 · 4 个文件</span></div>
+                  <em>82%</em>
+                  <div class="mini-line"><i style="width:82%"></i></div>
+                  <button>打开</button>
+                </article>
+                <article class="project-card">
+                  <div><strong>CRM 数据迁移</strong><span>18 个任务 · 9 名成员 · 3 张表格</span></div>
+                  <em>58%</em>
+                  <div class="mini-line"><i style="width:58%"></i></div>
+                  <button>打开</button>
+                </article>
+                <article class="project-card">
+                  <div><strong>审批流程优化</strong><span>9 个任务 · 4 名成员 · 2 次回溯</span></div>
+                  <em>36%</em>
+                  <div class="mini-line"><i style="width:36%"></i></div>
+                  <button>打开</button>
+                </article>
+              </div>
+              <div class="asset-row">
+                <article><b>附件</b><strong>设计稿.zip</strong><span>18.2 MB · 已同步</span></article>
+                <article><b>在线文档</b><strong>需求规格说明</strong><span>可回溯 · 12 条修改记录</span></article>
+                <article><b>在线表格</b><strong>任务排期表</strong><span>支持导入导出 Office/WPS</span></article>
+              </div>
+            </section>
+
+            <aside class="glass-panel timeline-panel">
+              <h2>变更时间线</h2>
+              <p>不同颜色日志卡片串成项目时间轴</p>
+              <div class="timeline">
+                <article class="log blue"><time>10:42</time><strong>任务状态变更</strong><span>接口开发由进行中变为待验收</span></article>
+                <article class="log mint"><time>10:12</time><strong>文档修改记录</strong><span>周敏更新需求规格说明第 3 节</span></article>
+                <article class="log amber"><time>09:30</time><strong>表格导入</strong><span>任务排期表从 xlsx 导入，保留样式</span></article>
+                <article class="log violet"><time>昨日</time><strong>邀请成员</strong><span>李然加入项目，角色为协作者</span></article>
+                <article class="log rose"><time>周五</time><strong>风险标记</strong><span>审批流程优化新增延期风险</span></article>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section id="docs" class="page">
+          <div class="doc-workspace">
+            <section class="glass-panel file-panel">
+              <div class="section-head compact">
+                <div>
+                  <h2>项目文件</h2>
+                  <p>附件、在线文档、在线表格</p>
+                </div>
+              </div>
+              <div class="file-folder active"><b>文档</b><span>需求规格说明</span><em>12 条修改记录</em></div>
+              <div class="file-folder"><b>表格</b><span>任务排期表</span><em>保留公式与样式</em></div>
+              <div class="file-folder"><b>附件</b><span>交互原型.zip</span><em>18.2 MB</em></div>
+              <button class="dark-wide">上传 / 新建</button>
+            </section>
+
+            <section class="glass-panel editor-panel">
+              <div class="editor-toolbar">
+                <button>B</button><button>I</button><button>H1</button><button>表格</button><button>批注</button><button>历史</button>
+                <span></span>
+                <div class="presence-stack">
+                  <i>林</i><i>周</i><i>陈</i><b>3 人在线</b>
+                </div>
+                <button>导入</button><button>导出</button>
+              </div>
+              <div class="doc-paper">
+                <h2>智能客服上线 - 需求规格说明</h2>
+                <p>本章节说明会话路由、知识库导入、质检指标和通知策略。在线协作时保留多人光标、评论、版本回溯和修改记录。</p>
+                <div class="live-cursor cursor-lin">林初正在编辑</div>
+                <div class="live-cursor cursor-zhou">周敏选中此段</div>
+                <div class="sheet-preview">
+                  <div>模块</div><div>负责人</div><div>状态</div><div>进度</div>
+                  <div>知识库导入</div><div>周敏</div><div>完成</div><div>100%</div>
+                  <div>会话路由</div><div>陈序</div><div>进行中</div><div>76%</div>
+                  <div>质检面板</div><div>李然</div><div>待处理</div><div>42%</div>
+                </div>
+                <div class="comment-bubble">
+                  <b>批注线程</b>
+                  <span>陈序：这里需要关联任务 #A-102 的验收标准。</span>
+                  <em>2 条回复 · 已实时同步</em>
+                </div>
+              </div>
+              <div class="quick-menu">
+                <button><b>导入 Office/WPS</b><span>docx、xlsx、wps、et、pdf</span></button>
+                <button class="active"><b>保留格式导出</b><span>样式、合并单元格、公式、批注</span></button>
+                <button><b>嵌入项目任务</b><span>把文档段落关联到任务</span></button>
+              </div>
+            </section>
+
+            <aside class="glass-panel history-panel">
+              <h2>版本与修改记录</h2>
+              <p>以日志卡片进入项目时间线</p>
+              <div class="collab-status">
+                <strong>多人协同中</strong>
+                <span>光标、选区、批注和保存状态实时同步</span>
+              </div>
+              <article class="history-card mint"><strong>v18</strong><span>周敏修改需求范围</span><small>10:12</small></article>
+              <article class="history-card blue"><strong>v17</strong><span>陈序导入任务排期表</span><small>09:30</small></article>
+              <article class="history-card amber"><strong>v16</strong><span>系统自动保存并合并冲突</span><small>昨日</small></article>
+              <button class="soft-btn wide">回溯到此版本</button>
+            </aside>
+          </div>
+        </section>
+
+        <section id="messages" class="page">
+          <div class="integration-layout">
+            <section class="glass-panel integration-main">
+              <div class="section-head">
+                <div>
+                  <h2>消息同步</h2>
+                  <p>飞书机器人、微信公众号与项目事件流联动</p>
+                </div>
+                <button class="dark-btn">新增通道</button>
+              </div>
+              <div class="integration-cards">
+                <article class="integration-card">
+                  <header><b>飞书机器人</b><span class="tag mint">已启用</span></header>
+                  <p>Webhook 推送，支持签名校验、交互卡片、失败重试</p>
+                  <div><span>触发事件</span><strong>任务分配、延期、评论、文档回溯</strong></div>
+                  <div><span>发送节奏</span><strong>即时 + 18:00 摘要</strong></div>
+                </article>
+                <article class="integration-card">
+                  <header><b>微信公众号</b><span class="tag amber">待配置</span></header>
+                  <p>模板消息/订阅消息，用户扫码绑定 OpenID</p>
+                  <div><span>模板</span><strong>任务待办、项目周报、风险提醒</strong></div>
+                  <div><span>绑定</span><strong>账号与 OpenID 一对一映射</strong></div>
+                </article>
+              </div>
+              <div class="rule-dock">
+                <div><b></b><span>任务被分配</span><em>负责人、项目管理员</em></div>
+                <div><b></b><span>文档被回溯</span><em>协作者、超级管理员</em></div>
+                <div><b></b><span>项目风险新增</span><em>即时提醒</em></div>
+                <div><b></b><span>每日摘要</span><em>工作日 18:00</em></div>
+              </div>
+            </section>
+            <aside class="floating-card message-preview">
+              <span class="eyebrow">飞书卡片预览</span>
+              <h3>审批流程优化出现延期风险</h3>
+              <p>请项目管理员在今日 18:00 前确认处理方案。相关文档已记录 v18 版本修改。</p>
+              <button class="dark-wide">查看任务</button>
+            </aside>
+          </div>
+        </section>
+
+        <section id="permissions" class="page">
+          <div class="permission-layout">
+            <section class="glass-panel matrix-panel">
+              <div class="section-head">
+                <div>
+                  <h2>权限管理</h2>
+                  <p>超级管理员查看全部数据；项目创建者拥有本项目完全管理权</p>
+                </div>
+                <button class="dark-btn">新增成员</button>
+              </div>
+              <div class="permission-matrix">
+                <div class="matrix-head">能力</div><div class="matrix-head">超级管理员</div><div class="matrix-head">项目创建者</div><div class="matrix-head">普通用户</div>
+                <div>查看项目</div><div class="yes">全部数据</div><div>本项目</div><div>参与项目</div>
+                <div>任务管理</div><div class="yes">全部</div><div class="yes">本项目全部</div><div>被分配任务</div>
+                <div>成员邀请</div><div class="yes">全部项目</div><div class="yes">本项目</div><div>无</div>
+                <div>文档表格</div><div class="yes">全部查看</div><div class="yes">管理与回溯</div><div>协作/只读</div>
+                <div>提醒通道</div><div class="yes">全局配置</div><div>本项目配置</div><div>无</div>
+                <div>审计日志</div><div class="yes">全局</div><div>本项目</div><div>无</div>
+              </div>
+            </section>
+            <aside class="glass-panel member-panel">
+              <h2>成员授权</h2>
+              <p>系统角色和项目角色叠加生效</p>
+              <div class="member-row"><span>林</span><div><strong>林初</strong><em>超级管理员</em></div><b>全局</b></div>
+              <div class="member-row"><span>周</span><div><strong>周敏</strong><em>智能客服上线 · 创建者</em></div><b>管理</b></div>
+              <div class="member-row"><span>陈</span><div><strong>陈序</strong><em>CRM 数据迁移 · 协作者</em></div><b>协作</b></div>
+              <div class="member-row"><span>李</span><div><strong>李然</strong><em>审批流程优化 · 观察者</em></div><b>只读</b></div>
+              <div class="audit-card">
+                <strong>最近权限变更</strong>
+                <p>周敏将李然添加为「智能客服上线」协作者，并授予文档评论权限。</p>
+                <small>2026-06-01 10:12</small>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const titles = {
+        dashboard: "仪表盘",
+        projects: "项目工作台",
+        docs: "文档与表格",
+        messages: "消息同步",
+        permissions: "权限管理",
+      };
+      const view = new URLSearchParams(window.location.search).get("view") || "dashboard";
+      document.querySelectorAll(".page").forEach((page) => {
+        page.classList.toggle("active", page.id === view);
+      });
+      document.querySelectorAll("[data-view]").forEach((link) => {
+        link.classList.toggle("active", link.dataset.view === view);
+      });
+      document.getElementById("pageTitle").textContent = titles[view] || titles.dashboard;
+    </script>
+  </body>
+</html>

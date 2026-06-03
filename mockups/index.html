@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>轻量级多人任务协同系统 Mockups</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">协</div>
+          <div>
+            <div class="brand-title">轻协同</div>
+            <div class="brand-subtitle">LightTask</div>
+          </div>
+        </div>
+        <nav class="nav">
+          <a data-view="dashboard" href="?view=dashboard"><span>仪</span>仪表盘</a>
+          <a data-view="projects" href="?view=projects"><span>项</span>项目列表</a>
+          <a data-view="messages" href="?view=messages"><span>同</span>消息同步</a>
+          <a data-view="permissions" href="?view=permissions"><span>权</span>权限管理</a>
+        </nav>
+        <div class="sidebar-footer">
+          <div class="mini-title">当前空间</div>
+          <strong>产品研发中心</strong>
+          <p>32 名成员 · 11 个项目</p>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <div class="crumb">工作台 / 多人任务协同</div>
+            <h1 id="pageTitle">仪表盘</h1>
+          </div>
+          <div class="topbar-actions">
+            <button class="ghost-btn">导出</button>
+            <button class="primary-btn">新建项目</button>
+            <div class="avatar">林</div>
+          </div>
+        </header>
+
+        <section id="dashboard" class="page">
+          <div class="metric-row">
+            <div class="metric accent-blue">
+              <span>进行中项目</span>
+              <strong>11</strong>
+              <em>较上月 +2</em>
+            </div>
+            <div class="metric accent-green">
+              <span>本期完成率</span>
+              <strong>74%</strong>
+              <em>18 个任务已完成</em>
+            </div>
+            <div class="metric accent-amber">
+              <span>今日到期</span>
+              <strong>6</strong>
+              <em>4 个待确认</em>
+            </div>
+            <div class="metric accent-red">
+              <span>风险任务</span>
+              <strong>3</strong>
+              <em>需负责人处理</em>
+            </div>
+          </div>
+
+          <section class="panel gantt-panel">
+            <div class="panel-head">
+              <div>
+                <h2>任务甘特图</h2>
+                <p>按日、月、季度、年切换项目节奏与关键节点</p>
+              </div>
+              <div class="segmented">
+                <button class="active">日</button>
+                <button>月</button>
+                <button>季度</button>
+                <button>年</button>
+              </div>
+            </div>
+            <div class="gantt">
+              <div class="gantt-header empty"></div>
+              <div class="gantt-header">06/01</div>
+              <div class="gantt-header">06/03</div>
+              <div class="gantt-header">06/05</div>
+              <div class="gantt-header">06/07</div>
+              <div class="gantt-header">06/09</div>
+              <div class="gantt-header">06/11</div>
+              <div class="gantt-header">06/13</div>
+              <div class="gantt-row-title">需求评审</div>
+              <div class="gantt-track span-2 start-1 blue">核心流程</div>
+              <div class="gantt-row-title">接口开发</div>
+              <div class="gantt-track span-3 start-2 green">任务服务</div>
+              <div class="gantt-row-title">联调测试</div>
+              <div class="gantt-track span-2 start-4 amber">飞书提醒</div>
+              <div class="gantt-row-title">灰度发布</div>
+              <div class="gantt-track span-2 start-6 red">风险复核</div>
+              <div class="today-line"></div>
+            </div>
+          </section>
+
+          <section class="panel progress-panel">
+            <div class="panel-head compact">
+              <div>
+                <h2>项目进度详情</h2>
+                <p>下钻到项目子项，快速识别延期、阻塞与责任人</p>
+              </div>
+              <button class="ghost-btn">查看全部</button>
+            </div>
+            <div class="project-progress-grid">
+              <article class="progress-item">
+                <div class="progress-top">
+                  <strong>智能客服上线</strong>
+                  <span class="pill green">健康</span>
+                </div>
+                <div class="progress-line"><i style="width: 82%"></i></div>
+                <div class="subtask-list">
+                  <div><span>知识库导入</span><b>100%</b></div>
+                  <div><span>会话路由策略</span><b>76%</b></div>
+                  <div><span>质检指标面板</span><b>42%</b></div>
+                </div>
+              </article>
+              <article class="progress-item">
+                <div class="progress-top">
+                  <strong>CRM 数据迁移</strong>
+                  <span class="pill amber">关注</span>
+                </div>
+                <div class="progress-line"><i style="width: 58%"></i></div>
+                <div class="subtask-list">
+                  <div><span>字段映射</span><b>90%</b></div>
+                  <div><span>增量同步</span><b>54%</b></div>
+                  <div><span>回滚脚本</span><b>30%</b></div>
+                </div>
+              </article>
+              <article class="progress-item">
+                <div class="progress-top">
+                  <strong>审批流程优化</strong>
+                  <span class="pill red">延期</span>
+                </div>
+                <div class="progress-line"><i style="width: 36%"></i></div>
+                <div class="subtask-list">
+                  <div><span>权限矩阵</span><b>66%</b></div>
+                  <div><span>流程配置器</span><b>28%</b></div>
+                  <div><span>审计日志</span><b>18%</b></div>
+                </div>
+              </article>
+            </div>
+          </section>
+        </section>
+
+        <section id="projects" class="page">
+          <div class="workspace-head">
+            <div>
+              <h2>项目列表</h2>
+              <p>创建任务、邀请成员，并通过时间线追踪项目和任务变更</p>
+            </div>
+            <div class="workspace-actions">
+              <button class="ghost-btn">邀请用户</button>
+              <button class="primary-btn">创建任务</button>
+            </div>
+          </div>
+          <div class="project-layout">
+            <section class="panel project-table-panel">
+              <div class="filterbar">
+                <button class="filter active">全部</button>
+                <button class="filter">我负责的</button>
+                <button class="filter">有风险</button>
+                <button class="filter">已归档</button>
+                <div class="search">搜索项目 / 任务 / 成员</div>
+              </div>
+              <table class="project-table">
+                <thead>
+                  <tr>
+                    <th>项目</th>
+                    <th>负责人</th>
+                    <th>进度</th>
+                    <th>截止日期</th>
+                    <th>状态</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>智能客服上线</strong><span>12 个任务 · 6 名成员</span></td>
+                    <td>周敏</td>
+                    <td><div class="mini-progress"><i style="width:82%"></i></div>82%</td>
+                    <td>2026-06-18</td>
+                    <td><span class="pill green">正常</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>CRM 数据迁移</strong><span>18 个任务 · 9 名成员</span></td>
+                    <td>陈序</td>
+                    <td><div class="mini-progress"><i style="width:58%"></i></div>58%</td>
+                    <td>2026-06-26</td>
+                    <td><span class="pill amber">关注</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>审批流程优化</strong><span>9 个任务 · 4 名成员</span></td>
+                    <td>林初</td>
+                    <td><div class="mini-progress"><i style="width:36%"></i></div>36%</td>
+                    <td>2026-06-12</td>
+                    <td><span class="pill red">延期</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>官网内容改版</strong><span>7 个任务 · 5 名成员</span></td>
+                    <td>王珂</td>
+                    <td><div class="mini-progress"><i style="width:71%"></i></div>71%</td>
+                    <td>2026-06-22</td>
+                    <td><span class="pill blue">联调</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+
+            <section class="panel timeline-panel">
+              <div class="panel-head compact">
+                <div>
+                  <h2>变更时间线</h2>
+                  <p>颜色区分任务、成员、进度、风险日志</p>
+                </div>
+              </div>
+              <div class="timeline">
+                <article class="log-card task">
+                  <time>10:42</time>
+                  <strong>任务状态变更</strong>
+                  <p>「接口开发」由进行中变更为待验收，负责人：陈序</p>
+                </article>
+                <article class="log-card member">
+                  <time>09:30</time>
+                  <strong>邀请成员</strong>
+                  <p>周敏邀请李然加入「智能客服上线」，角色：协作者</p>
+                </article>
+                <article class="log-card progress">
+                  <time>昨日</time>
+                  <strong>进度更新</strong>
+                  <p>CRM 数据迁移整体进度由 52% 更新为 58%</p>
+                </article>
+                <article class="log-card risk">
+                  <time>周五</time>
+                  <strong>风险标记</strong>
+                  <p>审批流程优化新增延期风险，需项目管理员确认排期</p>
+                </article>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section id="messages" class="page">
+          <div class="workspace-head">
+            <div>
+              <h2>消息同步</h2>
+              <p>对接飞书机器人与微信公众号，让任务变更及时触达项目成员</p>
+            </div>
+            <button class="primary-btn">新增通道</button>
+          </div>
+          <div class="integration-grid">
+            <section class="panel integration-card">
+              <div class="integration-head">
+                <div class="channel-icon feishu">飞</div>
+                <div>
+                  <h2>飞书机器人</h2>
+                  <p>Webhook 推送 · 支持签名校验</p>
+                </div>
+                <span class="status-dot online">已启用</span>
+              </div>
+              <div class="config-list">
+                <div><span>提醒范围</span><strong>任务创建、延期、评论、完成</strong></div>
+                <div><span>发送频率</span><strong>即时 + 每日 18:00 摘要</strong></div>
+                <div><span>失败重试</span><strong>3 次指数退避</strong></div>
+              </div>
+              <div class="message-preview">
+                <b>飞书卡片预览</b>
+                <p>审批流程优化出现延期风险，请项目管理员在今日 18:00 前确认处理方案。</p>
+              </div>
+            </section>
+
+            <section class="panel integration-card">
+              <div class="integration-head">
+                <div class="channel-icon wechat">微</div>
+                <div>
+                  <h2>微信公众号</h2>
+                  <p>模板消息 / 订阅消息 · OpenID 绑定</p>
+                </div>
+                <span class="status-dot pending">待配置</span>
+              </div>
+              <div class="config-list">
+                <div><span>AppID</span><strong>wx_********_prod</strong></div>
+                <div><span>模板类型</span><strong>任务待办提醒、项目周报</strong></div>
+                <div><span>用户绑定</span><strong>扫码绑定账号与 OpenID</strong></div>
+              </div>
+              <div class="message-preview">
+                <b>公众号模板预览</b>
+                <p>你有 3 个任务今日到期，点击查看任务详情并更新进度。</p>
+              </div>
+            </section>
+
+            <section class="panel rules-panel">
+              <div class="panel-head compact">
+                <div>
+                  <h2>提醒规则</h2>
+                  <p>按项目、角色和事件配置触达策略</p>
+                </div>
+              </div>
+              <div class="rule-list">
+                <div class="rule-row"><span class="event-dot blue"></span><strong>任务被分配</strong><p>负责人、项目管理员</p><button>编辑</button></div>
+                <div class="rule-row"><span class="event-dot amber"></span><strong>任务即将到期</strong><p>提前 24 小时提醒</p><button>编辑</button></div>
+                <div class="rule-row"><span class="event-dot red"></span><strong>项目风险新增</strong><p>项目管理员、超级管理员</p><button>编辑</button></div>
+                <div class="rule-row"><span class="event-dot green"></span><strong>每日摘要</strong><p>工作日 18:00 汇总发送</p><button>编辑</button></div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section id="permissions" class="page">
+          <div class="workspace-head">
+            <div>
+              <h2>权限管理</h2>
+              <p>超级管理员可查看全部数据；项目创建者拥有本项目完全管理权</p>
+            </div>
+            <button class="primary-btn">新增成员</button>
+          </div>
+
+          <div class="permission-layout">
+            <section class="panel role-panel">
+              <div class="panel-head compact">
+                <div>
+                  <h2>角色权限矩阵</h2>
+                  <p>系统级角色与项目级角色叠加生效</p>
+                </div>
+              </div>
+              <table class="permission-table">
+                <thead>
+                  <tr>
+                    <th>能力</th>
+                    <th>超级管理员</th>
+                    <th>项目创建者</th>
+                    <th>普通成员</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>查看全部项目</td><td class="yes">允许</td><td>本项目</td><td>参与项目</td></tr>
+                  <tr><td>创建 / 删除项目</td><td class="yes">允许</td><td>创建 / 删除自建</td><td>创建项目</td></tr>
+                  <tr><td>邀请 / 移除成员</td><td class="yes">允许</td><td class="yes">允许</td><td>无</td></tr>
+                  <tr><td>编辑任务与进度</td><td class="yes">允许</td><td class="yes">允许</td><td>被分配任务</td></tr>
+                  <tr><td>查看审计日志</td><td class="yes">允许</td><td>本项目</td><td>无</td></tr>
+                  <tr><td>配置提醒通道</td><td class="yes">允许</td><td>本项目</td><td>无</td></tr>
+                </tbody>
+              </table>
+            </section>
+
+            <aside class="panel member-panel">
+              <div class="panel-head compact">
+                <div>
+                  <h2>成员与项目授权</h2>
+                  <p>按用户查看系统角色和项目角色</p>
+                </div>
+              </div>
+              <div class="member-list">
+                <div class="member-row">
+                  <div class="avatar small">林</div>
+                  <div><strong>林初</strong><p>超级管理员</p></div>
+                  <span class="pill blue">全局</span>
+                </div>
+                <div class="member-row">
+                  <div class="avatar small">周</div>
+                  <div><strong>周敏</strong><p>智能客服上线 · 创建者</p></div>
+                  <span class="pill green">管理</span>
+                </div>
+                <div class="member-row">
+                  <div class="avatar small">陈</div>
+                  <div><strong>陈序</strong><p>CRM 数据迁移 · 协作者</p></div>
+                  <span class="pill amber">协作</span>
+                </div>
+                <div class="member-row">
+                  <div class="avatar small">李</div>
+                  <div><strong>李然</strong><p>审批流程优化 · 观察者</p></div>
+                  <span class="pill gray">只读</span>
+                </div>
+              </div>
+              <div class="audit-box">
+                <b>最近权限变更</b>
+                <p>周敏将李然添加为「智能客服上线」协作者。</p>
+                <span>2026-06-01 10:12</span>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const titles = {
+        dashboard: "仪表盘",
+        projects: "项目列表",
+        messages: "消息同步",
+        permissions: "权限管理",
+      };
+      const params = new URLSearchParams(window.location.search);
+      const view = params.get("view") || "dashboard";
+      document.querySelectorAll(".page").forEach((page) => {
+        page.classList.toggle("active", page.id === view);
+      });
+      document.querySelectorAll(".nav a").forEach((link) => {
+        link.classList.toggle("active", link.dataset.view === view);
+      });
+      document.getElementById("pageTitle").textContent = titles[view] || titles.dashboard;
+      document.body.dataset.view = view;
+    </script>
+  </body>
+</html>

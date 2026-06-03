@@ -1,0 +1,2094 @@
+{
+  "users": [
+    {
+      "id": "u_admin",
+      "username": "admin",
+      "passwordHash": "$2a$10$v6uxCT3pPAJUBHLPaRnvk.MaqpJANa/n.4wRZe3B95BhVP5CvIB7y",
+      "name": "林栖",
+      "role": "SUPER_ADMIN",
+      "enabled": true,
+      "avatar": "/uploads/avatars/avatar_1780479386983_77019425.jpg",
+      "signature": "让项目主线清楚，细节有迹可循。",
+      "theme": "custom",
+      "customWallpaper": "",
+      "customBlur": 0
+    },
+    {
+      "id": "u_member",
+      "username": "member",
+      "passwordHash": "$2a$10$HuKOWFizuZ7hU6WR29QcguDOBXWW/W6qcnsqMzPHSHR0omzhul36a",
+      "name": "林树",
+      "role": "MEMBER",
+      "enabled": true,
+      "avatar": "树",
+      "signature": "今日任务今日清。",
+      "theme": "windbell"
+    },
+    {
+      "id": "u_9777fa260ba7",
+      "username": "zhangsan",
+      "passwordHash": "$2a$10$YyYO1aypHF5ilNUd/2mg2uLRhkNroC8iAgwtFGsQTjHRvAE1QyZZe",
+      "name": "������",
+      "role": "MEMBER",
+      "enabled": false,
+      "avatar": "z",
+      "theme": "letter"
+    },
+    {
+      "id": "u_d49643a15a7d",
+      "username": "lisi",
+      "passwordHash": "$2a$10$GlDF2vc0VIfaZDtHQX2uJ.1rhvIoz0pvpe.FuffjcY9yejJDCfwSu",
+      "name": "李四",
+      "role": "MEMBER",
+      "enabled": false,
+      "avatar": "l",
+      "theme": "letter"
+    },
+    {
+      "id": "u_91762b42dce3",
+      "username": "wangwu",
+      "passwordHash": "$2a$10$fidpDzZa3R8hZtzX6Jva4uZvP3yb4m0tCodgH7mOmiiIqk8Kpjeoe",
+      "name": "王五",
+      "role": "MEMBER",
+      "enabled": false,
+      "avatar": "w",
+      "theme": "letter"
+    },
+    {
+      "id": "u_9c98a60bc598",
+      "username": "test",
+      "passwordHash": "$2a$10$DiREA4J9W.cE40AqNIXgeO6xPm8k1TccyxQS8zHVh5Zoj8pItFPz.",
+      "name": "二狗",
+      "role": "MEMBER",
+      "enabled": true,
+      "avatar": "t",
+      "theme": "letter"
+    },
+    {
+      "id": "u_10a3648038ba",
+      "username": "zhaoliu",
+      "passwordHash": "$2a$10$hB/PI6LWSFHgeZAjS6Z3ROmpaAgl.ZMF3eT3OMVFYJAAkANG8Jix6",
+      "name": "赵六",
+      "role": "MEMBER",
+      "enabled": true,
+      "avatar": "z",
+      "theme": "letter"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "sess_e328aa439a28",
+      "tokenHash": "5699f610ea9e7d303c866227df24bde5c2ca00ac07a548ac62ce25974f270012",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T06:57:37.496Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_7724faa10aec",
+      "tokenHash": "667bc9380d692d6dc5a33be7fc23953a1bcd88183a4903c00e61c8169379d892",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T06:58:01.998Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_5f705f2cd2d2",
+      "tokenHash": "1e6988f74e7a4ce12524f416a2e9e3656dfb263a719827b3825a50e4aca3943a",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T07:00:38.586Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_083617943a69",
+      "tokenHash": "7b6fbf06bcefa374b8d873d49049b1310d091368c11efa9ff0cea5ee9d529907",
+      "userId": "u_9777fa260ba7",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T07:00:37.227Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_bcc85aa1c843",
+      "tokenHash": "5f60961fdeccffeeff1260f01d73826a84c20da7d20bece60259e71d268ff57f",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T07:01:06.826Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_e1f872183b6e",
+      "tokenHash": "699836effc8333b3ab282bf5634e6ad11df299439e847881e1602d47756e7719",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T07:05:05.518Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_081582efe56d",
+      "tokenHash": "fc3832b5a70ac9f23dcb5d62c5c573250b68bf025786fc9a2ad0fa966a0fca04",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T07:07:06.021Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_3ff4274be0b5",
+      "tokenHash": "aa2edec313137cbebcf99104ca4bcffa1b15b75ee23a2eaa60ff146086c9a0cf",
+      "userId": "u_9c98a60bc598",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T07:51:19.329Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_aed3c8a6f0fc",
+      "tokenHash": "c3c21babc1934b36455fb172d826ab884d8f6581a09ce7851b61c88994019f17",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T08:04:48.382Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_3c8d37624ccc",
+      "tokenHash": "7a94f3ff04fb688c9d5046bbec76150d49affa7fa021cb0001317ed3ac94e618",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T07:53:36.193Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_8ce830e19283",
+      "tokenHash": "c0318c8f11624c3d569038c1346f89c2a1775c3e7004020c8ac4d1a2ffc02f8e",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T07:54:42.778Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_4cfe1edad8e6",
+      "tokenHash": "b63280cc3c1c2c8239e6cfe039d8e94659e1f4b22a1d6061df2e96dc604e6977",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T07:55:11.467Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_b775907178d1",
+      "tokenHash": "9e300151d409a231b0e8c144c71b14a3e4dd2eec7808940bfa758f4cb3892387",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T08:00:42.530Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_35730100d451",
+      "tokenHash": "2c40f32132c6bd3460b13f9971f16d07d30140da02a4a52eff0c5b53b726b515",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T08:02:56.923Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_092ea724ccc2",
+      "tokenHash": "302fbd66aae61ab898eecb5eff57b1babb904a12d721996deea9b8fa7da969cd",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T08:03:46.905Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_fe1e4be01953",
+      "tokenHash": "d74ec037aaa486667f7fcd7d8860b02e9af3870e517157904fae51ac295af0ed",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T08:05:17.295Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_da9eff9e5c65",
+      "tokenHash": "35f93d648c9ad21081c59cb98df859ce7a86dde7915f0a6782b6da12cf117a8b",
+      "userId": "u_member",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T08:11:05.005Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_a845ba8c3f26",
+      "tokenHash": "38f02c4f8f63a254f1d85ce1f8da679cc98de476d0fac6c43f0ca3b7e79506e8",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T08:12:23.906Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_8f989de5c6d5",
+      "tokenHash": "25a0ae4aeec4707f660fe36051fcf76f23abee069ecd9ee3baca54984542529d",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T18:49:01.945Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_09d33f664227",
+      "tokenHash": "b2843ab1b442588b4cf07108fbe5b7610dcba43c3250f02004f8612b8fd4e8bc",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T08:16:20.623Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_8ce80b84d4db",
+      "tokenHash": "1ed8aa2907d34b325228304df8fe79b2433ee68e3dc3c5a9d9d23e73b34d9199",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T08:17:50.639Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_afb7eec56daf",
+      "tokenHash": "c064c2316c775627abf3ded10f377fbbd64ea82086ee270ce47518b5bb9c8fac",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T08:18:54.483Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_6f76ba27b51e",
+      "tokenHash": "091c31082c779435f336097829f399c1b99b176e3a6bd6172670677e99e1af86",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T08:19:11.840Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_4fed1afc4d07",
+      "tokenHash": "21c7fa3ec716f58e12b18a3f0bb0d9e708abd39547be66da74f3298133faec95",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T08:20:22.033Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_d8214cbdfa87",
+      "tokenHash": "766336f77e7c1b5ba9b3c52386598ef022d046da7aeea9a6147f8f60a73f5b2c",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T08:20:55.803Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_ad25015596d9",
+      "tokenHash": "c64bae0b3c9bc6c3a76088768b57a0e4bace1447c672ff7e447d88a1bdda3390",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T08:21:30.345Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_936642414ad8",
+      "tokenHash": "4da6d8932ca2bcfbd50f9f31e7359f59b3a652f8e96eea4ea6e207a654f5c3e0",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T08:38:53.233Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_e22581a7bcb8",
+      "tokenHash": "50ca80441599da39c54807de2585113fa1b14bd741b7e5e160ef8d512c6c8d7a",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T08:39:13.250Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_40b69515598d",
+      "tokenHash": "62f11371ef1489ffe5d54919ac1b2d51dc89d7a927382df25324459204a5ec82",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T09:08:22.303Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_2c0aac7f7a9b",
+      "tokenHash": "19a5f2379cd959ecacc6ff3a5849ed93ad6ae4b491cf411a3e52eb15b24ed29d",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T09:09:16.243Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_3b5a966648a1",
+      "tokenHash": "75fb2f942f2e3f57f59424d9c2bf1da3ba8840e493b76d307d503006f14258c8",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T09:11:23.122Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_987227551db5",
+      "tokenHash": "aac863dcac176f6d2af210d05bdd1dd1e612ef8da4463047fcce23a0ee13dfda",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T09:21:34.293Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_3aca0a966bdd",
+      "tokenHash": "a01166f66a331d7a2b3c2836f9c0b43eb49302c564f2787b1732504d014a7d57",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T09:21:50.093Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_f2a48d1e5662",
+      "tokenHash": "8a11dc155858b0ecd95adc4c54b32f66c5ce37bfe8c6f4ee013f4fde3729166c",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T09:40:00.400Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_10ae675b3aa4",
+      "tokenHash": "3116b8c2a4385add63d6df4d99b41c85d474ae3c81528e59ff60da57f25b0f7f",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T09:44:28.947Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_53c51045c39a",
+      "tokenHash": "36c6675e3d92431d6fa3a01ac45a006061b9cd68b64e01d7d9d79b46c82cff1e",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T09:44:45.082Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_1c7252367f5a",
+      "tokenHash": "ef31871d722a3a0b33dd5e993ecd87d21f33b16102e6d063df31bc5b377b3322",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T09:47:41.131Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_5684fd3a494f",
+      "tokenHash": "1acd56afaee57431f2ea84538fabaf6086e2c8339947e4d0cbc6a7c3c1cab0ed",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T09:53:01.973Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_cd85dea77cf9",
+      "tokenHash": "69cb25df2e02ec8a67d8993ae51bc2673a3302babadc4daa54c8cabdc57c1477",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T10:01:41.723Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_48f7bdaea107",
+      "tokenHash": "67875c3910607a76912ca7a3d159939ff9404a8ea08d98b2441d7f88c1ef597b",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T10:08:05.307Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_8d5591d6f7e3",
+      "tokenHash": "58c2c7b6c3db91ea827503b9997ff86a79d0940504671b3b21b3b7f0829556df",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T10:39:12.995Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_d1f15621a64f",
+      "tokenHash": "2ac5cb562bef5359c54f26170a17621282a618f22ed07f95bf9a7bc5b5cf9da6",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T10:42:41.269Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_7f6498d169a0",
+      "tokenHash": "54ed68d2bc08824d9c8fa1bab847b25b253cae52cae7d071f3f351ad3cfb7331",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T10:46:22.128Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_2e75a35ea74a",
+      "tokenHash": "9b57392586681305d485bef5d931a88ef8906b26c012ab4e558c6e4a339c65ed",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T10:46:55.947Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_c1b762a2af99",
+      "tokenHash": "d104c9e3a706fd14227da59bad8d3309a53146307c8196c00c76067abaf61b9e",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T10:53:29.883Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_f7744a49135b",
+      "tokenHash": "dde751f6f08b39a5e5093fa1294aec6d7f7e15c931d21845f4015dce90f71a14",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T10:54:12.544Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_851e326d37f5",
+      "tokenHash": "5ee8910e12b22c9e5ec57008c6f4925ae3e0685315f4fb9a48cf50615f188723",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T10:57:42.386Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_895cf35baee9",
+      "tokenHash": "fdfc15f0d0c4b15e6874101cea5450778e8466d89d762fce7449be5b02717c31",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T11:00:47.047Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_c9e331314d58",
+      "tokenHash": "fd8408562052c0e307ba1ba9896f00b74c0432b7c14600cd657305284b7799b3",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T11:01:48.844Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_590d1ee2d33c",
+      "tokenHash": "4f1961b0c4eb44ef7bc246252ec347bc307f459515c5499b851694d533c2a12a",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T11:02:33.200Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_3575715b17c5",
+      "tokenHash": "2d7104b17d56b7350c93cebbbf7d5819a86b9914d780dc9a1c5c70a168077c32",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T11:03:09.811Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_820369cefcc1",
+      "tokenHash": "ff712d0af1534e6c042d0bc878a48d0f771a75450b2700ceaadd4238251febd0",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T11:03:31.453Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_c5009a7b1bca",
+      "tokenHash": "a08f18cdaf4262540cccd89f415a6d099cf201b1ab56915b9cad8b4af5674f91",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T11:04:06.766Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_4dede1025c73",
+      "tokenHash": "4b7751373e44c333765f794400316dd1d8ae3df27c96016523d7fa837f9a9f86",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T11:04:50.604Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_96793c1687ab",
+      "tokenHash": "5cbf19bfc72927dcf764088823fc576eeb0941cc17a3939fafa482a671b038bf",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T11:05:27.469Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_655ffb26fb96",
+      "tokenHash": "b3cd811a60a952901cb4d4b905406fd515d188cf7a6afd422e25c474fd3f4047",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T11:06:20.214Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_1f86e6b532d9",
+      "tokenHash": "e9cfbacf6a8744ea3d82d54b201143dfcb5d7dd39c2315e81f171c2766ae0444",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T12:15:36.795Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_581ad6c9f8d2",
+      "tokenHash": "da7366f012bf853cf5440d1dd37e69a0be647340d9b3fbbe459c04d46c15b0c4",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T12:15:53.460Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_0ddebbae62fe",
+      "tokenHash": "c280bbf6cac0da0d6c9fbaa32891dab2f3777fdf5483cdddfd9d6b6122400a44",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T13:23:14.412Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_3b76f8720e3d",
+      "tokenHash": "6eceaeee3d915cb6bee55ff62fe5608629dbc00b942d339a380a509c8d919aa2",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T13:27:21.879Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_a2b4b426371a",
+      "tokenHash": "4f8959f0232bdd654cf8a41227c71b65a37ed25383c8a06420fa00cec1894ca8",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T13:54:28.594Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_dd10b78a2cba",
+      "tokenHash": "79d27c9097e9131f5dd9884a6fbef711b26ccfeafcbfa80ea93d64c28b8cd6bc",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T13:55:02.490Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_f40890dd782d",
+      "tokenHash": "aa1c24cc63106b762131298b39da74a1198556dfe173cf151624a6f3ac36668b",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T13:55:22.920Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_d5bb54795739",
+      "tokenHash": "e1e23f7a3b22e57554b8f69a9ff51442f7242694cd7aa553d0489adfcea1c0e2",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T14:02:31.483Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_fbc30c42ce4b",
+      "tokenHash": "908f3fefa9453623450b07964bb6338fe89c7d94a9f105e92b7d549718c20e2a",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T14:02:47.346Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_29a612c32dc1",
+      "tokenHash": "2638aa22f37116ea146891cb029ae23739ad4f9bb3c2958663f99de075c39d29",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T14:21:55.719Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_7256bc024bc8",
+      "tokenHash": "db7ad82c597eb2f3dea255c419adeb953e3a42868d8af45948f72536aa74828e",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T14:24:55.905Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_85a1083e7230",
+      "tokenHash": "c15b31f66718e533816f8a29c5775a932278a2fcab4fe916531587df3433fb77",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T14:46:35.057Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_d030654e478b",
+      "tokenHash": "4d981aa9f6eb256f0dcadc9ec5f9bff9697387a69c1c8caabc346f8121ccc590",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T14:51:39.172Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_b0a8132e3039",
+      "tokenHash": "a39493dc9d9aa7714ec549c3fe184c7aef72547e89eec7db10ca313a022c104a",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T14:55:28.286Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_128fd14804e5",
+      "tokenHash": "c23dd8767c6e9c12960b72420ced2e98934facffed80a6607782620aebee5085",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T15:21:54.168Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_54672448fb2f",
+      "tokenHash": "92145d17de9c7a3db621cea2b7574273da280415b10828041db48215edbd2f47",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T15:22:33.044Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_dbfd12841d3b",
+      "tokenHash": "1eac0e822e237ff3eaeb1411d8d64c9de6eda0a645609b77b696ebad54d953ad",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T15:23:04.391Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_e4e16a5ca734",
+      "tokenHash": "42bbb6b26c9b4bd9b4f20a3c3f889d1c54719decf65cc1c5d6ebcbc10844fe11",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T15:30:11.022Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_dbd8401242b2",
+      "tokenHash": "e9e3d33a09affbbcb4d29e865dd754df7cfc3194d206c052f671516cef7b2b29",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T15:30:31.402Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_fb559e94c92c",
+      "tokenHash": "2ec83af8de55f966acf66693d15c3f960938f5989b80e77f4f5e1316c7b9755c",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T15:31:08.273Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_c70cfa5dc045",
+      "tokenHash": "fc2d2032a966cfc0b8ad714669899c1db691037ee998095c73c0114d58e54ac9",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T15:31:32.040Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_a044dc7d1722",
+      "tokenHash": "363ccd615bf0d57ae27960f297cce99eb217797452b438874be9b5bb710713f0",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T16:40:23.435Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_54e6c3fa1887",
+      "tokenHash": "208002c255ac5b243533186a03195955e3fd70b4908c59c9eea535cb5eb08b0a",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T16:44:06.390Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_d1bc81f7c75d",
+      "tokenHash": "2882c01abf39250056a7e01cc1b00992536e7baa62cdb733848e8ac6406ab51b",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T16:45:55.279Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_3d9a9f170642",
+      "tokenHash": "78b0816951792e109ffdb10b4c144c0f7b42a83479fd347dfc32fc0ef8021cf3",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T16:48:12.668Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_1342b46824e5",
+      "tokenHash": "9b9dcbc7a63f30076f787d635b02bc0ce8612096495a0e2fce7f761ee2c5f797",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T16:49:03.132Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_b50dc83978c9",
+      "tokenHash": "1eac6184ba10e9ed1fc2d76425da80409c85a37c85086bb523da3ef150ec9051",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T16:52:01.380Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_55d59316791e",
+      "tokenHash": "8eebac9889a4e050c8c508542f2a6c84cd1d23f9a75b7c1af6386bd0af3ab64c",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T16:52:51.279Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_187c54f89baf",
+      "tokenHash": "b0899ae2525fb169420f7e150f9d8be7840fee7c13bf32e1113723d657ad0911",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T16:56:51.429Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_c5ae296422a4",
+      "tokenHash": "0b432a06e26d01177c9764a58a3981bf091f77b8eef1ffa1ac316d1a48ebde7a",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T17:08:19.582Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_982b32608e9e",
+      "tokenHash": "da64c97c3a2e1e20347d1c6d5327194769706865594df3de8e6d6663841a69ef",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T17:11:09.666Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_0dc4359d5911",
+      "tokenHash": "834e7e77dbef4ae4e3187d5bfbbd161bcb8b30a211c56b6e06638bd3b0b3e6cb",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T17:15:33.810Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_fc7e4059b304",
+      "tokenHash": "a5857914f89e2fa6f097a53ab90aee4f396237edc0dd893f144039e3d19b2b71",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T17:20:28.868Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_81dc1f33206b",
+      "tokenHash": "cc055b5dd2719aa3aacfdf81246ae35214a70a002d14d036942c4a2d0056a8de",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T17:27:47.491Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_2d1921aea5e9",
+      "tokenHash": "4112fb74e33faec6db24f6cc351427e9dd1c2f983ebd064c771978a2e30d819e",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T17:42:43.632Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_1d66b3b04794",
+      "tokenHash": "995ad9101920acdc27f0ced6fce3d12a0d1ec4e1174ae2219680d5b03b9d0fac",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T17:46:44.251Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_10ba2c307f29",
+      "tokenHash": "5d6bf9121649ac6242774ef5467e1883fe49faee1bafe11b28d08d332880760c",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T17:46:45.190Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_33f09ab75c49",
+      "tokenHash": "b7ae975755b444eb742df21008e1797c7de51acfcf84984f3af488e0079ce743",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T17:49:42.334Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_6ccd95b04111",
+      "tokenHash": "2fbd28ddb8d3a169a7272a7c38971901d2a7423e56003f968e05124090f960f3",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T17:50:27.409Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_76e0d3e984c6",
+      "tokenHash": "50ed0eb1a487a488d80231d6d3511c1cdf7063bc7c8ffee9779a74c58df2102e",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T17:50:41.863Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_9b0df6a50394",
+      "tokenHash": "fd03455d79de2e80f493829399bdea99f551710fafb75eadc35ac895810ba61c",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T17:50:43.086Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_c136f3052c68",
+      "tokenHash": "0bb4e1fa32d30d3b443e84ef4fd646d15124272a1e00df6f6b0be8caf7cc24ac",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T17:57:30.379Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_d0fe36168b99",
+      "tokenHash": "4ceaccbe8e30b9838c786232254dcb3e3f6d1d9aa2d12d86940be370139504fb",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T18:07:42.488Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_c51a9abdfe62",
+      "tokenHash": "d8289fbc2010cb44a14a39f92fd9e8ae728707f9861302f897cd8f6522b17c88",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T18:08:25.926Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_35b1442fef93",
+      "tokenHash": "fd3ece0508680f1fa7e124756f087cc20cf5b955daaded984cb1d5e3c69361ae",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T18:10:30.593Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_e1183baec813",
+      "tokenHash": "4bbc663eb4f542aeb11cc8d76bccad907e55fd382780ba10d6929a655651c924",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T18:12:31.169Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_5ebef6c3fed0",
+      "tokenHash": "eaecd589fb8e579876794ea37dfec7e62b3e0aceb2f7643890faefedccaf3511",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T18:20:25.450Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_bc661f2f474e",
+      "tokenHash": "ffd42d5c6ee3602caeb004b8b787e530f88fd4c4639495f3cfb7c69bd7b41796",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T18:21:49.925Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_23a93640d5ce",
+      "tokenHash": "ac44dab9162ce6101d29f1697a9894ce29a4267630322bd21643b9ccf3cae05f",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T18:22:41.483Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_bbbd33832842",
+      "tokenHash": "770498dbd04093d2e8da5f5b0a4f1de077db6b22dd82729a7bb53ea09788e763",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T18:24:41.864Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_ba5a73a5295b",
+      "tokenHash": "46b4e0cd948b23ae6df6097f30cc7df043fed6618c28b6c855f90c18f256c331",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T18:26:46.960Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_2fae66e0743c",
+      "tokenHash": "7dc98f83e52e54d755ea445b8a672d6f1416ba3a70943b4e33049b07e8fb9f61",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T18:29:27.374Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_5a5806a9c24c",
+      "tokenHash": "13b523aa91867c0c8e6a13303098b50aaa82d20730db09c31f7dd5016a27e870",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T18:49:28.214Z",
+      "revoked": false
+    }
+  ],
+  "ipPolicies": [
+    {
+      "userId": "u_admin",
+      "enabled": false
+    },
+    {
+      "userId": "u_member",
+      "enabled": false
+    },
+    {
+      "userId": "u_9777fa260ba7",
+      "enabled": true
+    }
+  ],
+  "ipEntries": [
+    {
+      "id": "ip_01524b7b790e",
+      "userId": "u_9777fa260ba7",
+      "value": "192.168.1.100",
+      "note": "�칫��",
+      "enabled": true,
+      "createdBy": "u_admin",
+      "createdAt": "2026-06-03T07:00:37.551Z"
+    }
+  ],
+  "projects": [
+    {
+      "id": "p_alpha",
+      "name": "客户交付项目",
+      "group": "客户交付",
+      "ownerId": "u_admin",
+      "status": "ACTIVE",
+      "progress": 68,
+      "risk": "medium",
+      "start": "2026-06-01",
+      "baselineEnd": "2026-06-08",
+      "currentEnd": "2026-06-09",
+      "description": "围绕资料收集、页面设计、验收报告推进。",
+      "settings": {},
+      "acceptanceStatus": "pending"
+    },
+    {
+      "id": "p_study",
+      "name": "双人学习计划",
+      "group": "学习",
+      "ownerId": "u_member",
+      "status": "ACTIVE",
+      "progress": 42,
+      "risk": "low",
+      "start": "2026-06-01",
+      "baselineEnd": "2026-06-30",
+      "currentEnd": "2026-06-29",
+      "description": "两个人交错推进学习任务。",
+      "settings": {},
+      "acceptanceStatus": "pending"
+    }
+  ],
+  "members": [
+    {
+      "id": "pm_admin_alpha",
+      "projectId": "p_alpha",
+      "userId": "u_admin",
+      "role": "owner"
+    },
+    {
+      "id": "pm_member_alpha",
+      "projectId": "p_alpha",
+      "userId": "u_member",
+      "role": "editor"
+    },
+    {
+      "id": "pm_5bee0c586d67",
+      "projectId": "p_study",
+      "userId": "u_admin",
+      "role": "editor"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "t_design",
+      "projectId": "p_alpha",
+      "title": "需求确认",
+      "status": "DOING",
+      "priority": "high",
+      "baselineStart": "2026-06-01",
+      "baselineEnd": "2026-06-04",
+      "currentStart": "2026-06-01",
+      "currentEnd": "2026-06-04",
+      "dependencyIds": []
+    }
+  ],
+  "progress": [
+    {
+      "id": "tp_design",
+      "taskId": "t_design",
+      "projectId": "p_alpha",
+      "userId": "u_member",
+      "status": "DOING",
+      "planStart": "2026-06-01",
+      "planEnd": "2026-06-04",
+      "currentEnd": "2026-06-04",
+      "actualStart": "2026-06-01",
+      "actualEnd": null,
+      "deltaDays": null,
+      "progress": 45,
+      "note": "正在确认客户需求"
+    }
+  ],
+  "files": [
+    {
+      "id": "f_plan",
+      "projectId": "p_alpha",
+      "name": "项目计划",
+      "type": "WORD_DOC",
+      "folder": "项目资料",
+      "content": "# 项目计划\n\n- 需求确认\n- 资料收集\n- 验收归档",
+      "version": 1,
+      "ownerId": "u_admin",
+      "deleted": false
+    }
+  ],
+  "fileVersions": [],
+  "submissions": [],
+  "acceptanceItems": [
+    {
+      "id": "acc_alpha",
+      "projectId": "p_alpha",
+      "title": "交付资料齐全",
+      "status": "PENDING"
+    }
+  ],
+  "acceptanceReports": [],
+  "notificationRules": [
+    {
+      "id": "nr_done",
+      "event": "task.progress_completed",
+      "channel": "feishu",
+      "targetMode": "creator",
+      "targets": [],
+      "enabled": true
+    }
+  ],
+  "notificationLogs": [
+    {
+      "id": "nl_51921c617008",
+      "event": "test",
+      "projectId": "",
+      "channel": "feishu",
+      "targetMode": "creator",
+      "targets": [],
+      "status": "sent",
+      "message": "测试消息",
+      "retryCount": 0,
+      "createdAt": "2026-06-03T09:13:49.149Z"
+    }
+  ],
+  "channels": [
+    {
+      "id": "nc_feishu",
+      "name": "飞书机器人",
+      "type": "feishu",
+      "enabled": true,
+      "config": {
+        "webhookMasked": "https://open.feishu.cn/***"
+      }
+    }
+  ],
+  "keys": [],
+  "timeline": [
+    {
+      "id": "ev_5bd9c9cab0b7",
+      "projectId": "p_study",
+      "type": "member.invited",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "分配用户 林栖 到项目",
+      "color": "green",
+      "createdAt": "2026-06-03T08:12:50.133Z"
+    },
+    {
+      "id": "ev_f886f4a79014",
+      "projectId": "p_alpha",
+      "type": "project.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建项目并邀请成员",
+      "color": "blue",
+      "createdAt": "2026-06-03T06:57:36.554Z"
+    }
+  ],
+  "audit": [
+    {
+      "id": "audit_66db1632bde5",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T18:49:28.101Z"
+    },
+    {
+      "id": "audit_35cd0a48e3c7",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T18:29:27.272Z"
+    },
+    {
+      "id": "audit_a32e9877bb7e",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T18:26:46.849Z"
+    },
+    {
+      "id": "audit_188baa5c7fbb",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T18:24:41.756Z"
+    },
+    {
+      "id": "audit_5dfe96358b4b",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T18:22:41.380Z"
+    },
+    {
+      "id": "audit_ef1812e9dc87",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T18:21:48.712Z"
+    },
+    {
+      "id": "audit_24756c64d90d",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T18:20:25.322Z"
+    },
+    {
+      "id": "audit_c584391fbca6",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T18:12:19.898Z"
+    },
+    {
+      "id": "audit_76a38c3dd4bb",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T18:10:29.309Z"
+    },
+    {
+      "id": "audit_12e94f22cef3",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T18:08:25.825Z"
+    },
+    {
+      "id": "audit_cd707c21a2be",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T18:07:39.784Z"
+    },
+    {
+      "id": "audit_124c532a1094",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T17:57:30.277Z"
+    },
+    {
+      "id": "audit_c472a6897e4a",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T17:50:43.031Z"
+    },
+    {
+      "id": "audit_c1ff2efc14e7",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T17:50:40.512Z"
+    },
+    {
+      "id": "audit_c65c8854a9e0",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T17:50:27.304Z"
+    },
+    {
+      "id": "audit_6100cf2f4d7a",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T17:49:40.989Z"
+    },
+    {
+      "id": "audit_cd4515aee285",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T17:46:45.112Z"
+    },
+    {
+      "id": "audit_2a4ee408dc4e",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T17:46:42.954Z"
+    },
+    {
+      "id": "audit_83da0203af10",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T17:42:43.516Z"
+    },
+    {
+      "id": "audit_12691d0a4bc3",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T17:27:47.361Z"
+    },
+    {
+      "id": "audit_4fafa367abf3",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T17:20:28.761Z"
+    },
+    {
+      "id": "audit_8795eba638a4",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T17:15:28.125Z"
+    },
+    {
+      "id": "audit_106811c749db",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T17:11:06.518Z"
+    },
+    {
+      "id": "audit_dbdc1348b1f4",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T17:08:19.474Z"
+    },
+    {
+      "id": "audit_6680eea6b973",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T16:56:51.315Z"
+    },
+    {
+      "id": "audit_e76e84aecf34",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T16:52:51.149Z"
+    },
+    {
+      "id": "audit_e7963035c84e",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T16:52:01.213Z"
+    },
+    {
+      "id": "audit_8e945da54c1b",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T16:49:02.950Z"
+    },
+    {
+      "id": "audit_8a93f4e5c9e3",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T16:48:12.551Z"
+    },
+    {
+      "id": "audit_b3efbff68b9f",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T16:45:55.093Z"
+    },
+    {
+      "id": "audit_0053b36bb5fe",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T16:44:06.272Z"
+    },
+    {
+      "id": "audit_73b16982bf57",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T16:40:23.273Z"
+    },
+    {
+      "id": "audit_bfac304f075b",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T15:31:31.924Z"
+    },
+    {
+      "id": "audit_668ddbca4af8",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T15:31:08.135Z"
+    },
+    {
+      "id": "audit_5c57d67e3838",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T15:30:31.298Z"
+    },
+    {
+      "id": "audit_f927545eb1bb",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T15:30:10.914Z"
+    },
+    {
+      "id": "audit_927cb9e91d85",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T15:23:04.281Z"
+    },
+    {
+      "id": "audit_153d68c5774d",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T15:22:32.929Z"
+    },
+    {
+      "id": "audit_7b7a2fb2f5c3",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T15:21:54.041Z"
+    },
+    {
+      "id": "audit_c7018b041c12",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T14:55:28.172Z"
+    },
+    {
+      "id": "audit_e243ead8262b",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T14:51:39.067Z"
+    },
+    {
+      "id": "audit_deb2e1f8dd34",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T14:46:34.956Z"
+    },
+    {
+      "id": "audit_a572aeea24a6",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T14:24:55.781Z"
+    },
+    {
+      "id": "audit_404564198f33",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T14:21:55.589Z"
+    },
+    {
+      "id": "audit_9cc393bd6364",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T14:02:47.238Z"
+    },
+    {
+      "id": "audit_f520401d378b",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T14:02:31.370Z"
+    },
+    {
+      "id": "audit_f085778e835c",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T13:55:22.564Z"
+    },
+    {
+      "id": "audit_d73826992a8c",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T13:55:02.387Z"
+    },
+    {
+      "id": "audit_73d5e106eaa2",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T13:54:28.484Z"
+    },
+    {
+      "id": "audit_fcad746d5d1c",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T13:27:21.739Z"
+    },
+    {
+      "id": "audit_2d993b683c16",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T13:23:14.307Z"
+    },
+    {
+      "id": "audit_0b0ffc4722c5",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖测试 登录成功",
+      "createdAt": "2026-06-03T12:15:50.795Z"
+    },
+    {
+      "id": "audit_7c159832c560",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T12:15:32.978Z"
+    },
+    {
+      "id": "audit_b4d167f3105c",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T11:06:20.092Z"
+    },
+    {
+      "id": "audit_d9d698a01fe1",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T11:05:27.362Z"
+    },
+    {
+      "id": "audit_ab3c1fb29e4f",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T11:04:50.502Z"
+    },
+    {
+      "id": "audit_ed13b13994ee",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T11:04:06.650Z"
+    },
+    {
+      "id": "audit_da90a986a47a",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T11:03:31.337Z"
+    },
+    {
+      "id": "audit_9380a87bfdc3",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T11:03:09.711Z"
+    },
+    {
+      "id": "audit_3e6047730eb6",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T11:02:33.094Z"
+    },
+    {
+      "id": "audit_de99a8502e93",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T11:01:48.741Z"
+    },
+    {
+      "id": "audit_911289ca47f2",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T11:00:46.939Z"
+    },
+    {
+      "id": "audit_8e449dc44b37",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T10:57:42.220Z"
+    },
+    {
+      "id": "audit_72608c729840",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T10:54:12.372Z"
+    },
+    {
+      "id": "audit_b5f504c72836",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T10:53:29.732Z"
+    },
+    {
+      "id": "audit_f83dc52a78c9",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T10:46:55.845Z"
+    },
+    {
+      "id": "audit_3228bad4ed6f",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T10:46:22.016Z"
+    },
+    {
+      "id": "audit_1c17d62a9d8e",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T10:42:41.160Z"
+    },
+    {
+      "id": "audit_a796da44c9ea",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T10:39:12.890Z"
+    },
+    {
+      "id": "audit_dcf03db1fb02",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T10:08:05.202Z"
+    },
+    {
+      "id": "audit_0d7b7f5c2f97",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T10:01:41.619Z"
+    },
+    {
+      "id": "audit_4dcbe421a063",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T09:53:01.862Z"
+    },
+    {
+      "id": "audit_3603133d837c",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T09:47:41.035Z"
+    },
+    {
+      "id": "audit_b7404f82cbc8",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T09:44:43.186Z"
+    },
+    {
+      "id": "audit_aa7ccc4bfd86",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T09:44:28.844Z"
+    },
+    {
+      "id": "audit_e1cd0928eedf",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T09:40:00.258Z"
+    },
+    {
+      "id": "audit_736072f67a01",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖新 登录成功",
+      "createdAt": "2026-06-03T09:21:49.977Z"
+    },
+    {
+      "id": "audit_91717b63ce40",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖新 登录成功",
+      "createdAt": "2026-06-03T09:21:34.145Z"
+    },
+    {
+      "id": "audit_7b5f935ec13a",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖新 登录成功",
+      "createdAt": "2026-06-03T09:11:21.056Z"
+    },
+    {
+      "id": "audit_592e753d7abb",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖新 登录成功",
+      "createdAt": "2026-06-03T09:09:13.987Z"
+    },
+    {
+      "id": "audit_dc62bf6ca00a",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T09:08:20.198Z"
+    },
+    {
+      "id": "audit_b5dbbd9c76ca",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T08:39:11.808Z"
+    },
+    {
+      "id": "audit_c7296ed5717e",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T08:38:53.117Z"
+    },
+    {
+      "id": "audit_33494070f7f2",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T08:21:28.911Z"
+    },
+    {
+      "id": "audit_7552d0b98375",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T08:20:53.102Z"
+    },
+    {
+      "id": "audit_f8f37be0abbc",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T08:20:19.325Z"
+    },
+    {
+      "id": "audit_33ee3aa32f3b",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T08:19:11.738Z"
+    },
+    {
+      "id": "audit_2f609d4542d5",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T08:18:52.223Z"
+    },
+    {
+      "id": "audit_0cdc2c613afb",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T08:17:48.074Z"
+    },
+    {
+      "id": "audit_72405c57e6f4",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T08:16:16.711Z"
+    },
+    {
+      "id": "audit_fa13449febbd",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T08:12:31.938Z"
+    },
+    {
+      "id": "audit_59a7868adbe1",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T08:12:23.906Z"
+    },
+    {
+      "id": "audit_f9bd34a0a6ef",
+      "type": "security.login_succeeded",
+      "actorId": "u_member",
+      "message": "用户 林树 登录成功",
+      "createdAt": "2026-06-03T08:11:04.829Z"
+    },
+    {
+      "id": "audit_5b71fdff7ab4",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T08:04:10.487Z"
+    },
+    {
+      "id": "audit_e3eb1d217076",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T08:03:42.585Z"
+    },
+    {
+      "id": "audit_c9bffba39527",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T08:02:55.331Z"
+    },
+    {
+      "id": "audit_230fbe4d82dc",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T08:00:42.051Z"
+    },
+    {
+      "id": "audit_160864aa31f5",
+      "type": "permission.role_updated",
+      "actorId": "u_admin",
+      "message": "更新角色模板：编辑者 (副本)",
+      "createdAt": "2026-06-03T07:55:08.840Z"
+    },
+    {
+      "id": "audit_899523b07eaa",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T07:55:04.752Z"
+    },
+    {
+      "id": "audit_e3427e1a626c",
+      "type": "permission.role_updated",
+      "actorId": "u_admin",
+      "message": "更新角色模板：超级管理员",
+      "createdAt": "2026-06-03T07:54:42.766Z"
+    },
+    {
+      "id": "audit_589f61941f37",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T07:54:40.003Z"
+    },
+    {
+      "id": "audit_8cb8dd66810c",
+      "type": "permission.role_updated",
+      "actorId": "u_admin",
+      "message": "更新角色模板：只读访客",
+      "createdAt": "2026-06-03T07:53:32.504Z"
+    },
+    {
+      "id": "audit_cbcf6afc3708",
+      "type": "permission.role_updated",
+      "actorId": "u_admin",
+      "message": "更新角色模板：超级管理员",
+      "createdAt": "2026-06-03T07:53:30.639Z"
+    },
+    {
+      "id": "audit_c9e6a926269b",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T07:53:27.769Z"
+    },
+    {
+      "id": "audit_3458d4b02d2c",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T07:51:30.458Z"
+    },
+    {
+      "id": "audit_9e29d8568f15",
+      "type": "security.login_succeeded",
+      "actorId": "u_9c98a60bc598",
+      "message": "用户 二狗 登录成功",
+      "createdAt": "2026-06-03T07:51:01.133Z"
+    },
+    {
+      "id": "audit_460670e685cf",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T07:06:22.769Z"
+    },
+    {
+      "id": "audit_6fa6545daa31",
+      "type": "permission.role_updated",
+      "actorId": "u_admin",
+      "message": "更新角色模板：只读访客",
+      "createdAt": "2026-06-03T07:05:05.518Z"
+    },
+    {
+      "id": "audit_4767faec532c",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T07:05:00.402Z"
+    },
+    {
+      "id": "audit_259832d39991",
+      "type": "permission.role_updated",
+      "actorId": "u_admin",
+      "message": "更新角色模板：只读访客",
+      "createdAt": "2026-06-03T07:01:06.784Z"
+    },
+    {
+      "id": "audit_e3753f5fbd50",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T07:01:02.628Z"
+    },
+    {
+      "id": "audit_7dcd7ce6808e",
+      "type": "security.login_succeeded",
+      "actorId": "u_9777fa260ba7",
+      "message": "用户 ������ 登录成功",
+      "createdAt": "2026-06-03T07:00:37.228Z"
+    },
+    {
+      "id": "audit_625051528750",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T07:00:35.909Z"
+    },
+    {
+      "id": "audit_d392be06d95c",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T06:58:01.845Z"
+    },
+    {
+      "id": "audit_20d1ee781895",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T06:57:37.350Z"
+    }
+  ],
+  "roleTemplates": [
+    {
+      "id": "rt_2bc3cf449914",
+      "name": "编辑者 (副本)",
+      "role": "editor",
+      "builtin": false,
+      "permissions": [
+        "progress.visible",
+        "file.visible",
+        "task.edit",
+        "file.edit",
+        "file.download"
+      ]
+    },
+    {
+      "id": "rt_super_admin",
+      "name": "超级管理员",
+      "role": "super_admin",
+      "builtin": true,
+      "permissions": [
+        "file.visible",
+        "file.download",
+        "submission.accept",
+        "system.manage",
+        "audit.view",
+        "progress.visible"
+      ]
+    },
+    {
+      "id": "rt_owner",
+      "name": "项目负责人",
+      "role": "owner",
+      "builtin": true,
+      "permissions": [
+        "progress.visible",
+        "file.visible",
+        "file.download",
+        "submission.accept",
+        "project.manage",
+        "task.manage",
+        "file.manage",
+        "acceptance.manage"
+      ]
+    },
+    {
+      "id": "rt_admin",
+      "name": "项目管理员",
+      "role": "admin",
+      "builtin": true,
+      "permissions": [
+        "progress.visible",
+        "file.visible",
+        "file.download",
+        "task.manage",
+        "file.manage",
+        "acceptance.manage"
+      ]
+    },
+    {
+      "id": "rt_editor",
+      "name": "编辑者",
+      "role": "editor",
+      "builtin": true,
+      "permissions": [
+        "progress.visible",
+        "file.visible",
+        "task.edit",
+        "file.edit"
+      ]
+    },
+    {
+      "id": "rt_commenter",
+      "name": "评论者",
+      "role": "commenter",
+      "builtin": true,
+      "permissions": [
+        "progress.visible",
+        "file.visible",
+        "task.comment",
+        "file.comment"
+      ]
+    },
+    {
+      "id": "rt_viewer",
+      "name": "只读访客",
+      "role": "viewer",
+      "builtin": true,
+      "permissions": [
+        "progress.visible",
+        "file.visible"
+      ]
+    },
+    {
+      "id": "rt_acceptor",
+      "name": "文件验收者",
+      "role": "acceptor",
+      "builtin": true,
+      "permissions": [
+        "progress.visible",
+        "file.visible",
+        "submission.accept"
+      ]
+    }
+  ],
+  "permissionScopes": [
+    {
+      "id": "ps_progress",
+      "key": "progress.visible",
+      "name": "进度可见",
+      "description": "成员甘特、快慢天数、当前状态",
+      "target": "project",
+      "enabled": true,
+      "defaultLevel": "member"
+    },
+    {
+      "id": "ps_file_visible",
+      "key": "file.visible",
+      "name": "文件可见",
+      "description": "项目文件、任务提交物、版本记录",
+      "target": "project",
+      "enabled": true,
+      "defaultLevel": "editor"
+    },
+    {
+      "id": "ps_file_download",
+      "key": "file.download",
+      "name": "文件下载",
+      "description": "下载、导出、归档包读取",
+      "target": "project",
+      "enabled": true,
+      "defaultLevel": "admin"
+    },
+    {
+      "id": "ps_submission",
+      "key": "submission.accept",
+      "name": "提交物验收",
+      "description": "标记通过、需修改、驳回",
+      "target": "project",
+      "enabled": true,
+      "defaultLevel": "owner"
+    }
+  ],
+  "jobs": [],
+  "collab": [],
+  "ganttViews": []
+}

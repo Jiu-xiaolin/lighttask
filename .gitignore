@@ -1,0 +1,7 @@
+node_modules/
+app/.data/
+app/.smoke-data/
+app/.visual-smoke/
+app/.visual-smoke-data/
+app/*.log
+.test-data/
