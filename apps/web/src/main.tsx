@@ -20,6 +20,7 @@ function App() {
   const [personalize, setPersonalize] = useState(false);
   const [dashboard, setDashboard] = useState<any>(null);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [projectGroups, setProjectGroups] = useState<{name:string,count:number}[]>([]);
   const [projectFilter, setProjectFilter] = useState("");
   const [projectId, setProjectId] = useState("p_alpha");
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -108,9 +109,10 @@ function App() {
   async function refresh() {
     if (!token) return;
     try {
-      const [dash, projectData] = await Promise.all([api("/dashboard"), api(`/projects${projectFilter ? `?filter=${projectFilter}` : ""}`)]);
+      const [dash, projectData, groups] = await Promise.all([api("/dashboard-full"), api(`/projects${projectFilter ? `?filter=${projectFilter}` : ""}`), api("/project-groups")]);
       setDashboard(dash);
       setProjects(projectData.projects || []);
+      setProjectGroups(groups.groups || []);
       const currentProjectId = projectId || projectData.projects?.[0]?.id;
       if (currentProjectId) {
         const [taskData, fileData, acceptanceData] = await Promise.all([
@@ -151,7 +153,7 @@ function App() {
   const titles: Record<PageKey, string> = { dashboard: "行动仪表盘", "project-list": "项目列表", workspace: "项目工作台", files: "项目文件", messages: "消息同步", permissions: "管理", profile: "用户信息设置", support: "后台支撑" };
 
   return <div className="app-shell">
-    <Sidebar user={user} view={view} setView={setView} projects={projects} dashboard={dashboard} compact={compact} setCompact={setCompact} personalize={personalize} setPersonalize={setPersonalize} theme={theme} setTheme={setTheme} logout={() => { localStorage.clear(); setToken(""); setUser(null); }} />
+    <Sidebar user={user} view={view} setView={setView} projects={projects} dashboard={dashboard} projectGroups={projectGroups} setProjectFilter={setProjectFilter} compact={compact} setCompact={setCompact} personalize={personalize} setPersonalize={setPersonalize} theme={theme} setTheme={setTheme} logout={() => { localStorage.clear(); setToken(""); setUser(null); }} />
     <main className="main">
       <header className="topbar">
         <div><p>LightTask v12 / 闭环精简版</p><h1 id="page-title">{titles[view]}</h1></div>
@@ -159,7 +161,7 @@ function App() {
         <div className="top-actions"><button className="icon-btn"><Icon name="import" /></button><button className="icon-btn"><Icon name="export" /></button><button className="btn primary" onClick={async () => { await api("/projects", { method: "POST", body: JSON.stringify({ name: "新客户交付计划", group: "客户交付" }) }); await refresh(); setView("project-list"); }}><Icon name="plus" /><span>新建项目</span></button></div>
       </header>
       {toast && <div className="risk-strip"><strong>系统提示</strong><span>{toast}</span><button onClick={() => setToast("")}>关闭</button></div>}
-      <section className={`page ${view === "dashboard" ? "active" : ""}`}><Dashboard data={dashboard} projects={projects} setView={setView} /></section>
+      <section className={`page ${view === "dashboard" ? "active" : ""}`}><Dashboard data={dashboard} projects={projects} setView={setView} setProjectId={setProjectId} setProjectFilter={setProjectFilter} /></section>
       <section className={`page ${view === "project-list" ? "active" : ""}`}><ProjectList projects={projects} setProjectId={setProjectId} setView={setView} api={api} refresh={refresh} filter={projectFilter} setFilter={setProjectFilter} /></section>
       <section className={`page ${view === "workspace" ? "active" : ""}`}><Workspace project={project} tasks={tasks} api={api} refresh={refresh} setView={setView} /></section>
       <section className={`page ${view === "files" ? "active" : ""}`}><Files project={project} files={files} api={api} refresh={refresh} /></section>
@@ -171,7 +173,7 @@ function App() {
   </div>;
 }
 
-function Sidebar({ user, view, setView, projects, dashboard, compact, setCompact, personalize, setPersonalize, theme, setTheme, logout }: any) {
+function Sidebar({ user, view, setView, projects, dashboard, projectGroups, setProjectFilter, compact, setCompact, personalize, setPersonalize, theme, setTheme, logout }: any) {
   const nav = [
     ["dashboard", "行动台", "dashboard", dashboard?.metrics?.todayActions || 17],
     ["project-list", "项目", "project", projects.length || 29],
@@ -184,7 +186,7 @@ function Sidebar({ user, view, setView, projects, dashboard, compact, setCompact
     <button className="collapse-btn" onClick={() => setCompact(!compact)}><Icon name="menu" /><span>导航</span></button>
     <div className="sidebar-scroll">
       <nav className="nav">{nav.map(([key, label, icon, count]) => <a key={key} className={view === key ? "active" : ""} onClick={() => setView(key)}><Icon name={icon as IconName} /><span>{label}</span>{count !== "" && <b>{count}</b>}</a>)}</nav>
-      <section className="side-group"><span>项目分组</span>{["客户交付", "产品研发", "内部运营", "数据治理"].map((group, index) => <button key={group}>{group}<b>{[8, 11, 6, 4][index]}</b></button>)}</section>
+      <section className="side-group"><span>项目分组</span>{(projectGroups.length ? projectGroups : [{name:"全部项目",count:projects.length}]).map((g: any) => <button key={g.name} onClick={() => { setProjectFilter(g.name); setView("project-list"); }}>{g.name}<b>{g.count}</b></button>)}</section>
       <section className="side-note"><strong>{dashboard?.metrics?.todayActions || 17}</strong><span>待处理动作</span><p>{dashboard?.metrics?.riskProjects || 4} 个项目需要介入</p></section>
     </div>
     <div className="account"><button className="account-trigger" onClick={() => setPersonalize(!personalize)}>

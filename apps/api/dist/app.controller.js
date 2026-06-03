@@ -293,6 +293,18 @@ let AppController = class AppController {
         return this.app.testNotification(this.current(auth, req), body);
     }
     // --- Search ---
+    projectGroups(auth, req) {
+        return this.app.projectGroups(this.current(auth, req));
+    }
+    dashboardFull(auth, req) {
+        return this.app.dashboardFull(this.current(auth, req));
+    }
+    getTaskFull(auth, req, taskId) {
+        return this.app.getTaskFull(this.current(auth, req), taskId);
+    }
+    fileCollection(auth, req, projectId) {
+        return this.app.fileCollection(this.current(auth, req), projectId);
+    }
     search(auth, req, q = "") {
         return this.app.search(this.current(auth, req), q);
     }
@@ -1060,6 +1072,40 @@ __decorate([
     __metadata("design:paramtypes", [String, Object, Object]),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "testNotification", null);
+__decorate([
+    Get("project-groups"),
+    __param(0, Headers("authorization")),
+    __param(1, Req()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "projectGroups", null);
+__decorate([
+    Get("dashboard-full"),
+    __param(0, Headers("authorization")),
+    __param(1, Req()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "dashboardFull", null);
+__decorate([
+    Get("tasks/:taskId/full"),
+    __param(0, Headers("authorization")),
+    __param(1, Req()),
+    __param(2, Param("taskId")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, String]),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "getTaskFull", null);
+__decorate([
+    Get("projects/:projectId/file-collection"),
+    __param(0, Headers("authorization")),
+    __param(1, Req()),
+    __param(2, Param("projectId")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, String]),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "fileCollection", null);
 __decorate([
     Get("search"),
     __param(0, Headers("authorization")),

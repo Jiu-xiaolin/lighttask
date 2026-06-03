@@ -1096,6 +1096,107 @@ export declare class AppController {
             createdAt: string;
         };
     };
+    projectGroups(auth: string, req: any): {
+        groups: {
+            name: string;
+            count: number;
+        }[];
+    };
+    dashboardFull(auth: string, req: any): {
+        metrics: {
+            activeProjects: number;
+            todayActions: number;
+            riskProjects: number;
+            pendingFiles: number;
+            myCompletion: number;
+            myDeltaDays: number;
+        };
+        pendingActions: {
+            taskId: string;
+            title: string;
+            status: string;
+            projectId: string;
+            projectName: string;
+            action: string;
+        }[];
+        riskItems: {
+            projectId: string;
+            name: string;
+            risk: string;
+            progress: number;
+        }[];
+        myProgress: {
+            id: string;
+            taskId: string;
+            projectId: string;
+            userId: string;
+            status: string;
+            planStart: string;
+            planEnd: string;
+            currentEnd: string;
+            actualStart?: string | null;
+            actualEnd?: string | null;
+            deltaDays?: number | null;
+            progress: number;
+            note?: string;
+            nextAction?: string;
+        }[];
+    };
+    getTaskFull(auth: string, req: any, taskId: string): {
+        task: {
+            progressItems: {
+                user: {
+                    id: string;
+                    username: string;
+                    name: string;
+                    role: "SUPER_ADMIN" | "MEMBER";
+                    enabled: boolean;
+                    avatar: string;
+                    signature?: string;
+                    theme: string;
+                    customWallpaper?: string;
+                    customBlur?: number;
+                };
+                id: string;
+                taskId: string;
+                projectId: string;
+                userId: string;
+                status: string;
+                planStart: string;
+                planEnd: string;
+                currentEnd: string;
+                actualStart?: string | null;
+                actualEnd?: string | null;
+                deltaDays?: number | null;
+                progress: number;
+                note?: string;
+                nextAction?: string;
+            }[];
+            submissions: Record<string, any>[];
+            timeline: Record<string, any>[];
+            id: string;
+            projectId: string;
+            title: string;
+            status: string;
+            priority: string;
+            baselineStart: string;
+            baselineEnd: string;
+            currentStart: string;
+            currentEnd: string;
+            dependencyIds: string[];
+            note?: string;
+        };
+    };
+    fileCollection(auth: string, req: any, projectId: string): {
+        collection: {
+            userId: string;
+            userName: string;
+            count: number;
+            submitted: number;
+            items: any[];
+        }[];
+        total: number;
+    };
     search(auth: string, req: any, q?: string): {
         projects: {
             id: string;

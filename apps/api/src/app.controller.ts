@@ -415,6 +415,26 @@ export class AppController {
   }
 
   // --- Search ---
+  @Get("project-groups")
+  projectGroups(@Headers("authorization") auth: string, @Req() req: any) {
+    return this.app.projectGroups(this.current(auth, req));
+  }
+
+  @Get("dashboard-full")
+  dashboardFull(@Headers("authorization") auth: string, @Req() req: any) {
+    return this.app.dashboardFull(this.current(auth, req));
+  }
+
+  @Get("tasks/:taskId/full")
+  getTaskFull(@Headers("authorization") auth: string, @Req() req: any, @Param("taskId") taskId: string) {
+    return this.app.getTaskFull(this.current(auth, req), taskId);
+  }
+
+  @Get("projects/:projectId/file-collection")
+  fileCollection(@Headers("authorization") auth: string, @Req() req: any, @Param("projectId") projectId: string) {
+    return this.app.fileCollection(this.current(auth, req), projectId);
+  }
+
   @Get("search")
   search(@Headers("authorization") auth: string, @Req() req: any, @Query("q") q = "") {
     return this.app.search(this.current(auth, req), q);
