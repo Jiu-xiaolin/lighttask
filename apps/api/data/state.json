@@ -225,7 +225,7 @@
       "tokenHash": "25a0ae4aeec4707f660fe36051fcf76f23abee069ecd9ee3baca54984542529d",
       "userId": "u_admin",
       "ip": "127.0.0.1",
-      "lastActivityAt": "2026-06-03T18:49:01.945Z",
+      "lastActivityAt": "2026-06-03T19:00:46.594Z",
       "revoked": false
     },
     {
@@ -947,6 +947,14 @@
       "ip": "127.0.0.1",
       "lastActivityAt": "2026-06-03T18:49:28.214Z",
       "revoked": false
+    },
+    {
+      "id": "sess_5dfa37b567fd",
+      "tokenHash": "8056c5383e80b6c456a788234e24afffec846591e747b0d0a74431888b1e9941",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T19:01:11.084Z",
+      "revoked": false
     }
   ],
   "ipPolicies": [
@@ -1140,6 +1148,13 @@
     }
   ],
   "audit": [
+    {
+      "id": "audit_669fa399aa04",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T19:01:10.931Z"
+    },
     {
       "id": "audit_66db1632bde5",
       "type": "security.login_succeeded",

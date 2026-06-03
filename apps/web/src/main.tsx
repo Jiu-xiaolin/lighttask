@@ -20,6 +20,7 @@ function App() {
   const [personalize, setPersonalize] = useState(false);
   const [dashboard, setDashboard] = useState<any>(null);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [projectFilter, setProjectFilter] = useState("");
   const [projectId, setProjectId] = useState("p_alpha");
   const [tasks, setTasks] = useState<Task[]>([]);
   const [files, setFiles] = useState<FileItem[]>([]);
@@ -107,7 +108,7 @@ function App() {
   async function refresh() {
     if (!token) return;
     try {
-      const [dash, projectData] = await Promise.all([api("/dashboard"), api("/projects")]);
+      const [dash, projectData] = await Promise.all([api("/dashboard"), api(`/projects${projectFilter ? `?filter=${projectFilter}` : ""}`)]);
       setDashboard(dash);
       setProjects(projectData.projects || []);
       const currentProjectId = projectId || projectData.projects?.[0]?.id;
@@ -159,7 +160,7 @@ function App() {
       </header>
       {toast && <div className="risk-strip"><strong>系统提示</strong><span>{toast}</span><button onClick={() => setToast("")}>关闭</button></div>}
       <section className={`page ${view === "dashboard" ? "active" : ""}`}><Dashboard data={dashboard} projects={projects} setView={setView} /></section>
-      <section className={`page ${view === "project-list" ? "active" : ""}`}><ProjectList projects={projects} setProjectId={setProjectId} setView={setView} api={api} refresh={refresh} /></section>
+      <section className={`page ${view === "project-list" ? "active" : ""}`}><ProjectList projects={projects} setProjectId={setProjectId} setView={setView} api={api} refresh={refresh} filter={projectFilter} setFilter={setProjectFilter} /></section>
       <section className={`page ${view === "workspace" ? "active" : ""}`}><Workspace project={project} tasks={tasks} api={api} refresh={refresh} setView={setView} /></section>
       <section className={`page ${view === "files" ? "active" : ""}`}><Files project={project} files={files} api={api} refresh={refresh} /></section>
       <section className={`page ${view === "messages" ? "active" : ""}`}><Messages notifications={notifications} api={api} refresh={refresh} /></section>

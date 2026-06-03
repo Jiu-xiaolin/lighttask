@@ -43,8 +43,8 @@ export class AppController {
   }
 
   @Get("projects")
-  projects(@Headers("authorization") auth: string, @Req() req: any) {
-    return this.app.listProjects(this.current(auth, req));
+  projects(@Headers("authorization") auth: string, @Req() req: any, @Query("filter") filter?: string) {
+    return this.app.listProjects(this.current(auth, req), filter);
   }
 
   @Post("projects")

@@ -87,8 +87,10 @@ export declare class AppController {
             zoom: any;
         };
     };
-    projects(auth: string, req: any): {
+    projects(auth: string, req: any, filter?: string): {
         projects: {
+            memberCount: number;
+            taskCount: number;
             id: string;
             name: string;
             group: string;
@@ -138,11 +140,30 @@ export declare class AppController {
             acceptanceStatus: string;
         };
         members: {
+            user: {
+                id: string;
+                username: string;
+                name: string;
+                role: "SUPER_ADMIN" | "MEMBER";
+                enabled: boolean;
+                avatar: string;
+                signature?: string;
+                theme: string;
+                customWallpaper?: string;
+                customBlur?: number;
+            };
             id: string;
             projectId: string;
             userId: string;
             role: string;
         }[];
+        timeline: Record<string, any>[];
+        stats: {
+            tasks: number;
+            progress: number;
+            files: number;
+            acceptance: number;
+        };
     };
     updateProject(auth: string, req: any, projectId: string, body: any): {
         project: {

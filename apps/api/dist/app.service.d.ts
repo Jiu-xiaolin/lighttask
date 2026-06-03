@@ -181,8 +181,52 @@ export declare class AppService {
         gantt: Task[];
         myProgress: Progress[];
     };
-    listProjects(user: User): {
-        projects: Project[];
+    listProjects(user: User, filter?: string): {
+        projects: {
+            memberCount: number;
+            taskCount: number;
+            id: string;
+            name: string;
+            group: string;
+            ownerId: string;
+            status: "ACTIVE" | "ARCHIVED" | "DELETED";
+            progress: number;
+            risk: string;
+            start: string;
+            baselineEnd: string;
+            currentEnd: string;
+            description?: string;
+            settings: Record<string, unknown>;
+            acceptanceStatus: string;
+        }[];
+    };
+    projectDetail(user: User, id: string): {
+        project: Project;
+        members: {
+            user: {
+                id: string;
+                username: string;
+                name: string;
+                role: "SUPER_ADMIN" | "MEMBER";
+                enabled: boolean;
+                avatar: string;
+                signature?: string;
+                theme: string;
+                customWallpaper?: string;
+                customBlur?: number;
+            };
+            id: string;
+            projectId: string;
+            userId: string;
+            role: string;
+        }[];
+        timeline: Record<string, any>[];
+        stats: {
+            tasks: number;
+            progress: number;
+            files: number;
+            acceptance: number;
+        };
     };
     createProject(user: User, body: any): {
         project: Project;
@@ -198,10 +242,6 @@ export declare class AppService {
     };
     settings(user: User, id: string, body: any): {
         project: Project;
-    };
-    projectDetail(user: User, id: string): {
-        project: Project;
-        members: Member[];
     };
     membersOf(user: User, id: string): {
         members: {

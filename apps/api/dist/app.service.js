@@ -180,7 +180,21 @@ let AppService = class AppService {
     requireProject(user, id) { const project = this.projects.find(p => p.id === id && p.status !== "DELETED"); if (!project || !this.canAccess(user, id))
         throw new NotFoundException("项目不存在或无权限"); return project; }
     dashboard(user) { const projects = this.visibleProjects(user); const projectIds = new Set(projects.map(p => p.id)); const progress = this.progress.filter(p => projectIds.has(p.projectId)); return { metrics: { activeProjects: projects.filter(p => p.status === "ACTIVE").length, todayActions: progress.length, riskProjects: projects.filter(p => p.risk !== "low").length, pendingFiles: this.files.filter(f => projectIds.has(f.projectId) && !f.deleted).length }, gantt: this.tasks.filter(t => projectIds.has(t.projectId)), myProgress: progress.filter(p => p.userId === user.id) }; }
-    listProjects(user) { return { projects: this.visibleProjects(user) }; }
+    listProjects(user, filter) {
+        let projects = this.visibleProjects(user);
+        if (filter === "mine")
+            projects = projects.filter(p => p.ownerId === user.id);
+        else if (filter === "risk")
+            projects = projects.filter(p => p.risk !== "low");
+        else if (filter === "pending_acceptance")
+            projects = projects.filter(p => p.acceptanceStatus === "pending" || p.acceptanceStatus === "in_review");
+        else if (filter === "archived")
+            projects = projects.filter(p => p.status === "ARCHIVED");
+        else
+            projects = projects.filter(p => p.status === "ACTIVE"); // default: active only
+        return { projects: projects.map(p => ({ ...p, memberCount: this.members.filter(m => m.projectId === p.id).length, taskCount: this.tasks.filter(t => t.projectId === p.id && t.status !== "DELETED").length })) };
+    }
+    projectDetail(user, id) { const project = this.requireProject(user, id); const timeline = this.timeline.filter(t => t.projectId === id).slice(0, 30); const members = this.members.filter(m => m.projectId === id).map(m => ({ ...m, user: this.publicUser(this.users.find(u => u.id === m.userId)) })); const stats = { tasks: this.tasks.filter(t => t.projectId === id && t.status !== "DELETED").length, progress: this.progress.filter(p => p.projectId === id).length, files: this.files.filter(f => f.projectId === id && !f.deleted).length, acceptance: this.acceptanceItems.filter(a => a.projectId === id).length }; return { project, members, timeline, stats }; }
     createProject(user, body) { const project = { id: this.id("p"), name: body.name || "新项目", group: body.group || "默认分组", ownerId: user.id, status: "ACTIVE", progress: 0, risk: "low", start: body.start || this.today(), baselineEnd: body.baselineEnd || this.today(), currentEnd: body.currentEnd || body.baselineEnd || this.today(), description: body.description || "", settings: {}, acceptanceStatus: "pending" }; this.projects.unshift(project); this.members.push({ id: this.id("pm"), projectId: project.id, userId: user.id, role: "owner" }); this.addTimeline(project.id, "project.created", user, `创建项目：${project.name}`); this.markDirty(); return { project }; }
     updateProject(user, id, body) { const project = this.requireProject(user, id); if (!this.canManage(user, id))
         throw new ForbiddenException("无项目管理权限"); Object.assign(project, body); this.addTimeline(id, "project.updated", user, `更新项目：${project.name}`); this.markDirty(); return { project }; }
@@ -191,7 +205,6 @@ let AppService = class AppService {
         throw new ForbiddenException("无项目恢复权限"); project.status = "ACTIVE"; this.addTimeline(id, "project.restored", user, `恢复项目：${project.name}`, "green"); this.markDirty(); return { project }; }
     settings(user, id, body) { const project = this.requireProject(user, id); if (!this.canManage(user, id))
         throw new ForbiddenException("无项目设置权限"); project.settings = { ...project.settings, ...body }; this.markDirty(); return { project }; }
-    projectDetail(user, id) { const project = this.requireProject(user, id); return { project, members: this.members.filter(m => m.projectId === id) }; }
     membersOf(user, id) { this.requireProject(user, id); return { members: this.members.filter(m => m.projectId === id).map(m => ({ ...m, user: this.publicUser(this.users.find(u => u.id === m.userId)) })) }; }
     invite(user, id, body) { this.requireProject(user, id); if (!this.canManage(user, id))
         throw new ForbiddenException("无邀请成员权限"); const target = this.users.find(u => u.id === body.userId || u.username === body.username); if (!target)
