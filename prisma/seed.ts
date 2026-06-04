@@ -1,0 +1,23 @@
+import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
+const prisma = new PrismaClient();
+async function main() {
+  const dels = [prisma.collaborationEvent,prisma.importExportJob,prisma.notificationLog,prisma.notificationKey,prisma.notificationChannel,prisma.notificationRule,prisma.auditLog,prisma.timelineEvent,prisma.fileVersion,prisma.taskSubmission,prisma.acceptanceReport,prisma.acceptanceItem,prisma.projectFile,prisma.taskProgress,prisma.task,prisma.projectMember,prisma.project,prisma.session,prisma.userIpWhitelistEntry,prisma.userIpPolicy,prisma.permissionScope,prisma.roleTemplate,prisma.user];
+  for (const d of dels) await d.deleteMany();
+  const h = (p: string) => bcrypt.hashSync(p, 10);
+  const a = await prisma.user.create({data:{id:"u_admin",username:"admin",passwordHash:h("admin123"),name:"林栖",role:"SUPER_ADMIN",enabled:true,avatar:"林",signature:"让项目主线清楚，细节有迹可循。",theme:"letter"}});
+  const m = await prisma.user.create({data:{id:"u_member",username:"member",passwordHash:h("member123"),name:"林树",role:"MEMBER",enabled:true,avatar:"树",signature:"今日任务今日清。",theme:"letter"}});
+  await prisma.project.createMany({data:[{id:"p_alpha",name:"客户交付项目",group:"客户交付",ownerId:a.id,status:"ACTIVE",progress:68,risk:"medium",start:new Date("2026-06-01"),baselineEnd:new Date("2026-06-08"),currentEnd:new Date("2026-06-09"),description:"围绕资料收集、页面设计、验收报告推进。"},{id:"p_study",name:"双人学习计划",group:"学习",ownerId:m.id,status:"ACTIVE",progress:42,risk:"low",start:new Date("2026-06-01"),baselineEnd:new Date("2026-06-30"),currentEnd:new Date("2026-06-29"),description:"两个人交错推进学习任务。"}]});
+  await prisma.projectMember.createMany({data:[{id:"pm_a",projectId:"p_alpha",userId:a.id,role:"owner"},{id:"pm_b",projectId:"p_alpha",userId:m.id,role:"editor"},{id:"pm_c",projectId:"p_study",userId:m.id,role:"owner"}]});
+  await prisma.task.create({data:{id:"t_design",projectId:"p_alpha",title:"需求确认",status:"DOING",priority:"high",baselineStart:new Date("2026-06-01"),baselineEnd:new Date("2026-06-04"),currentStart:new Date("2026-06-01"),currentEnd:new Date("2026-06-04")}});
+  await prisma.taskProgress.create({data:{id:"tp_design",taskId:"t_design",projectId:"p_alpha",userId:m.id,status:"DOING",planStart:new Date("2026-06-01"),planEnd:new Date("2026-06-04"),currentEnd:new Date("2026-06-04"),actualStart:new Date("2026-06-01"),progress:45,note:"正在确认客户需求"}});
+  await prisma.projectFile.create({data:{id:"f_plan",projectId:"p_alpha",name:"项目计划",type:"WORD_DOC",folder:"项目资料",content:"# 项目计划\n\n- 需求确认\n- 资料收集\n- 验收归档",version:1,ownerId:a.id}});
+  await prisma.acceptanceItem.create({data:{id:"acc_alpha",projectId:"p_alpha",title:"交付资料齐全",status:"PENDING"}});
+  await prisma.notificationChannel.create({data:{id:"nc_feishu",name:"飞书机器人",type:"feishu",enabled:true,config:{webhookMasked:"https://open.feishu.cn/***"}}});
+  await prisma.notificationRule.create({data:{id:"nr_done",event:"task.progress_completed",channel:"feishu",targetMode:"creator",enabled:true}});
+  await prisma.roleTemplate.createMany({data:[{id:"rt_super_admin",name:"超级管理员",role:"super_admin",builtin:true,permissions:["progress.visible","file.visible","file.download","submission.accept","system.manage","audit.view"]},{id:"rt_owner",name:"项目负责人",role:"owner",builtin:true,permissions:["progress.visible","file.visible","file.download","submission.accept","project.manage","task.manage","file.manage","acceptance.manage"]},{id:"rt_admin",name:"项目管理员",role:"admin",builtin:true,permissions:["progress.visible","file.visible","file.download","task.manage","file.manage","acceptance.manage"]},{id:"rt_editor",name:"编辑者",role:"editor",builtin:true,permissions:["progress.visible","file.visible","task.edit","file.edit"]},{id:"rt_commenter",name:"评论者",role:"commenter",builtin:true,permissions:["progress.visible","file.visible","task.comment","file.comment"]},{id:"rt_viewer",name:"只读访客",role:"viewer",builtin:true,permissions:["progress.visible"]},{id:"rt_acceptor",name:"文件验收者",role:"acceptor",builtin:true,permissions:["progress.visible","file.visible","submission.accept"]}]});
+  await prisma.permissionScope.createMany({data:[{id:"ps_progress",key:"progress.visible",name:"进度可见",target:"project",enabled:true},{id:"ps_file_visible",key:"file.visible",name:"文件可见",target:"project",enabled:true},{id:"ps_file_download",key:"file.download",name:"文件下载",target:"project",enabled:true},{id:"ps_submission",key:"submission.accept",name:"提交物验收",target:"project",enabled:true}]});
+  await prisma.timelineEvent.create({data:{id:"ev_init",projectId:"p_alpha",type:"project.created",actorId:a.id,actorName:a.name,message:"创建项目并邀请成员",color:"blue"}});
+  console.log("Seed OK");
+}
+main().catch(e=>console.error(e)).finally(()=>prisma.$disconnect());

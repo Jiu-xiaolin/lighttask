@@ -237,8 +237,6 @@ export function Workspace({ project, tasks, api, refresh, setView }: any) {
   }, []);
   const [dragTask, setDragTask] = React.useState<string | null>(null);
   const [dragOverCol, setDragOverCol] = React.useState<string | null>(null);
-  const droppingRef = React.useRef(false);
-
   const colStatusMap: Record<string, string> = { "待处理": "TODO", "进行中": "DOING", "阻塞": "BLOCKED", "已完成": "DONE" };
 
   const clickPos = React.useRef({ x: 0, y: 0, taskId: '' });
@@ -256,22 +254,16 @@ export function Workspace({ project, tasks, api, refresh, setView }: any) {
   function handleDragLeave(e: React.DragEvent, col: string) { dragEnterCount.current[col] = (dragEnterCount.current[col] || 1) - 1; if (dragEnterCount.current[col] <= 0) setDragOverCol(null); }
   async function handleDrop(e: React.DragEvent, col: string) {
     e.preventDefault();
-    setDragOverCol(null);
-    setDragTask(null);
-    if (droppingRef.current) return;
+    setDragOverCol(null); setDragTask(null);
     const taskId = e.dataTransfer.getData("text/plain");
     if (!taskId) return;
     const newStatus = colStatusMap[col] || "TODO";
     const task = tasks.find((t: Task) => t.id === taskId);
     if (!task || task.status === newStatus) return;
-    droppingRef.current = true;
     const oldStatus = task.status;
     task.status = newStatus;
-    // Optimistic timeline entry
     setTimeline(prev => [{ id: 'opt_' + Date.now(), projectId: project.id, type: 'task.status_changed', actorName: '你', message: `任务状态变更：${task.title} → ${col}`, color: 'blue', createdAt: new Date().toISOString() }, ...prev]);
-    try { await api(`/tasks/${taskId}`, { method: "PATCH", body: JSON.stringify({ status: newStatus }) }); await refresh(); }
-    catch { task.status = oldStatus; await refresh(); }
-    finally { droppingRef.current = false; }
+    api(`/tasks/${taskId}`, { method: "PATCH", body: JSON.stringify({ status: newStatus }) }).catch(() => { task.status = oldStatus; refresh(); });
   }
 
   React.useEffect(() => {
@@ -300,7 +292,8 @@ export function Workspace({ project, tasks, api, refresh, setView }: any) {
     {task.baselineStart && <span className="task-date">{task.baselineStart}{task.baselineEnd !== task.baselineStart ? ` → ${task.baselineEnd}` : ''}</span>}
     <b className={`task-status-dot ${task.status === "DONE" ? "ok" : task.status === "BLOCKED" ? "warn" : ""}`}>{task.status === "TODO" ? "待处理" : task.status === "DOING" ? "进行中" : task.status === "DONE" ? "已完成" : "阻塞"}</b>
   </div>
-  {(task.progressItems || []).length > 0 && <div className="task-members">{(task.progressItems || []).map((p: ProgressItem) => <span key={p.id} className="task-member-tag">{p.userId === "u_admin" ? "林" : p.userId === "u_member" ? "树" : "?"} · {p.progress}%</span>)}</div>}
+  {task.currentEnd && task.baselineEnd && task.currentEnd > task.baselineEnd && <div className="task-delay">延迟至：{task.currentEnd}</div>}
+  {(task.progressItems || []).length > 0 && <div className="task-members">{(task.progressItems || []).map((p: ProgressItem) => { const member = members.find((m: any) => m.userId === p.userId); const name = member?.user?.name || p.userId; return <span key={p.id} className="task-member-tag">{name} · {p.progress}%</span>; })}</div>}
   {task.note && <div className="task-note">{task.note}</div>}
 </div>)}</article>})}</div>}
 
@@ -324,7 +317,21 @@ export function Workspace({ project, tasks, api, refresh, setView }: any) {
       {wsTab === "acceptance" && <div className="acceptance-report compact-deferred"><div className="block-head"><strong>验收统计</strong></div><div className="acceptance-metrics"><article><span>项目状态</span><strong>{project.acceptanceStatus === "approved" ? "已通过" : project.acceptanceStatus === "in_review" ? "验收中" : "待验收"}</strong><em>{acceptanceText(project)}</em></article></div><div><button className="btn primary" onClick={async () => { await api(`/projects/${project.id}/acceptance/start`, { method: "POST" }); await refresh(); }}>发起验收</button></div></div>}
     </div></section>
 
-    <aside className="panel timeline" ref={timelineRef}><div className="panel-head slim"><h2>变更时间线</h2></div>{tl.map((ev: any) => <article key={ev.id} className={`event ${ev.type?.includes("task") ? "task-event" : ev.type?.includes("doc") ? "doc-event" : ev.type?.includes("member") ? "member-event" : "task-event"}`}><time>{ev.createdAt ? new Date(ev.createdAt).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}) : ""}</time><strong>{ev.message}</strong><span>{ev.actorName} · {ev.type}</span></article>)}</aside></div>;
+    <aside className="panel timeline" ref={timelineRef}>
+      <div className="panel-head slim"><h2>项目成员</h2><span style={{fontSize:11,color:"var(--muted)"}}>{members.length} 人</span></div>
+      <div className="member-cards">
+        {members.map((m: any) => {
+          const av = m.user?.avatar || '';
+          const isImg = av.startsWith('/uploads/') || av.startsWith('http');
+          const userTheme = m.user?.theme || 'letter';
+          return <div key={m.userId} className={`user-card-button member-card-item card-theme-${userTheme}`} style={{minHeight:72,padding:10,gap:10,gridTemplateColumns:'42px 1fr',fontSize:13}}>
+            {isImg ? <span className="user-card-avatar" style={{backgroundImage:`url(${av})`,backgroundSize:'cover',width:42,height:42}} /> : <span className="user-card-avatar" style={{width:42,height:42,fontSize:18}}>{m.user?.name?.[0] || '?'}</span>}
+            <span className="user-card-copy"><strong>{m.user?.name || m.userId}</strong><em>{m.user?.signature || '暂无签名'}</em></span>
+          </div>;
+        })}
+      </div>
+      <div className="panel-head slim" style={{marginTop:12}}><h2>变更时间线</h2></div>
+      {tl.map((ev: any) => <article key={ev.id} className={`event ${ev.type?.includes("task") ? "task-event" : ev.type?.includes("doc") ? "doc-event" : ev.type?.includes("member") ? "member-event" : "task-event"}`}><time>{ev.createdAt ? new Date(ev.createdAt).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}) : ""}</time><strong>{ev.message}</strong><span>{ev.actorName} · {ev.type}</span></article>)}</aside></div>;
 }
 
 export function Files({ project, files, api, refresh }: any) {

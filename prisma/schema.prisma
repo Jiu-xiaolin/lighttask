@@ -301,7 +301,7 @@ model NotificationLog {
   projectId  String?
   channel    String
   targetMode String
-  targets    String[] @default([])
+  targets    String @default("[]")
   status     String
   message    String
   retryCount Int      @default(0)
@@ -331,10 +331,11 @@ model AuditLog {
 }
 
 model RoleTemplate {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String
   role        String
-  permissions String[] @default([])
+  builtin     Boolean   @default(false)
+  permissions String[]  @default([])
 }
 
 model PermissionScope {
