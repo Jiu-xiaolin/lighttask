@@ -42,8 +42,8 @@ let AppController = class AppController {
     saveGanttView(auth, req, body) {
         return this.app.saveGanttView(this.current(auth, req), body);
     }
-    projects(auth, req, filter) {
-        return this.app.listProjects(this.current(auth, req), filter);
+    projects(auth, req, filter, group) {
+        return this.app.listProjects(this.current(auth, req), filter, group);
     }
     createProject(auth, req, body) {
         return this.app.createProject(this.current(auth, req), body);
@@ -362,8 +362,9 @@ __decorate([
     __param(0, Headers("authorization")),
     __param(1, Req()),
     __param(2, Query("filter")),
+    __param(3, Query("group")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object, String]),
+    __metadata("design:paramtypes", [String, Object, String, String]),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "projects", null);
 __decorate([

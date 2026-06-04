@@ -225,7 +225,7 @@
       "tokenHash": "25a0ae4aeec4707f660fe36051fcf76f23abee069ecd9ee3baca54984542529d",
       "userId": "u_admin",
       "ip": "127.0.0.1",
-      "lastActivityAt": "2026-06-03T19:20:14.605Z",
+      "lastActivityAt": "2026-06-03T19:25:38.246Z",
       "revoked": false
     },
     {
@@ -963,6 +963,206 @@
       "ip": "127.0.0.1",
       "lastActivityAt": "2026-06-03T19:20:57.036Z",
       "revoked": false
+    },
+    {
+      "id": "sess_2178a617ceab",
+      "tokenHash": "85121ad013319202be934b3add956a90420a22e3f5355185b1fd29855e68a032",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T19:23:19.282Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_dd167129eb59",
+      "tokenHash": "91090385a3c0fdff54974b06a67670e61d2b3d414187cc7475337bd625aa44f4",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T19:25:44.113Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_7b0bc913acc3",
+      "tokenHash": "505124f3641ad1b4f133559054735dfcd189e909c71efa8d77fbc94b5330cfb2",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-04T02:21:23.622Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_9497ff3456f9",
+      "tokenHash": "4e01ef4c4fd800133527d3a6a5ed3f792fddb59ae02865c6a4667bf1f6eb255e",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T19:26:07.756Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_1f93dac436a7",
+      "tokenHash": "1dee0665fa06d076afa671905b09c2df809d6e56bde90eda55893ada30dd8416",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T19:34:00.055Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_54867d9330e6",
+      "tokenHash": "545ecb0a72c218f55043132a6d65dd78148e1f9119ba0c458b35d950a265f781",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T19:34:25.286Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_549df2a5e749",
+      "tokenHash": "6e43060fab28aa6a58bb87c89edff217214af45c3ccdc8d26c3380cafa97591b",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T19:37:50.115Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_d7c80ef4a8d9",
+      "tokenHash": "03851040d8517ab2bf0eea0861c94d58e58dc0e3a0b73291120902edddf593a2",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T19:41:24.183Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_fd1cf9ad818a",
+      "tokenHash": "600010d92409372fa0238067308459b99188169cc546ac067f2e96879d99d756",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T19:41:45.098Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_d20e60364837",
+      "tokenHash": "18aa3469810adc16bb21e5f5afa1c7a5fa10f7ecb9177e9e1cde6da3545cf181",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T19:52:09.084Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_7fabe08d033f",
+      "tokenHash": "b1b67ab5e97078f5a7cc8c04d905b0d373995e6b274ed3ebb41819df4f2dd2b9",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T19:54:44.115Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_fc3615515555",
+      "tokenHash": "6564f68b9a0d4ae3c87f14414b730bb92597b5fedbb0f0e45462c60700ebe844",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T19:55:36.632Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_d8874cc290f0",
+      "tokenHash": "5f31b13c3c0778bf0f0eb484305499f724154965cbf072c4532cf3ea14ee7951",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T19:56:26.971Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_c7cb7b3656a1",
+      "tokenHash": "cdf71110f4e3454d35ed411f9a491203fea6a935d63e96962161922d7215b673",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T19:57:23.725Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_e56b97503566",
+      "tokenHash": "6fa2331b1576a7c91f2c73678a28dfbd7dc770c2c6b5b66c1eb864c7ccc4ee8f",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T20:00:08.362Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_b8cfac3cc591",
+      "tokenHash": "0384d0de3aa1662d1c46a402575d50c2910f94602c5ba5b2d6e7d203a6290210",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T20:00:29.068Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_f031d19112b2",
+      "tokenHash": "839c8cee99c56b83cfb52925a0368a0345d252586e94b43880424ee617de15a4",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T20:02:38.262Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_5421a71f9196",
+      "tokenHash": "d7409472db986a8c7070561e99aa1c92fd732c44e323036a153d596b2db691d5",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T20:58:33.273Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_f1ed88131e7c",
+      "tokenHash": "dcdcea419d35b04877c9f36950000ec803826ad6c05c8a77b082b8bf2780661d",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T20:59:27.409Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_452f68826548",
+      "tokenHash": "e192dcd586a7a9d8572f404bcce9356005898341910099406eedae8d90315f99",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T21:00:02.468Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_183eac2b6759",
+      "tokenHash": "4ff5557f8f6ad84123e23c28038819d421e19fd2cefc31a0dc1c49d14c293129",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-03T21:00:34.846Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_95c9d8e03d7d",
+      "tokenHash": "96cc8bfb03a656daf3976a2fa3fe615e466ad1fd7f82096d5c87535bbc14eab7",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-04T01:58:02.234Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_4eddd7efa8ef",
+      "tokenHash": "9084c3a6a4c33f3e83b7031e1e333f1c3059922cd05b82cd7248b1475538ea18",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-04T01:58:51.458Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_ed09153a5c6c",
+      "tokenHash": "9accd3b5c5715d76a709cdd92bff241fbde5d33f5ecdd734c54aaf361f37aeac",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-04T02:18:39.286Z",
+      "revoked": false
+    },
+    {
+      "id": "sess_364483a09c89",
+      "tokenHash": "b521eab793f3b951e3784b38726837b66458000b8d5d34c72848e67df1aff715",
+      "userId": "u_admin",
+      "ip": "127.0.0.1",
+      "lastActivityAt": "2026-06-04T02:20:08.935Z",
+      "revoked": false
     }
   ],
   "ipPolicies": [
@@ -991,6 +1191,51 @@
     }
   ],
   "projects": [
+    {
+      "id": "p_0504974b22e7",
+      "name": "新客户交付计划",
+      "group": "客户交付",
+      "ownerId": "u_admin",
+      "status": "ACTIVE",
+      "progress": 0,
+      "risk": "low",
+      "start": "2026-06-04",
+      "baselineEnd": "2026-06-04",
+      "currentEnd": "2026-06-04",
+      "description": "",
+      "settings": {},
+      "acceptanceStatus": "pending"
+    },
+    {
+      "id": "p_78017e5967b6",
+      "name": "新项目",
+      "group": "默认分组",
+      "ownerId": "u_admin",
+      "status": "ACTIVE",
+      "progress": 0,
+      "risk": "low",
+      "start": "2026-06-04",
+      "baselineEnd": "2026-06-04",
+      "currentEnd": "2026-06-04",
+      "description": "",
+      "settings": {},
+      "acceptanceStatus": "pending"
+    },
+    {
+      "id": "p_63d3ec29e96c",
+      "name": "新项目",
+      "group": "默认分组",
+      "ownerId": "u_admin",
+      "status": "ARCHIVED",
+      "progress": 0,
+      "risk": "low",
+      "start": "2026-06-03",
+      "baselineEnd": "2026-06-03",
+      "currentEnd": "2026-06-03",
+      "description": "",
+      "settings": {},
+      "acceptanceStatus": "pending"
+    },
     {
       "id": "p_alpha",
       "name": "客户交付项目",
@@ -1040,14 +1285,283 @@
       "projectId": "p_study",
       "userId": "u_admin",
       "role": "editor"
+    },
+    {
+      "id": "pm_68a15d1bfe12",
+      "projectId": "p_63d3ec29e96c",
+      "userId": "u_admin",
+      "role": "owner"
+    },
+    {
+      "id": "pm_81bbcd47e0ed",
+      "projectId": "p_78017e5967b6",
+      "userId": "u_admin",
+      "role": "owner"
+    },
+    {
+      "id": "pm_723de85254d8",
+      "projectId": "p_0504974b22e7",
+      "userId": "u_admin",
+      "role": "owner"
     }
   ],
   "tasks": [
     {
+      "id": "t_487c8b033a4c",
+      "projectId": "p_0504974b22e7",
+      "title": "前端修复测试",
+      "status": "BLOCKED",
+      "priority": "medium",
+      "baselineStart": "2026-06-04",
+      "baselineEnd": "2026-06-04",
+      "currentStart": "2026-06-04",
+      "currentEnd": "2026-06-04",
+      "dependencyIds": [],
+      "note": ""
+    },
+    {
+      "id": "t_d8a038eb26f5",
+      "projectId": "p_0504974b22e7",
+      "title": "tst111",
+      "status": "TODO",
+      "priority": "medium",
+      "baselineStart": "2026-06-04",
+      "baselineEnd": "2026-06-04",
+      "currentStart": "2026-06-04",
+      "currentEnd": "2026-06-04",
+      "dependencyIds": [],
+      "note": ""
+    },
+    {
+      "id": "t_0d765e83ade2",
+      "projectId": "p_alpha",
+      "title": "未命名任务",
+      "status": "TODO",
+      "priority": "medium",
+      "baselineStart": "2026-06-04",
+      "baselineEnd": "2026-06-04",
+      "currentStart": "2026-06-04",
+      "currentEnd": "2026-06-04",
+      "dependencyIds": [],
+      "note": ""
+    },
+    {
+      "id": "t_ecbfd59f55a8",
+      "projectId": "p_alpha",
+      "title": "������������",
+      "status": "TODO",
+      "priority": "high",
+      "baselineStart": "2026-06-10",
+      "baselineEnd": "2026-06-20",
+      "currentStart": "2026-06-10",
+      "currentEnd": "2026-06-22",
+      "dependencyIds": [],
+      "note": "���Ա�ע"
+    },
+    {
+      "id": "t_ca4bec95fcf3",
+      "projectId": "p_alpha",
+      "title": "��������",
+      "status": "TODO",
+      "priority": "medium",
+      "baselineStart": "2026-06-04",
+      "baselineEnd": "2026-06-04",
+      "currentStart": "2026-06-04",
+      "currentEnd": "2026-06-04",
+      "dependencyIds": [],
+      "note": ""
+    },
+    {
+      "id": "t_cdd51ea49bd6",
+      "projectId": "p_alpha",
+      "title": "API��������",
+      "status": "TODO",
+      "priority": "medium",
+      "baselineStart": "2026-06-04",
+      "baselineEnd": "2026-06-04",
+      "currentStart": "2026-06-04",
+      "currentEnd": "2026-06-04",
+      "dependencyIds": [],
+      "note": ""
+    },
+    {
+      "id": "t_6ce69762fa22",
+      "projectId": "p_0504974b22e7",
+      "title": "test1111",
+      "status": "TODO",
+      "priority": "medium",
+      "baselineStart": "2026-06-04",
+      "baselineEnd": "2026-06-04",
+      "currentStart": "2026-06-04",
+      "currentEnd": "2026-06-04",
+      "dependencyIds": [],
+      "note": ""
+    },
+    {
+      "id": "t_22942974b6be",
+      "projectId": "p_78017e5967b6",
+      "title": "test1",
+      "status": "TODO",
+      "priority": "medium",
+      "baselineStart": "2026-06-04",
+      "baselineEnd": "2026-06-04",
+      "currentStart": "2026-06-04",
+      "currentEnd": "2026-06-04",
+      "dependencyIds": [],
+      "note": ""
+    },
+    {
+      "id": "t_03361a7e8d60",
+      "projectId": "p_78017e5967b6",
+      "title": "test2",
+      "status": "TODO",
+      "priority": "medium",
+      "baselineStart": "2026-06-04",
+      "baselineEnd": "2026-06-04",
+      "currentStart": "2026-06-04",
+      "currentEnd": "2026-06-04",
+      "dependencyIds": [],
+      "note": ""
+    },
+    {
+      "id": "t_cf9bd3f9d762",
+      "projectId": "p_0504974b22e7",
+      "title": "test",
+      "status": "DOING",
+      "priority": "high",
+      "baselineStart": "2026-06-04",
+      "baselineEnd": "2026-06-04",
+      "currentStart": "2026-06-04",
+      "currentEnd": "2026-06-04",
+      "dependencyIds": [],
+      "note": "222222222222"
+    },
+    {
+      "id": "t_210eb561f817",
+      "projectId": "p_alpha",
+      "title": "快速测试任务",
+      "status": "TODO",
+      "priority": "medium",
+      "baselineStart": "2026-06-03",
+      "baselineEnd": "2026-06-03",
+      "currentStart": "2026-06-03",
+      "currentEnd": "2026-06-03",
+      "dependencyIds": [],
+      "note": ""
+    },
+    {
+      "id": "t_4de58fad5ad0",
+      "projectId": "p_alpha",
+      "title": "审计测试任务",
+      "status": "DONE",
+      "priority": "medium",
+      "baselineStart": "2026-06-03",
+      "baselineEnd": "2026-06-03",
+      "currentStart": "2026-06-03",
+      "currentEnd": "2026-06-03",
+      "dependencyIds": [],
+      "note": ""
+    },
+    {
+      "id": "t_e576ca094c4a",
+      "projectId": "p_alpha",
+      "title": "11111",
+      "status": "DOING",
+      "priority": "high",
+      "baselineStart": "2026-06-03",
+      "baselineEnd": "2026-06-03",
+      "currentStart": "2026-06-03",
+      "currentEnd": "2026-06-03",
+      "dependencyIds": [
+        "t_5394c4b9c19a"
+      ],
+      "note": "1111"
+    },
+    {
+      "id": "t_ce89d7418a23",
+      "projectId": "p_alpha",
+      "title": "多人协作任务",
+      "status": "BLOCKED",
+      "priority": "medium",
+      "baselineStart": "2026-06-03",
+      "baselineEnd": "2026-06-03",
+      "currentStart": "2026-06-03",
+      "currentEnd": "2026-06-03",
+      "dependencyIds": [],
+      "note": ""
+    },
+    {
+      "id": "t_d4019dcb1546",
+      "projectId": "p_alpha",
+      "title": "API集成任务",
+      "status": "BLOCKED",
+      "priority": "medium",
+      "baselineStart": "2026-06-03",
+      "baselineEnd": "2026-06-03",
+      "currentStart": "2026-06-03",
+      "currentEnd": "2026-06-03",
+      "dependencyIds": [],
+      "note": ""
+    },
+    {
+      "id": "t_83683409b4fd",
+      "projectId": "p_alpha",
+      "title": "新设计任务",
+      "status": "DELETED",
+      "priority": "medium",
+      "baselineStart": "2026-06-10",
+      "baselineEnd": "2026-06-20",
+      "currentStart": "2026-06-10",
+      "currentEnd": "2026-06-22",
+      "dependencyIds": [],
+      "note": "这是一个测试任务"
+    },
+    {
+      "id": "t_1259117f1047",
+      "projectId": "p_alpha",
+      "title": "新任务",
+      "status": "DOING",
+      "priority": "medium",
+      "baselineStart": "2026-06-03",
+      "baselineEnd": "2026-06-12",
+      "currentStart": "2026-06-03",
+      "currentEnd": "2026-06-03",
+      "dependencyIds": [
+        "t_4de58fad5ad0"
+      ],
+      "note": ""
+    },
+    {
+      "id": "t_3c8ef8b836bb",
+      "projectId": "p_alpha",
+      "title": "新任务",
+      "status": "DONE",
+      "priority": "medium",
+      "baselineStart": "2026-06-03",
+      "baselineEnd": "2026-06-03",
+      "currentStart": "2026-06-03",
+      "currentEnd": "2026-06-03",
+      "dependencyIds": [],
+      "note": "22222"
+    },
+    {
+      "id": "t_5394c4b9c19a",
+      "projectId": "p_alpha",
+      "title": "测试任务",
+      "status": "TODO",
+      "priority": "medium",
+      "baselineStart": "2026-06-03",
+      "baselineEnd": "2026-06-03",
+      "currentStart": "2026-06-03",
+      "currentEnd": "2026-06-03",
+      "dependencyIds": [],
+      "note": ""
+    },
+    {
       "id": "t_design",
       "projectId": "p_alpha",
       "title": "需求确认",
-      "status": "DOING",
+      "status": "DONE",
       "priority": "high",
       "baselineStart": "2026-06-01",
       "baselineEnd": "2026-06-04",
@@ -1062,15 +1576,300 @@
       "taskId": "t_design",
       "projectId": "p_alpha",
       "userId": "u_member",
-      "status": "DOING",
+      "status": "COMPLETED",
       "planStart": "2026-06-01",
       "planEnd": "2026-06-04",
       "currentEnd": "2026-06-04",
       "actualStart": "2026-06-01",
+      "actualEnd": "2026-06-03",
+      "deltaDays": -1,
+      "progress": 100,
+      "note": "正在确认客户需求"
+    },
+    {
+      "id": "tp_d07c08e100d5",
+      "taskId": "t_5394c4b9c19a",
+      "projectId": "p_alpha",
+      "userId": "u_member",
+      "status": "TODO",
+      "planStart": "2026-06-03",
+      "planEnd": "2026-06-03",
+      "currentEnd": "2026-06-03",
+      "actualStart": null,
       "actualEnd": null,
       "deltaDays": null,
-      "progress": 45,
-      "note": "正在确认客户需求"
+      "progress": 0,
+      "note": ""
+    },
+    {
+      "id": "tp_67b6d26b01fe",
+      "taskId": "t_3c8ef8b836bb",
+      "projectId": "p_alpha",
+      "userId": "u_member",
+      "status": "COMPLETED",
+      "planStart": "2026-06-03",
+      "planEnd": "2026-06-03",
+      "currentEnd": "2026-06-03",
+      "actualStart": null,
+      "actualEnd": "2026-06-04",
+      "deltaDays": 1,
+      "progress": 100,
+      "note": ""
+    },
+    {
+      "id": "tp_56760e0d27eb",
+      "taskId": "t_1259117f1047",
+      "projectId": "p_alpha",
+      "userId": "u_member",
+      "status": "COMPLETED",
+      "planStart": "2026-06-03",
+      "planEnd": "2026-06-03",
+      "currentEnd": "2026-06-03",
+      "actualStart": null,
+      "actualEnd": "2026-06-04",
+      "deltaDays": 1,
+      "progress": 100,
+      "note": ""
+    },
+    {
+      "id": "tp_69cc6ae5a087",
+      "taskId": "t_83683409b4fd",
+      "projectId": "p_alpha",
+      "userId": "u_admin",
+      "status": "TODO",
+      "planStart": "2026-06-10",
+      "planEnd": "2026-06-20",
+      "currentEnd": "2026-06-22",
+      "actualStart": null,
+      "actualEnd": null,
+      "deltaDays": null,
+      "progress": 0,
+      "note": ""
+    },
+    {
+      "id": "tp_a8cd02c5a5b6",
+      "taskId": "t_d4019dcb1546",
+      "projectId": "p_alpha",
+      "userId": "u_admin",
+      "status": "DELAYED",
+      "planStart": "2026-06-03",
+      "planEnd": "2026-06-03",
+      "currentEnd": "2026-06-03",
+      "actualStart": null,
+      "actualEnd": "2026-06-03",
+      "deltaDays": 0,
+      "progress": 100,
+      "note": "延期到2026年6月7日"
+    },
+    {
+      "id": "tp_3259e026afec",
+      "taskId": "t_ce89d7418a23",
+      "projectId": "p_alpha",
+      "userId": "u_admin",
+      "status": "COMPLETED",
+      "planStart": "2026-06-03",
+      "planEnd": "2026-06-03",
+      "currentEnd": "2026-06-03",
+      "actualStart": null,
+      "actualEnd": "2026-06-03",
+      "deltaDays": 0,
+      "progress": 100,
+      "note": ""
+    },
+    {
+      "id": "tp_d47848879dde",
+      "taskId": "t_ce89d7418a23",
+      "projectId": "p_alpha",
+      "userId": "u_admin",
+      "status": "COMPLETED",
+      "planStart": "2026-06-03",
+      "planEnd": "2026-06-03",
+      "currentEnd": "2026-06-03",
+      "actualStart": null,
+      "actualEnd": "2026-06-03",
+      "deltaDays": 0,
+      "progress": 100,
+      "note": ""
+    },
+    {
+      "id": "tp_56de8afd3b0f",
+      "taskId": "t_e576ca094c4a",
+      "projectId": "p_alpha",
+      "userId": "u_admin",
+      "status": "TODO",
+      "planStart": "2026-06-03",
+      "planEnd": "2026-06-03",
+      "currentEnd": "2026-06-03",
+      "actualStart": null,
+      "actualEnd": null,
+      "deltaDays": null,
+      "progress": 0,
+      "note": ""
+    },
+    {
+      "id": "tp_9632f5f6c42e",
+      "taskId": "t_4de58fad5ad0",
+      "projectId": "p_alpha",
+      "userId": "u_admin",
+      "status": "COMPLETED",
+      "planStart": "2026-06-03",
+      "planEnd": "2026-06-03",
+      "currentEnd": "2026-06-03",
+      "actualStart": null,
+      "actualEnd": "2026-06-03",
+      "deltaDays": 0,
+      "progress": 100,
+      "note": ""
+    },
+    {
+      "id": "tp_e797e5c614cb",
+      "taskId": "t_210eb561f817",
+      "projectId": "p_alpha",
+      "userId": "u_admin",
+      "status": "TODO",
+      "planStart": "2026-06-03",
+      "planEnd": "2026-06-03",
+      "currentEnd": "2026-06-03",
+      "actualStart": null,
+      "actualEnd": null,
+      "deltaDays": null,
+      "progress": 0,
+      "note": ""
+    },
+    {
+      "id": "tp_53ef97bb340e",
+      "taskId": "t_cf9bd3f9d762",
+      "projectId": "p_0504974b22e7",
+      "userId": "u_admin",
+      "status": "TODO",
+      "planStart": "2026-06-04",
+      "planEnd": "2026-06-04",
+      "currentEnd": "2026-06-04",
+      "actualStart": null,
+      "actualEnd": null,
+      "deltaDays": null,
+      "progress": 0,
+      "note": ""
+    },
+    {
+      "id": "tp_8419b65e1728",
+      "taskId": "t_03361a7e8d60",
+      "projectId": "p_78017e5967b6",
+      "userId": "u_admin",
+      "status": "TODO",
+      "planStart": "2026-06-04",
+      "planEnd": "2026-06-04",
+      "currentEnd": "2026-06-04",
+      "actualStart": null,
+      "actualEnd": null,
+      "deltaDays": null,
+      "progress": 0,
+      "note": ""
+    },
+    {
+      "id": "tp_c102bd6b7862",
+      "taskId": "t_22942974b6be",
+      "projectId": "p_78017e5967b6",
+      "userId": "u_admin",
+      "status": "TODO",
+      "planStart": "2026-06-04",
+      "planEnd": "2026-06-04",
+      "currentEnd": "2026-06-04",
+      "actualStart": null,
+      "actualEnd": null,
+      "deltaDays": null,
+      "progress": 0,
+      "note": ""
+    },
+    {
+      "id": "tp_f99b9e0bf163",
+      "taskId": "t_6ce69762fa22",
+      "projectId": "p_0504974b22e7",
+      "userId": "u_admin",
+      "status": "TODO",
+      "planStart": "2026-06-04",
+      "planEnd": "2026-06-04",
+      "currentEnd": "2026-06-04",
+      "actualStart": null,
+      "actualEnd": null,
+      "deltaDays": null,
+      "progress": 0,
+      "note": ""
+    },
+    {
+      "id": "tp_51c17b9547d1",
+      "taskId": "t_ca4bec95fcf3",
+      "projectId": "p_alpha",
+      "userId": "u_admin",
+      "status": "TODO",
+      "planStart": "2026-06-04",
+      "planEnd": "2026-06-04",
+      "currentEnd": "2026-06-04",
+      "actualStart": null,
+      "actualEnd": null,
+      "deltaDays": null,
+      "progress": 0,
+      "note": ""
+    },
+    {
+      "id": "tp_eebdb336999f",
+      "taskId": "t_ca4bec95fcf3",
+      "projectId": "p_alpha",
+      "userId": "u_member",
+      "status": "TODO",
+      "planStart": "2026-06-04",
+      "planEnd": "2026-06-04",
+      "currentEnd": "2026-06-04",
+      "actualStart": null,
+      "actualEnd": null,
+      "deltaDays": null,
+      "progress": 0,
+      "note": ""
+    },
+    {
+      "id": "tp_a3f051b3f599",
+      "taskId": "t_ecbfd59f55a8",
+      "projectId": "p_alpha",
+      "userId": "u_member",
+      "status": "TODO",
+      "planStart": "2026-06-10",
+      "planEnd": "2026-06-20",
+      "currentEnd": "2026-06-22",
+      "actualStart": null,
+      "actualEnd": null,
+      "deltaDays": null,
+      "progress": 0,
+      "note": ""
+    },
+    {
+      "id": "tp_b00213d74296",
+      "taskId": "t_d8a038eb26f5",
+      "projectId": "p_0504974b22e7",
+      "userId": "u_admin",
+      "status": "TODO",
+      "planStart": "2026-06-04",
+      "planEnd": "2026-06-04",
+      "currentEnd": "2026-06-04",
+      "actualStart": null,
+      "actualEnd": null,
+      "deltaDays": null,
+      "progress": 0,
+      "note": ""
+    },
+    {
+      "id": "tp_1e26fa6d1849",
+      "taskId": "t_487c8b033a4c",
+      "projectId": "p_0504974b22e7",
+      "userId": "u_admin",
+      "status": "TODO",
+      "planStart": "2026-06-04",
+      "planEnd": "2026-06-04",
+      "currentEnd": "2026-06-04",
+      "actualStart": null,
+      "actualEnd": null,
+      "deltaDays": null,
+      "progress": 0,
+      "note": ""
     }
   ],
   "files": [
@@ -1098,6 +1897,14 @@
   ],
   "acceptanceReports": [],
   "notificationRules": [
+    {
+      "id": "nr_7265f841a8bb",
+      "event": "task.progress_remind",
+      "channel": "feishu",
+      "targetMode": "creator",
+      "targets": [],
+      "enabled": true
+    },
     {
       "id": "nr_done",
       "event": "task.progress_completed",
@@ -1135,6 +1942,2846 @@
   "keys": [],
   "timeline": [
     {
+      "id": "ev_be3558f94664",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:21:23.622Z"
+    },
+    {
+      "id": "ev_0d3ce49e7b27",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:21:21.183Z"
+    },
+    {
+      "id": "ev_9c282ce74b11",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:21:19.891Z"
+    },
+    {
+      "id": "ev_15615ec7f191",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:21:18.552Z"
+    },
+    {
+      "id": "ev_09892866e47d",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:21:16.553Z"
+    },
+    {
+      "id": "ev_25cc8e2b2b37",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：前端修复测试",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:21:14.348Z"
+    },
+    {
+      "id": "ev_948b4e2d262b",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：前端修复测试",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:21:13.136Z"
+    },
+    {
+      "id": "ev_17c76e7f59a4",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:21:11.577Z"
+    },
+    {
+      "id": "ev_82a5b6ef77e9",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:21:09.558Z"
+    },
+    {
+      "id": "ev_c2ecd9d8574d",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:21:06.957Z"
+    },
+    {
+      "id": "ev_67f29a802767",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:21:02.110Z"
+    },
+    {
+      "id": "ev_338dd98a446a",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：前端修复测试",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:20:59.488Z"
+    },
+    {
+      "id": "ev_b7e59ae199e9",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：前端修复测试",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:20:57.640Z"
+    },
+    {
+      "id": "ev_99c6c57b2399",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：前端修复测试",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:20:56.055Z"
+    },
+    {
+      "id": "ev_24824027053c",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：前端修复测试",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:20:54.363Z"
+    },
+    {
+      "id": "ev_f8eace13e0dd",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：前端修复测试",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:20:52.877Z"
+    },
+    {
+      "id": "ev_ce012f568deb",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：前端修复测试",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:20:50.768Z"
+    },
+    {
+      "id": "ev_0739cdda8791",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：前端修复测试",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:20:49.564Z"
+    },
+    {
+      "id": "ev_49e49fcd79e5",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：前端修复测试",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:20:48.366Z"
+    },
+    {
+      "id": "ev_5b4b9abe2c9d",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test1111",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:20:45.080Z"
+    },
+    {
+      "id": "ev_8101cf21968c",
+      "projectId": "p_0504974b22e7",
+      "type": "task.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建任务：前端修复测试",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:20:08.893Z"
+    },
+    {
+      "id": "ev_ab7484a8b4d5",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:20:05.434Z"
+    },
+    {
+      "id": "ev_35d629e53c01",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test1111",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:19:58.795Z"
+    },
+    {
+      "id": "ev_1b70552da0ba",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test1111",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:19:56.927Z"
+    },
+    {
+      "id": "ev_4153058dd36d",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test1111",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:19:55.086Z"
+    },
+    {
+      "id": "ev_779b9b082b6f",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test1111",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:19:53.789Z"
+    },
+    {
+      "id": "ev_fa85607240ac",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test1111",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:19:51.839Z"
+    },
+    {
+      "id": "ev_6d45d84472a6",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:19:49.773Z"
+    },
+    {
+      "id": "ev_82340c24e2e4",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:19:48.571Z"
+    },
+    {
+      "id": "ev_14e0eff6718b",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test1111",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:19:46.362Z"
+    },
+    {
+      "id": "ev_a3bbe16884ae",
+      "projectId": "p_0504974b22e7",
+      "type": "task.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建任务：tst111",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:19:44.142Z"
+    },
+    {
+      "id": "ev_9f948506f078",
+      "projectId": "p_alpha",
+      "type": "task.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建任务：未命名任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:18:39.286Z"
+    },
+    {
+      "id": "ev_a4298a7cf645",
+      "projectId": "p_alpha",
+      "type": "task.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建任务：������������",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:18:39.087Z"
+    },
+    {
+      "id": "ev_f02488957828",
+      "projectId": "p_alpha",
+      "type": "task.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建任务：��������",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:18:38.887Z"
+    },
+    {
+      "id": "ev_a1cc62eea1d7",
+      "projectId": "p_alpha",
+      "type": "task.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建任务：API��������",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:18:38.703Z"
+    },
+    {
+      "id": "ev_ed02ca0745fb",
+      "projectId": "p_0504974b22e7",
+      "type": "task.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建任务：test1111",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:17:54.150Z"
+    },
+    {
+      "id": "ev_b487ed90fafe",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:17:48.034Z"
+    },
+    {
+      "id": "ev_f6e8e5ff0f31",
+      "projectId": "p_78017e5967b6",
+      "type": "task.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建任务：test1",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:17:32.371Z"
+    },
+    {
+      "id": "ev_5a833dc2d80a",
+      "projectId": "p_78017e5967b6",
+      "type": "task.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建任务：test2",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:17:23.590Z"
+    },
+    {
+      "id": "ev_6c0ffb984792",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:16:13.550Z"
+    },
+    {
+      "id": "ev_7da8277191f1",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:16:11.602Z"
+    },
+    {
+      "id": "ev_d00bbc1345b9",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:15:56.060Z"
+    },
+    {
+      "id": "ev_0092a3be13d5",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:15:54.062Z"
+    },
+    {
+      "id": "ev_6cdf68848135",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:15:52.689Z"
+    },
+    {
+      "id": "ev_94274fb02159",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:15:50.688Z"
+    },
+    {
+      "id": "ev_b9fe685d9819",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:15:48.017Z"
+    },
+    {
+      "id": "ev_25f2c62d98d6",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:15:46.219Z"
+    },
+    {
+      "id": "ev_ed3be6116150",
+      "projectId": "p_0504974b22e7",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:15:44.825Z"
+    },
+    {
+      "id": "ev_30e0a5593c7e",
+      "projectId": "p_0504974b22e7",
+      "type": "task.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建任务：test",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:15:42.859Z"
+    },
+    {
+      "id": "ev_e8d2f6c6bb4d",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:09:03.186Z"
+    },
+    {
+      "id": "ev_4ac2f04778d1",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:08:22.219Z"
+    },
+    {
+      "id": "ev_a2b20a304470",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:08:19.886Z"
+    },
+    {
+      "id": "ev_f70dff5c34c4",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:08:18.262Z"
+    },
+    {
+      "id": "ev_b42ee7e96873",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:08:10.102Z"
+    },
+    {
+      "id": "ev_9ae24a6eafdc",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:08:08.528Z"
+    },
+    {
+      "id": "ev_8d6f57a9caa9",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:08:06.330Z"
+    },
+    {
+      "id": "ev_0d13171b259e",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:08:04.152Z"
+    },
+    {
+      "id": "ev_54e52f079871",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:08:02.923Z"
+    },
+    {
+      "id": "ev_d80edd26ec61",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:08:01.092Z"
+    },
+    {
+      "id": "ev_7266bbc28a07",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:07:59.772Z"
+    },
+    {
+      "id": "ev_5637ceb2047d",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:07:57.899Z"
+    },
+    {
+      "id": "ev_d5c254c454c7",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:07:56.466Z"
+    },
+    {
+      "id": "ev_97680536081d",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:07:55.168Z"
+    },
+    {
+      "id": "ev_93ea141f239d",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:07:53.557Z"
+    },
+    {
+      "id": "ev_e0cd458ee122",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:07:50.774Z"
+    },
+    {
+      "id": "ev_c87690c99d45",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:07:49.116Z"
+    },
+    {
+      "id": "ev_b9de5bf8dbc2",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:07:46.794Z"
+    },
+    {
+      "id": "ev_4e5a75dbf95a",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:07:44.075Z"
+    },
+    {
+      "id": "ev_9e161aee4c42",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：多人协作任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:07:36.745Z"
+    },
+    {
+      "id": "ev_8963ea09ac8f",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:07:33.021Z"
+    },
+    {
+      "id": "ev_01991214d0d3",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:07:31.725Z"
+    },
+    {
+      "id": "ev_cd80e82b44ec",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：多人协作任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:07:30.159Z"
+    },
+    {
+      "id": "ev_2cb5f83983df",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：多人协作任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:07:27.718Z"
+    },
+    {
+      "id": "ev_8fcee59175dd",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:06:31.920Z"
+    },
+    {
+      "id": "ev_0e5569edf9bd",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：多人协作任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:06:30.611Z"
+    },
+    {
+      "id": "ev_02f647c466f5",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:06:29.293Z"
+    },
+    {
+      "id": "ev_12a368944d10",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:06:27.660Z"
+    },
+    {
+      "id": "ev_8c19d1331053",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:06:25.899Z"
+    },
+    {
+      "id": "ev_e055f9a715af",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:06:24.697Z"
+    },
+    {
+      "id": "ev_ef74f7d05203",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:05:59.574Z"
+    },
+    {
+      "id": "ev_5865c093fe0e",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:05:57.672Z"
+    },
+    {
+      "id": "ev_86f3cfd2a8ea",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:03:31.958Z"
+    },
+    {
+      "id": "ev_55431c925ced",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:03:30.517Z"
+    },
+    {
+      "id": "ev_372a3a0cce2d",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:03:28.733Z"
+    },
+    {
+      "id": "ev_71a7c47b3bae",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:03:26.884Z"
+    },
+    {
+      "id": "ev_09ed63e02be8",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:03:14.130Z"
+    },
+    {
+      "id": "ev_2dbf442eeb95",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:03:12.565Z"
+    },
+    {
+      "id": "ev_0c1e24ee4069",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:03:10.786Z"
+    },
+    {
+      "id": "ev_dccca6cc6a74",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:03:04.640Z"
+    },
+    {
+      "id": "ev_586c649832d9",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:03:03.052Z"
+    },
+    {
+      "id": "ev_a0b88396e199",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:03:01.377Z"
+    },
+    {
+      "id": "ev_9eca9448a293",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:02:56.625Z"
+    },
+    {
+      "id": "ev_46512d1d709d",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:02:53.881Z"
+    },
+    {
+      "id": "ev_836ea655817e",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:02:51.748Z"
+    },
+    {
+      "id": "ev_2605a4217b6e",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:02:49.648Z"
+    },
+    {
+      "id": "ev_7392450252ff",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:02:48.386Z"
+    },
+    {
+      "id": "ev_2a47743edd5f",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:02:45.673Z"
+    },
+    {
+      "id": "ev_e6fd4331d889",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:02:43.065Z"
+    },
+    {
+      "id": "ev_aa8d9b006b8c",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:02:41.074Z"
+    },
+    {
+      "id": "ev_0f2b00accc20",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:02:39.642Z"
+    },
+    {
+      "id": "ev_07cab4732db7",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:02:17.788Z"
+    },
+    {
+      "id": "ev_4dda5332fda8",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:02:15.732Z"
+    },
+    {
+      "id": "ev_d5ae3f6b0da1",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:02:13.691Z"
+    },
+    {
+      "id": "ev_c136315e6357",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:02:11.733Z"
+    },
+    {
+      "id": "ev_9a7d2b0af901",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:02:09.319Z"
+    },
+    {
+      "id": "ev_b62a3198935a",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:02:07.362Z"
+    },
+    {
+      "id": "ev_b20051ad0ec9",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:02:05.357Z"
+    },
+    {
+      "id": "ev_d17a84faebc4",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:00:34.151Z"
+    },
+    {
+      "id": "ev_eb00278d65ad",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:00:32.767Z"
+    },
+    {
+      "id": "ev_4e4f30c29855",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:00:30.634Z"
+    },
+    {
+      "id": "ev_d13be8bea91c",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:00:29.091Z"
+    },
+    {
+      "id": "ev_d6f6b6f61efa",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:00:26.892Z"
+    },
+    {
+      "id": "ev_6d30650f4a8b",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:00:24.148Z"
+    },
+    {
+      "id": "ev_8696f797e0ac",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:00:22.415Z"
+    },
+    {
+      "id": "ev_925d0cebe561",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:00:18.914Z"
+    },
+    {
+      "id": "ev_4139b21c04ec",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:00:16.226Z"
+    },
+    {
+      "id": "ev_2ef293b14f39",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:00:08.259Z"
+    },
+    {
+      "id": "ev_c7b1a6f58ce4",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:00:07.064Z"
+    },
+    {
+      "id": "ev_23807dc87373",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:00:02.629Z"
+    },
+    {
+      "id": "ev_5a588d513e3f",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T02:00:00.299Z"
+    },
+    {
+      "id": "ev_a5019e6b5779",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:59:59.099Z"
+    },
+    {
+      "id": "ev_4a7b30e173cc",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:59:57.450Z"
+    },
+    {
+      "id": "ev_cce83b78adc2",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:59:55.322Z"
+    },
+    {
+      "id": "ev_45707ff41414",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:55:48.290Z"
+    },
+    {
+      "id": "ev_45160566577c",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:55:46.394Z"
+    },
+    {
+      "id": "ev_5164d75f28f5",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:55:44.309Z"
+    },
+    {
+      "id": "ev_fd3725b7cadd",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:55:42.812Z"
+    },
+    {
+      "id": "ev_bda1010c204b",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:55:40.650Z"
+    },
+    {
+      "id": "ev_8e295f2c88fb",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:50:28.417Z"
+    },
+    {
+      "id": "ev_9ab66e2dda52",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:50:26.602Z"
+    },
+    {
+      "id": "ev_7a4adaac83d2",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:50:25.044Z"
+    },
+    {
+      "id": "ev_1d69348b43e2",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:50:23.324Z"
+    },
+    {
+      "id": "ev_14d8682ebd71",
+      "projectId": "p_alpha",
+      "type": "task.progress_complete",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "成员进度complete：tp_56760e0d27eb",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:38:27.455Z"
+    },
+    {
+      "id": "ev_095d77aefa2b",
+      "projectId": "p_alpha",
+      "type": "task.progress_complete",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "成员进度complete：tp_56760e0d27eb",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:38:26.753Z"
+    },
+    {
+      "id": "ev_3bbfe7b6c859",
+      "projectId": "p_alpha",
+      "type": "task.progress_complete",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "成员进度complete：tp_67b6d26b01fe",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:37:44.446Z"
+    },
+    {
+      "id": "ev_80fb4698cdaa",
+      "projectId": "p_alpha",
+      "type": "task.progress_complete",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "成员进度complete：tp_67b6d26b01fe",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:37:43.270Z"
+    },
+    {
+      "id": "ev_78d355a3486b",
+      "projectId": "p_alpha",
+      "type": "task.progress_complete",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "成员进度complete：tp_67b6d26b01fe",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:37:41.814Z"
+    },
+    {
+      "id": "ev_2c25ad967abd",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:37:38.833Z"
+    },
+    {
+      "id": "ev_5a537aed0259",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:37:35.904Z"
+    },
+    {
+      "id": "ev_d08180a2679b",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:37:34.687Z"
+    },
+    {
+      "id": "ev_80669ea67730",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:37:31.956Z"
+    },
+    {
+      "id": "ev_bfc59868873e",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:37:30.244Z"
+    },
+    {
+      "id": "ev_47909bcab341",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:37:21.026Z"
+    },
+    {
+      "id": "ev_b8461437e8b6",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:37:18.004Z"
+    },
+    {
+      "id": "ev_0d6253aff097",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:37:16.218Z"
+    },
+    {
+      "id": "ev_4c53801a9a32",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:36:36.224Z"
+    },
+    {
+      "id": "ev_982970bf5496",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:36:34.209Z"
+    },
+    {
+      "id": "ev_7702bfa9c290",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:36:32.102Z"
+    },
+    {
+      "id": "ev_a586cf581ee1",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:36:30.680Z"
+    },
+    {
+      "id": "ev_3f3636e3ad71",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：多人协作任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:36:29.291Z"
+    },
+    {
+      "id": "ev_d6d16099f647",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:36:25.021Z"
+    },
+    {
+      "id": "ev_d76026985eb2",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：审计测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:36:23.222Z"
+    },
+    {
+      "id": "ev_017a80072e79",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:36:14.685Z"
+    },
+    {
+      "id": "ev_2c01abb0f3cb",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:36:12.506Z"
+    },
+    {
+      "id": "ev_97361efc2b0a",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:36:10.379Z"
+    },
+    {
+      "id": "ev_f01d336addd2",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:36:08.855Z"
+    },
+    {
+      "id": "ev_0065fdc95dd2",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:36:05.615Z"
+    },
+    {
+      "id": "ev_2c67c1afdb48",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:35:49.718Z"
+    },
+    {
+      "id": "ev_a4aae7e89589",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:35:48.392Z"
+    },
+    {
+      "id": "ev_d45cbf64582e",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:35:45.404Z"
+    },
+    {
+      "id": "ev_dca2b65e647a",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:35:44.041Z"
+    },
+    {
+      "id": "ev_c97abd911b43",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:35:41.750Z"
+    },
+    {
+      "id": "ev_3c0be36ec94a",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:35:39.504Z"
+    },
+    {
+      "id": "ev_c29500127db9",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:35:37.472Z"
+    },
+    {
+      "id": "ev_169053381fc7",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:54.085Z"
+    },
+    {
+      "id": "ev_2b5e421f5516",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:52.995Z"
+    },
+    {
+      "id": "ev_c9833966e9e4",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:52.121Z"
+    },
+    {
+      "id": "ev_358a2fa3c8ce",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：11111",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:50.847Z"
+    },
+    {
+      "id": "ev_34a2a0f6dc76",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：11111",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:48.346Z"
+    },
+    {
+      "id": "ev_f7ce3c439888",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：11111",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:46.995Z"
+    },
+    {
+      "id": "ev_f3ec127e71a7",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:45.786Z"
+    },
+    {
+      "id": "ev_44bddc490250",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：11111",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:44.389Z"
+    },
+    {
+      "id": "ev_7d339eb803f9",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:36.069Z"
+    },
+    {
+      "id": "ev_6588caab1969",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:34.509Z"
+    },
+    {
+      "id": "ev_ab0d77c12380",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:32.754Z"
+    },
+    {
+      "id": "ev_de0c1cbc9e6e",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:32.048Z"
+    },
+    {
+      "id": "ev_777866afc383",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:30.874Z"
+    },
+    {
+      "id": "ev_8ad6b9fb01e2",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:26.674Z"
+    },
+    {
+      "id": "ev_4e409c3384b7",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:25.766Z"
+    },
+    {
+      "id": "ev_73a758f78bf2",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:24.552Z"
+    },
+    {
+      "id": "ev_caffa9ef3612",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:23.540Z"
+    },
+    {
+      "id": "ev_92d6a3d1d577",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:22.613Z"
+    },
+    {
+      "id": "ev_7fc0b4113195",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:21.531Z"
+    },
+    {
+      "id": "ev_aee705d5795d",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:20.615Z"
+    },
+    {
+      "id": "ev_ba380d61c878",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:19.644Z"
+    },
+    {
+      "id": "ev_74927df5db4d",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:31:18.821Z"
+    },
+    {
+      "id": "ev_7dc9b5dd54f5",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:29:13.656Z"
+    },
+    {
+      "id": "ev_15eda2d6b773",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：11111",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:29:12.762Z"
+    },
+    {
+      "id": "ev_73dec3b299f7",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:29:11.873Z"
+    },
+    {
+      "id": "ev_9414bf1fdc37",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：11111",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:29:10.235Z"
+    },
+    {
+      "id": "ev_f3b0c21a7ea0",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:29:09.018Z"
+    },
+    {
+      "id": "ev_5c2da313de03",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:29:08.050Z"
+    },
+    {
+      "id": "ev_c017e7a76fe0",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：审计测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:29:06.723Z"
+    },
+    {
+      "id": "ev_eb4994b4ba27",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：审计测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:29:04.184Z"
+    },
+    {
+      "id": "ev_6546d5ffa4b0",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：快速测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:29:03.105Z"
+    },
+    {
+      "id": "ev_31ad667e6a7c",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：快速测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:29:01.961Z"
+    },
+    {
+      "id": "ev_9a66ad40c076",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:29:01.263Z"
+    },
+    {
+      "id": "ev_7dcb9eb88301",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：审计测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:29:00.301Z"
+    },
+    {
+      "id": "ev_09cc3f77cf09",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:28:59.329Z"
+    },
+    {
+      "id": "ev_bf211ef63d3d",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:28:58.250Z"
+    },
+    {
+      "id": "ev_9f07bfb20fcc",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:28:57.526Z"
+    },
+    {
+      "id": "ev_2753a2b234a0",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：快速测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:28:56.515Z"
+    },
+    {
+      "id": "ev_b5d0ea50d148",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:28:55.342Z"
+    },
+    {
+      "id": "ev_eea274820d7b",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:28:54.273Z"
+    },
+    {
+      "id": "ev_101d64c48785",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：审计测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:28:53.139Z"
+    },
+    {
+      "id": "ev_235250bd325b",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:27:55.141Z"
+    },
+    {
+      "id": "ev_beb6f54d2569",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:27:53.127Z"
+    },
+    {
+      "id": "ev_b17870034024",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:27:50.390Z"
+    },
+    {
+      "id": "ev_df2663373a0c",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:27:48.638Z"
+    },
+    {
+      "id": "ev_3c8407e5d021",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:27:43.641Z"
+    },
+    {
+      "id": "ev_f6c0a83c296c",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:27:42.291Z"
+    },
+    {
+      "id": "ev_3ac7f41792a5",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：11111",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:27:40.109Z"
+    },
+    {
+      "id": "ev_637fd6435dee",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:27:37.646Z"
+    },
+    {
+      "id": "ev_a09393752a7e",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:27:36.279Z"
+    },
+    {
+      "id": "ev_38ae9348cab2",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:27:34.762Z"
+    },
+    {
+      "id": "ev_7d6d9b32adc5",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:27:33.299Z"
+    },
+    {
+      "id": "ev_8018addc6e45",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:27:31.435Z"
+    },
+    {
+      "id": "ev_ca7d94f7c9d5",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:27:30.605Z"
+    },
+    {
+      "id": "ev_85dc92759697",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:27:29.123Z"
+    },
+    {
+      "id": "ev_7a6f98100cd5",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:27:27.383Z"
+    },
+    {
+      "id": "ev_8f2ad3396a0b",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:27:26.523Z"
+    },
+    {
+      "id": "ev_76bee0541a3e",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:27:25.455Z"
+    },
+    {
+      "id": "ev_acefb0e51058",
+      "projectId": "p_0504974b22e7",
+      "type": "project.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建项目：新客户交付计划",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:23:35.858Z"
+    },
+    {
+      "id": "ev_f8235775978b",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:20:40.643Z"
+    },
+    {
+      "id": "ev_304009d8a37a",
+      "projectId": "p_78017e5967b6",
+      "type": "project.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建项目：新项目",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:20:32.183Z"
+    },
+    {
+      "id": "ev_96bfc37015d1",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:18:26.198Z"
+    },
+    {
+      "id": "ev_d43173ba98b7",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:17:36.351Z"
+    },
+    {
+      "id": "ev_1b4177c8205a",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:17:33.197Z"
+    },
+    {
+      "id": "ev_9a021d655c82",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：快速测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:17:31.277Z"
+    },
+    {
+      "id": "ev_9b126d680449",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:06:52.898Z"
+    },
+    {
+      "id": "ev_030f1301c1a6",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：多人协作任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T01:06:47.217Z"
+    },
+    {
+      "id": "ev_92bf1cafba42",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T00:54:14.840Z"
+    },
+    {
+      "id": "ev_9c3292757341",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：多人协作任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T00:54:13.129Z"
+    },
+    {
+      "id": "ev_d646395434f8",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T00:54:10.608Z"
+    },
+    {
+      "id": "ev_3505ada0c5ae",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：多人协作任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T00:54:07.323Z"
+    },
+    {
+      "id": "ev_ed22e2d50948",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：多人协作任务",
+      "color": "blue",
+      "createdAt": "2026-06-04T00:54:04.580Z"
+    },
+    {
+      "id": "ev_0f8d0c9a6a7d",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：多人协作任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T21:01:38.223Z"
+    },
+    {
+      "id": "ev_38a9e140cf1e",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：审计测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T21:01:36.527Z"
+    },
+    {
+      "id": "ev_01efd8911575",
+      "projectId": "p_alpha",
+      "type": "task.progress_delay",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "成员进度delay：tp_a8cd02c5a5b6",
+      "color": "blue",
+      "createdAt": "2026-06-03T21:01:21.331Z"
+    },
+    {
+      "id": "ev_6675167c90b0",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：多人协作任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T21:00:57.761Z"
+    },
+    {
+      "id": "ev_5488c82d0107",
+      "projectId": "p_63d3ec29e96c",
+      "type": "project.archived",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "归档项目：新项目",
+      "color": "purple",
+      "createdAt": "2026-06-03T21:00:30.702Z"
+    },
+    {
+      "id": "ev_8509bde0c043",
+      "projectId": "p_63d3ec29e96c",
+      "type": "project.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建项目：新项目",
+      "color": "blue",
+      "createdAt": "2026-06-03T20:55:11.015Z"
+    },
+    {
+      "id": "ev_cb47f7471a8d",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T20:54:56.944Z"
+    },
+    {
+      "id": "ev_2526652ec42b",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T20:54:46.677Z"
+    },
+    {
+      "id": "ev_1d3064dd7f44",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T20:54:28.484Z"
+    },
+    {
+      "id": "ev_9b726c051b63",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T20:51:51.523Z"
+    },
+    {
+      "id": "ev_24a8a92ea877",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：多人协作任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T20:51:48.527Z"
+    },
+    {
+      "id": "ev_512fe715c8b5",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：审计测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T20:51:45.334Z"
+    },
+    {
+      "id": "ev_8fd8fa9a5c34",
+      "projectId": "p_alpha",
+      "type": "task.deleted",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "删除任务：新设计任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T20:05:34.675Z"
+    },
+    {
+      "id": "ev_fc3c27d992ef",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T20:05:03.856Z"
+    },
+    {
+      "id": "ev_7eed9ffe83e3",
+      "projectId": "p_alpha",
+      "type": "task.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建任务：快速测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T20:02:38.234Z"
+    },
+    {
+      "id": "ev_efb2c6e279b4",
+      "projectId": "p_alpha",
+      "type": "task.progress_complete",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "成员进度complete：tp_9632f5f6c42e",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:57:23.692Z"
+    },
+    {
+      "id": "ev_dd473b904e82",
+      "projectId": "p_alpha",
+      "type": "task.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建任务：审计测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:57:22.860Z"
+    },
+    {
+      "id": "ev_48d3ded311e2",
+      "projectId": "p_alpha",
+      "type": "task.progress_complete",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "成员进度complete：tp_a8cd02c5a5b6",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:55:36.593Z"
+    },
+    {
+      "id": "ev_62d2ca744e6f",
+      "projectId": "p_alpha",
+      "type": "task.progress_complete",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "成员进度complete：tp_a8cd02c5a5b6",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:54:44.087Z"
+    },
+    {
+      "id": "ev_fb2afad631cf",
+      "projectId": "p_alpha",
+      "type": "task.progress_complete",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "成员进度complete：tp_a8cd02c5a5b6",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:52:09.056Z"
+    },
+    {
+      "id": "ev_c1c12ec4989f",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：多人协作任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:50:36.759Z"
+    },
+    {
+      "id": "ev_d929bb41999e",
+      "projectId": "p_alpha",
+      "type": "task.progress_complete",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "成员进度complete：tp_d47848879dde",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:50:35.211Z"
+    },
+    {
+      "id": "ev_9c041f17fcf3",
+      "projectId": "p_alpha",
+      "type": "task.progress_complete",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "成员进度complete：tp_3259e026afec",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:50:34.903Z"
+    },
+    {
+      "id": "ev_00e2a20ca84a",
+      "projectId": "p_alpha",
+      "type": "task.progress_complete",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "成员进度complete：tp_d47848879dde",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:50:33.325Z"
+    },
+    {
+      "id": "ev_310d43c8823e",
+      "projectId": "p_alpha",
+      "type": "task.progress_complete",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "成员进度complete：tp_3259e026afec",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:50:33.075Z"
+    },
+    {
+      "id": "ev_bc32c98bb5b0",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新设计任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:48:49.264Z"
+    },
+    {
+      "id": "ev_6907d0cf3b13",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：11111",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:48:47.016Z"
+    },
+    {
+      "id": "ev_f5a05f2d0d5d",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:48:42.278Z"
+    },
+    {
+      "id": "ev_f753f7198317",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新设计任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:48:37.826Z"
+    },
+    {
+      "id": "ev_282ab3748074",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:48:34.563Z"
+    },
+    {
+      "id": "ev_8d0d6ba2bb71",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：新设计任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:46:58.000Z"
+    },
+    {
+      "id": "ev_a123fdab0ea4",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：多人协作任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:45:35.442Z"
+    },
+    {
+      "id": "ev_f8f9e766031f",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：多人协作任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:45:32.398Z"
+    },
+    {
+      "id": "ev_bcecd2231a31",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：多人协作任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:45:29.227Z"
+    },
+    {
+      "id": "ev_a8691aba08bd",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：11111",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:45:25.421Z"
+    },
+    {
+      "id": "ev_649422aa60fa",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：需求确认",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:43:17.394Z"
+    },
+    {
+      "id": "ev_252a3ba4dc72",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：多人协作任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:43:14.815Z"
+    },
+    {
+      "id": "ev_794029a27ec7",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：11111",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:43:02.900Z"
+    },
+    {
+      "id": "ev_058f0f8622d6",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：多人协作任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:42:59.973Z"
+    },
+    {
+      "id": "ev_37514ce04e98",
+      "projectId": "p_alpha",
+      "type": "task.updated",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "更新任务：11111",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:42:56.480Z"
+    },
+    {
+      "id": "ev_3b4b8d53194f",
+      "projectId": "p_alpha",
+      "type": "task.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建任务：11111",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:39:43.230Z"
+    },
+    {
+      "id": "ev_37de12edda42",
+      "projectId": "p_alpha",
+      "type": "task.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建任务：多人协作任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:37:50.083Z"
+    },
+    {
+      "id": "ev_7466a1e924de",
+      "projectId": "p_alpha",
+      "type": "task.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建任务：API集成任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:34:25.258Z"
+    },
+    {
+      "id": "ev_1ec4589bf5ae",
+      "projectId": "p_alpha",
+      "type": "task.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建任务：新设计任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:34:00.014Z"
+    },
+    {
+      "id": "ev_861747a78f6c",
+      "projectId": "p_alpha",
+      "type": "task.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:27:31.242Z"
+    },
+    {
+      "id": "ev_378725936ce7",
+      "projectId": "p_alpha",
+      "type": "task.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建任务：新任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:27:27.940Z"
+    },
+    {
+      "id": "ev_7d9fedff96d4",
+      "projectId": "p_alpha",
+      "type": "task.created",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "创建任务：测试任务",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:26:07.725Z"
+    },
+    {
+      "id": "ev_95ff80adacb5",
+      "projectId": "p_alpha",
+      "type": "task.progress_complete",
+      "actorId": "u_admin",
+      "actorName": "林栖",
+      "message": "成员进度complete：tp_design",
+      "color": "blue",
+      "createdAt": "2026-06-03T19:23:19.259Z"
+    },
+    {
       "id": "ev_5bd9c9cab0b7",
       "projectId": "p_study",
       "type": "member.invited",
@@ -1156,6 +4803,181 @@
     }
   ],
   "audit": [
+    {
+      "id": "audit_cbb30e91d184",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-04T02:20:06.085Z"
+    },
+    {
+      "id": "audit_482c9b029787",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-04T02:18:38.549Z"
+    },
+    {
+      "id": "audit_5705b8f18e49",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-04T01:58:51.362Z"
+    },
+    {
+      "id": "audit_e86582c953fb",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-04T01:58:01.287Z"
+    },
+    {
+      "id": "audit_cad6b290f282",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T21:00:32.373Z"
+    },
+    {
+      "id": "audit_a5895ee9a56f",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T21:00:02.206Z"
+    },
+    {
+      "id": "audit_a8105f5065ae",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T20:59:27.301Z"
+    },
+    {
+      "id": "audit_5efacff3c850",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T20:58:33.273Z"
+    },
+    {
+      "id": "audit_15d774f9862b",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T20:02:34.522Z"
+    },
+    {
+      "id": "audit_1d0b796db4a9",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T20:00:28.969Z"
+    },
+    {
+      "id": "audit_0991ef3ce7ec",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T20:00:08.261Z"
+    },
+    {
+      "id": "audit_602e4b64aa9b",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T19:57:19.102Z"
+    },
+    {
+      "id": "audit_2eb46092279d",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T19:56:26.882Z"
+    },
+    {
+      "id": "audit_4560b19a0bee",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T19:55:34.449Z"
+    },
+    {
+      "id": "audit_fb7691cff862",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T19:54:41.982Z"
+    },
+    {
+      "id": "audit_b46f56f882ac",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T19:52:06.921Z"
+    },
+    {
+      "id": "audit_d6a808390b7f",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T19:41:44.990Z"
+    },
+    {
+      "id": "audit_092cedd0d991",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T19:41:24.089Z"
+    },
+    {
+      "id": "audit_969b498f2c03",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T19:37:47.143Z"
+    },
+    {
+      "id": "audit_0c7f9bb2a2d2",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T19:34:22.697Z"
+    },
+    {
+      "id": "audit_e4b0bb81b46a",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T19:33:57.646Z"
+    },
+    {
+      "id": "audit_4edb10a6598e",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T19:26:03.139Z"
+    },
+    {
+      "id": "audit_8c948f00bcc8",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T19:25:57.643Z"
+    },
+    {
+      "id": "audit_947dc13cd623",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T19:25:42.821Z"
+    },
+    {
+      "id": "audit_44bffd9e4ecd",
+      "type": "security.login_succeeded",
+      "actorId": "u_admin",
+      "message": "用户 林栖 登录成功",
+      "createdAt": "2026-06-03T19:23:16.084Z"
+    },
     {
       "id": "audit_c53bcb93a48b",
       "type": "security.login_succeeded",

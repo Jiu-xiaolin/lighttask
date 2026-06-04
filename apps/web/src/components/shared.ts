@@ -2,7 +2,7 @@ export type { Project, Task, ProgressItem, FileItem } from "../lib/types";
 
 export function mapTaskStatus(status: string) {
   if (status === "DONE") return "已完成";
-  if (status === "BLOCKED") return "待处理";
+  if (status === "BLOCKED") return "阻塞";
   if (status === "TODO") return "待处理";
   return "进行中";
 }

@@ -87,7 +87,7 @@ export declare class AppController {
             zoom: any;
         };
     };
-    projects(auth: string, req: any, filter?: string): {
+    projects(auth: string, req: any, filter?: string, group?: string): {
         projects: {
             memberCount: number;
             taskCount: number;

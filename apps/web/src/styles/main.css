@@ -1729,7 +1729,17 @@ progress {
   margin-top: 6px;
 }
 
-.timeline,
+.timeline {
+  position: sticky;
+  top: 0;
+  max-height: calc(100vh - 130px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+}
+.timeline::-webkit-scrollbar { width: 4px; }
+.timeline::-webkit-scrollbar-thumb { border-radius: 10px; background: var(--line); }
+
 .log-panel,
 .audit-panel {
   align-self: start;
@@ -4542,3 +4552,88 @@ body[data-theme="custom"]::before {
   z-index: -1;
   opacity: 0.5;
 }
+
+/* ══ Task Create Modal ══ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(22,32,51,0.5);
+  backdrop-filter: blur(4px);
+  display: grid;
+  place-items: center;
+  z-index: 100;
+  animation: fadeIn 180ms ease;
+}
+.modal-card {
+  background: var(--surface-solid);
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(22,32,51,0.2);
+  width: 520px;
+  max-width: 92vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalIn 220ms cubic-bezier(0.2,0.8,0.2,1);
+}
+@keyframes modalIn { from { opacity: 0; transform: translateY(12px) scale(0.98); } }
+.modal-head {
+  padding: 20px 24px 0;
+}
+.modal-head strong { font-size: 18px; display: block; }
+.modal-head span { font-size: 12px; color: var(--muted); }
+.modal-body {
+  padding: 16px 24px;
+  display: grid;
+  gap: 14px;
+}
+.modal-field {
+  display: grid;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.modal-field input,
+.modal-field select,
+.modal-field textarea {
+  min-height: 38px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.8);
+  padding: 0 12px;
+  font-size: 14px;
+  color: var(--ink);
+  font-family: inherit;
+}
+.modal-field textarea { padding: 8px 12px; resize: vertical; }
+.modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.modal-row-3 { grid-template-columns: repeat(3, 1fr); }
+.modal-field .required { color: var(--rose); }
+.modal-foot {
+  padding: 0 24px 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.assignee-list { display: grid; gap: 6px; margin-top: 4px; }
+.assignee-row { display: flex; gap: 6px; align-items: center; }
+.assignee-row select { flex: 1; }
+.dep-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; max-height: 80px; overflow-y: auto; }
+.dep-chip { display: flex; align-items: center; gap: 4px; font-size: 12px; padding: 3px 8px; border-radius: 6px; background: rgba(113,128,149,0.06); border: 1px solid var(--line); }
+.dep-chip input[type="checkbox"] { width: 14px; height: 14px; margin: 0; }
+.task { transition: opacity 120ms ease, transform 180ms cubic-bezier(0.25,0.1,0.25,1), box-shadow 120ms ease, margin 180ms ease; will-change: transform; }
+.task:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.task.dragging { opacity: 0.3; transform: scale(0.97); box-shadow: 0 6px 20px rgba(0,0,0,0.15); z-index: 10; }
+.drop-col { transition: background 120ms ease, border-color 120ms ease, box-shadow 120ms ease, transform 150ms ease; padding: 8px; border-radius: 10px; border: 1px solid transparent; min-height: 120px; }
+.drop-col.drag-over { background: var(--primary-soft); border-color: var(--primary); transform: scale(1.02); box-shadow: 0 0 0 2px var(--primary), 0 6px 20px rgba(49,95,141,0.15); }
+.drop-col.drag-over .task { transform: translateX(3px); }
+.drop-col .task:last-child { margin-bottom: 0; }
+.task-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 4px; }
+.task-head strong { font-size: 14px; font-weight: 600; line-height: 1.3; }
+.task-meta { display: flex; justify-content: space-between; align-items: center; gap: 6px; margin-top: 3px; }
+.task-date { font-size: 11px; color: var(--muted); }
+.task-status-dot { font-size: 11px; padding: 2px 6px; border-radius: 4px; background: rgba(113,128,149,0.1); color: var(--muted); font-weight: 500; }
+.task-status-dot.ok { background: var(--green-soft); color: var(--teal); }
+.task-status-dot.warn { background: var(--rose-soft); color: var(--rose); }
+.task-members { display: flex; gap: 3px; margin-top: 5px; flex-wrap: wrap; }
+.task-member-tag { font-size: 11px; padding: 2px 6px; border-radius: 3px; background: rgba(113,128,149,0.06); color: var(--muted); }
+.task-note { font-size: 11px; color: var(--muted); margin-top: 5px; font-style: italic; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.side-group button.active { background: var(--primary-soft); color: var(--primary); font-weight: 600; }

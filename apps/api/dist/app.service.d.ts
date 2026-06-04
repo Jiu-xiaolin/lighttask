@@ -181,7 +181,7 @@ export declare class AppService {
         gantt: Task[];
         myProgress: Progress[];
     };
-    listProjects(user: User, filter?: string): {
+    listProjects(user: User, filter?: string, group?: string): {
         projects: {
             memberCount: number;
             taskCount: number;

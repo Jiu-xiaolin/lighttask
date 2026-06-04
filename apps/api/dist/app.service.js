@@ -180,9 +180,11 @@ let AppService = class AppService {
     requireProject(user, id) { const project = this.projects.find(p => p.id === id && p.status !== "DELETED"); if (!project || !this.canAccess(user, id))
         throw new NotFoundException("项目不存在或无权限"); return project; }
     dashboard(user) { const projects = this.visibleProjects(user); const projectIds = new Set(projects.map(p => p.id)); const progress = this.progress.filter(p => projectIds.has(p.projectId)); return { metrics: { activeProjects: projects.filter(p => p.status === "ACTIVE").length, todayActions: progress.length, riskProjects: projects.filter(p => p.risk !== "low").length, pendingFiles: this.files.filter(f => projectIds.has(f.projectId) && !f.deleted).length }, gantt: this.tasks.filter(t => projectIds.has(t.projectId)), myProgress: progress.filter(p => p.userId === user.id) }; }
-    listProjects(user, filter) {
+    listProjects(user, filter, group) {
         let projects = this.visibleProjects(user);
-        if (filter === "mine")
+        if (group)
+            projects = projects.filter(p => p.group === group);
+        else if (filter === "mine")
             projects = projects.filter(p => p.ownerId === user.id);
         else if (filter === "risk")
             projects = projects.filter(p => p.risk !== "low");
@@ -191,7 +193,7 @@ let AppService = class AppService {
         else if (filter === "archived")
             projects = projects.filter(p => p.status === "ARCHIVED");
         else
-            projects = projects.filter(p => p.status === "ACTIVE"); // default: active only
+            projects = projects.filter(p => p.status === "ACTIVE");
         return { projects: projects.map(p => ({ ...p, memberCount: this.members.filter(m => m.projectId === p.id).length, taskCount: this.tasks.filter(t => t.projectId === p.id && t.status !== "DELETED").length })) };
     }
     projectDetail(user, id) { const project = this.requireProject(user, id); const timeline = this.timeline.filter(t => t.projectId === id).slice(0, 30); const members = this.members.filter(m => m.projectId === id).map(m => ({ ...m, user: this.publicUser(this.users.find(u => u.id === m.userId)) })); const stats = { tasks: this.tasks.filter(t => t.projectId === id && t.status !== "DELETED").length, progress: this.progress.filter(p => p.projectId === id).length, files: this.files.filter(f => f.projectId === id && !f.deleted).length, acceptance: this.acceptanceItems.filter(a => a.projectId === id).length }; return { project, members, timeline, stats }; }
