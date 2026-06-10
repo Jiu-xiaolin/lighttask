@@ -151,6 +151,62 @@ function fmtDate(value: any) {
 function flattenTasks(groups: any[]) {
   return groups.flatMap((group: any) => group.children || []);
 }
+const DAY_MS = 24 * 60 * 60 * 1000;
+function dateValue(value: any) {
+  const time = new Date(value).getTime();
+  return Number.isFinite(time) ? time : null;
+}
+function clampValue(value: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, value));
+}
+function daysBetween(start: any, end: any) {
+  const a = dateValue(start);
+  const b = dateValue(end);
+  if (a == null || b == null) return 1;
+  return Math.max(1, Math.round((b - a) / DAY_MS) + 1);
+}
+function buildAdaptiveTimeline(unit: "day"|"week"|"month", tasks: any[], baselines: any[], range: any, viewportWidth: number) {
+  const visibleTasks = tasks.filter((task: any) => task?.startTime && task?.endTime);
+  const dates = [
+    ...visibleTasks.flatMap((task: any) => [task.startTime, task.endTime]),
+    ...baselines.flatMap((baseline: any) => [baseline.startTime, baseline.endTime]),
+    range?.startTime,
+    range?.endTime,
+  ].map(dateValue).filter((value): value is number => value != null).sort((a, b) => a - b);
+  const spanDays = dates.length ? Math.max(1, Math.round((dates[dates.length - 1] - dates[0]) / DAY_MS) + 1) : 30;
+  const taskCount = visibleTasks.length;
+  const taskDurations = visibleTasks.map((task: any) => daysBetween(task.startTime, task.endTime));
+  const shortRatio = taskDurations.length ? taskDurations.filter((days) => days <= 2).length / taskDurations.length : 0;
+  const denseRows = taskCount >= 18;
+  const roomyRows = taskCount <= 5;
+  const availableWidth = Math.max(420, viewportWidth || 680);
+
+  const minDayByUnit = unit === "day" ? 38 : unit === "week" ? 13 : 10;
+  const maxDayByUnit = unit === "day" ? 58 : unit === "week" ? 24 : 18;
+  const shortTaskBoost = shortRatio > 0.45 ? 4 : shortRatio > 0.2 ? 2 : 0;
+  const densityRelief = denseRows ? -2 : roomyRows ? 2 : 0;
+  const longRangeRelief = spanDays > 360 ? -4 : spanDays > 180 ? -2 : 0;
+  const minDayWidth = clampValue(minDayByUnit + shortTaskBoost + densityRelief + longRangeRelief, unit === "day" ? 34 : 8, maxDayByUnit);
+  const targetFill = roomyRows ? 0.9 : denseRows ? 1.12 : 1.02;
+  const fittedDayWidth = (availableWidth * targetFill) / spanDays;
+  const dayWidth = Math.round(clampValue(fittedDayWidth, minDayWidth, maxDayByUnit));
+  const totalWidth = dayWidth * spanDays;
+  const density = taskCount >= 24 || totalWidth > availableWidth * 3.2 ? "dense" : totalWidth > availableWidth * 1.75 ? "balanced-scroll" : "balanced";
+
+  return {
+    dayWidth,
+    weekWidth: Math.round(dayWidth * 7),
+    monthWidth: Math.round(dayWidth * 30.5),
+    spanDays,
+    taskCount,
+    shortRatio,
+    density,
+    labelMode: density === "dense" ? "progress" : "full",
+    linkOpacity: density === "dense" ? 0.32 : density === "balanced-scroll" ? 0.4 : 0.46,
+    baselineLabel: density !== "dense",
+    compareLabel: density === "balanced",
+  };
+}
 function withUpdatedSummaries(groups: any[]) {
   return groups.map((project: any) => {
     const children = project.children || [];
@@ -190,7 +246,9 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
   const [selectedTask, setSelectedTask] = useState<any>(null);
   const [themeKey, setThemeKey] = useState(() => document.body.dataset.theme || "default");
   const [viewMenuOpen, setViewMenuOpen] = useState(false);
+  const [ganttViewportWidth, setGanttViewportWidth] = useState(680);
   const ganttRef = useRef<XGanttReactRef>(null);
+  const ganttPanelRef = useRef<HTMLElement | null>(null);
   const fetchIdRef = useRef(0);
   const prevViewRef = useRef(view);
 
@@ -201,6 +259,19 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
   useEffect(() => {
     const observer = new MutationObserver(() => setThemeKey(document.body.dataset.theme || "default"));
     observer.observe(document.body, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const panel = ganttPanelRef.current;
+    if (!panel || typeof ResizeObserver === "undefined") return;
+    const updateWidth = () => {
+      const width = panel.getBoundingClientRect().width;
+      setGanttViewportWidth(Math.max(420, Math.round(width - 448)));
+    };
+    updateWidth();
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(panel);
     return () => observer.disconnect();
   }, []);
 
@@ -511,19 +582,35 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
   const ganttOptions = useMemo(() => {
     const tk = Tk();
     const skin = ganttSkin(themeKey, tk);
-    const rowHeight = settings.density === "comfortable" ? 48 : 40;
+    const adaptive = buildAdaptiveTimeline(settings.unit, flatGanttTasks, ganttBaselines, ganttRange, ganttViewportWidth);
+    const compactTable = settings.unit === "month" || adaptive.density !== "balanced";
+    const tableWidth = compactTable ? 372 : 420;
+    const columns = compactTable
+      ? [
+          { field: "name", label: "任务", width: 174, headerAlign: "left" as any, render: (r:any)=>rName(r,tk) },
+          { field: "assignee", label: "负责人", width: 60, align: "center" as any, render: (r:any)=>rAss(r,tk) },
+          { field: "progress", label: "进度", width: 52, align: "center" as any, render: (r:any)=>rProg(r,tk) },
+          { field: "status", label: "状态", width: 66, align: "center" as any, render: (r:any)=>rStat(r,tk) },
+        ]
+      : [
+          { field: "name", label: "任务", width: 198, headerAlign: "left" as any, render: (r:any)=>rName(r,tk) },
+          { field: "assignee", label: "负责人", width: 66, align: "center" as any, render: (r:any)=>rAss(r,tk) },
+          { field: "progress", label: "进度", width: 58, align: "center" as any, render: (r:any)=>rProg(r,tk) },
+          { field: "status", label: "状态", width: 74, align: "center" as any, render: (r:any)=>rStat(r,tk) },
+        ];
+    const rowHeight = settings.density === "comfortable" ? 48 : adaptive.density === "dense" ? 38 : 40;
     const scaleUnit: any = settings.unit === "day" ? [
       { unit: "month", format: "YYYY年 M月", height: 24 },
       { unit: "week", format: "第ww周", height: 22 },
-      { unit: "day", format: "M/D", cellWidth: 46, height: 24 },
+      { unit: "day", format: "M/D", cellWidth: adaptive.dayWidth, height: 24 },
     ] : settings.unit === "week" ? [
       { unit: "year", format: "YYYY年", height: 24 },
       { unit: "month", format: "M月", height: 22 },
-      { unit: "week", format: "第ww周", cellWidth: 118, height: 24 },
+      { unit: "week", format: "第ww周", cellWidth: adaptive.weekWidth, height: 24 },
     ] : [
       { unit: "year", format: "YYYY年", height: 24 },
       { unit: "quarter", format: "Q[季度]", height: 22 },
-      { unit: "month", format: "M月", cellWidth: 86, height: 24 },
+      { unit: "month", format: "M月", cellWidth: adaptive.monthWidth, height: 24 },
     ];
 
     return {
@@ -537,20 +624,15 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
       highlight: true,
       border: { show: true, color: tk.l },
       table: {
-        width: 420,
+        width: tableWidth,
         align: "left",
         headerAlign: "left",
         ellipsis: true,
         emptyText: "-",
-        columns: [
-          { field: "name", label: "任务", width: 198, headerAlign: "left" as any, render: (r:any)=>rName(r,tk) },
-          { field: "assignee", label: "负责人", width: 66, align: "center" as any, render: (r:any)=>rAss(r,tk) },
-          { field: "progress", label: "进度", width: 58, align: "center" as any, render: (r:any)=>rProg(r,tk) },
-          { field: "status", label: "状态", width: 74, align: "center" as any, render: (r:any)=>rStat(r,tk) },
-        ]
+        columns,
       },
       scaleUnit,
-      chart: { ...ganttRange, autoCellWidth: false, cellWidth: settings.unit === "day" ? 46 : settings.unit === "week" ? 118 : 86, backgroundColor: mix(tk.paper, tk.bg, 0.74), showVerticalLine: settings.unit !== "day" },
+      chart: { ...ganttRange, autoCellWidth: false, cellWidth: adaptive.dayWidth, backgroundColor: mix(tk.paper, tk.bg, 0.74), showVerticalLine: settings.unit !== "day" },
       header: { height: 70, backgroundColor: mix(tk.paper, tk.bg, 0.94), color: tk.m, fontSize: 11, fontWeight: 700, fontFamily: "Inter,PingFang SC,Microsoft YaHei,sans-serif" },
       expand: { show: true, enabled: true },
       selection: { enabled: true, includeSelf: true },
@@ -565,7 +647,7 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
         move: { enabled: true },
         create: { enabled: true, mode: "hover" as any, color: skin.link, opacity: 0.82, radius: 4, width: 2, from: (row:any)=>row?.data?.type !== "summary", to: (row:any)=>row?.data?.type !== "summary" },
         color: skin.link,
-        opacity: 0.46,
+        opacity: adaptive.linkOpacity,
         distance: 20,
         gap: 7,
         dash: [0],
@@ -587,7 +669,7 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
         color: skin.baseline,
         opacity: 0.58,
         radius: 999,
-        label: { show: true, field: "name", color: skin.baseline, fontSize: 9, fontFamily: "Inter,PingFang SC,Microsoft YaHei,sans-serif", position: "right", forceDisplay: true },
+        label: { show: adaptive.baselineLabel, field: "name", color: skin.baseline, fontSize: 9, fontFamily: "Inter,PingFang SC,Microsoft YaHei,sans-serif", position: "right", forceDisplay: true },
         compare: {
           enabled: true,
           tolerance: 0.5,
@@ -601,8 +683,8 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
             size: 5,
             fontSize: 9,
             fontFamily: "Inter,PingFang SC,Microsoft YaHei,sans-serif",
-            ahead: { show: true, text: (diff:number)=>`提前 ${Math.abs(Math.round(diff))} 天`, color: skin.done, opacity: 0.68 },
-            delayed: { show: true, text: (diff:number)=>`延后 ${Math.abs(Math.round(diff))} 天`, color: skin.blocked, opacity: 0.68 },
+            ahead: { show: adaptive.compareLabel, text: (diff:number)=>`提前 ${Math.abs(Math.round(diff))} 天`, color: skin.done, opacity: 0.68 },
+            delayed: { show: adaptive.compareLabel, text: (diff:number)=>`延后 ${Math.abs(Math.round(diff))} 天`, color: skin.blocked, opacity: 0.68 },
             ontime: { show: false, text: "准时", color: tk.m, opacity: 0.5 },
           },
         },
@@ -624,7 +706,7 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
         fontFamily: "Inter,PingFang SC,Microsoft YaHei,sans-serif",
         align: "center",
         move: { enabled: (row:any) => row?.data?.type !== "summary", byUnit: true, single: { left: true, right: true, backgroundColor: alpha(tk.paper, 0.58), opacity: 0.74 }, link: { child: "none", parent: "expand" } },
-        label: (row:any)=>{const d=row.data||{};if(d.type==="summary") return ""; const w=d.assignee||"";const p=d.progress!=null?`${d.progress}%`:"";return w?`${w} · ${p}`:p;},
+        label: (row:any)=>{const d=row.data||{};if(d.type==="summary") return ""; const p=d.progress!=null?`${d.progress}%`:""; if(adaptive.labelMode==="progress") return p; const w=d.assignee||"";return w?`${w} · ${p}`:p;},
         progress: { show: settings.showProgress, backgroundColor: skin.progress, color: tk.paper, opacity: 0.66, radius: 7, textAlign: "inside", fontSize: 10 },
       },
       row: {
@@ -637,7 +719,7 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
       today: { show: true, type: "line", backgroundColor: tk.r, opacity: 0.58, width: 1.2, text: { show: true, color: tk.paper, backgroundColor: tk.r, opacity: 0.78, fontSize: 9, fontFamily: "Inter" } },
       scrollbar: { showHorizontal: true, showVertical: true, track: { size: 10, radius: 999, color: alpha(tk.p, 0.04) }, thumb: { size: 34, radius: 999, color: mix(tk.p, tk.paper, 0.22) }, showDelay: 0, hideDelay: 900, showDuration: 160, hideDuration: 200, animationDuration: 120 },
     } as any;
-  }, [ganttTasks, ganttLinks, ganttBaselines, ganttRange, settings, themeKey]);
+  }, [ganttTasks, ganttLinks, ganttBaselines, ganttRange, flatGanttTasks, ganttViewportWidth, settings, themeKey]);
 
   const onModalClose = useCallback(() => { setEditingTask(null); fetchGantt(); fetchDashboardStats(); }, [fetchDashboardStats, fetchGantt]);
 
@@ -712,7 +794,7 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
     </section>
 
     <div className="dashboard-grid">
-      <section className="panel gantt-panel">
+      <section className="panel gantt-panel" ref={ganttPanelRef}>
 
         {/* ── Toolbar (like demo) ── */}
         <div className="dashboard-gantt-toolbar">
