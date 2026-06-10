@@ -189,6 +189,7 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
   const [syncNote, setSyncNote] = useState("已连接数据库");
   const [selectedTask, setSelectedTask] = useState<any>(null);
   const [themeKey, setThemeKey] = useState(() => document.body.dataset.theme || "default");
+  const [viewMenuOpen, setViewMenuOpen] = useState(false);
   const ganttRef = useRef<XGanttReactRef>(null);
   const fetchIdRef = useRef(0);
   const prevViewRef = useRef(view);
@@ -233,6 +234,12 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
     showWeekend: true,
     density: "compact" as "compact"|"comfortable",
   });
+  const viewToggleMeta = [
+    ["showLinks", "依赖", "sync"],
+    ["showProgress", "进度", "clock"],
+    ["showBaseline", "基线", "project"],
+    ["showWeekend", "周末", "dashboard"],
+  ] as const;
 
   /* ── Fetch data ── */
   const fetchGantt = useCallback(() => {
@@ -556,13 +563,14 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
         show: settings.showLinks,
         key: "id",
         move: { enabled: true },
-        create: { enabled: true, mode: "hover" as any, color: skin.link, opacity: 0.92, radius: 4, width: 2, from: (row:any)=>row?.data?.type !== "summary", to: (row:any)=>row?.data?.type !== "summary" },
+        create: { enabled: true, mode: "hover" as any, color: skin.link, opacity: 0.82, radius: 4, width: 2, from: (row:any)=>row?.data?.type !== "summary", to: (row:any)=>row?.data?.type !== "summary" },
         color: skin.link,
-        distance: 22,
+        opacity: 0.46,
+        distance: 20,
         gap: 7,
         dash: [0],
-        width: 1.2,
-        arrow: { width: 7, height: 6 },
+        width: 1,
+        arrow: { width: 6, height: 5 },
         radius: 3,
         enableCycleDetection: true,
       },
@@ -572,12 +580,12 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
         taskKey: "taskId",
         fields: { startTime: "startTime", endTime: "endTime", name: "name", id: "id", highlight: "highlight", target: "target" },
         mode: "line",
-        height: 3,
+        height: 2,
         offset: 2,
         position: "bottom",
         backgroundColor: skin.baseline,
         color: skin.baseline,
-        opacity: 0.76,
+        opacity: 0.58,
         radius: 999,
         label: { show: true, field: "name", color: skin.baseline, fontSize: 9, fontFamily: "Inter,PingFang SC,Microsoft YaHei,sans-serif", position: "right", forceDisplay: true },
         compare: {
@@ -593,8 +601,8 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
             size: 5,
             fontSize: 9,
             fontFamily: "Inter,PingFang SC,Microsoft YaHei,sans-serif",
-            ahead: { show: true, text: (diff:number)=>`提前 ${Math.abs(Math.round(diff))} 天`, color: skin.done, opacity: 0.76 },
-            delayed: { show: true, text: (diff:number)=>`延后 ${Math.abs(Math.round(diff))} 天`, color: skin.blocked, opacity: 0.76 },
+            ahead: { show: true, text: (diff:number)=>`提前 ${Math.abs(Math.round(diff))} 天`, color: skin.done, opacity: 0.68 },
+            delayed: { show: true, text: (diff:number)=>`延后 ${Math.abs(Math.round(diff))} 天`, color: skin.blocked, opacity: 0.68 },
             ontime: { show: false, text: "准时", color: tk.m, opacity: 0.5 },
           },
         },
@@ -622,11 +630,11 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
       row: {
         height: rowHeight,
         indent: 18,
-        backgroundColor: (row:any) => row.data?.type === "summary" ? mix(tk.p, tk.paper, 0.04) : alpha(tk.paper, settings.density === "comfortable" ? 0.82 : 0.72),
-        hover: { backgroundColor: tk.p, opacity: 0.055 },
-        select: { backgroundColor: tk.p, opacity: 0.095 },
+        backgroundColor: (row:any) => row.data?.type === "summary" ? mix(tk.p, tk.paper, 0.035) : alpha(tk.paper, settings.density === "comfortable" ? 0.76 : 0.68),
+        hover: { backgroundColor: tk.p, opacity: 0.04 },
+        select: { backgroundColor: tk.p, opacity: 0.07 },
       },
-      today: { show: true, type: "line", backgroundColor: tk.r, opacity: 0.68, width: 1.5, text: { show: true, color: tk.paper, backgroundColor: tk.r, opacity: 0.9, fontSize: 10, fontFamily: "Inter" } },
+      today: { show: true, type: "line", backgroundColor: tk.r, opacity: 0.58, width: 1.2, text: { show: true, color: tk.paper, backgroundColor: tk.r, opacity: 0.78, fontSize: 9, fontFamily: "Inter" } },
       scrollbar: { showHorizontal: true, showVertical: true, track: { size: 10, radius: 999, color: alpha(tk.p, 0.04) }, thumb: { size: 34, radius: 999, color: mix(tk.p, tk.paper, 0.22) }, showDelay: 0, hideDelay: 900, showDuration: 160, hideDuration: 200, animationDuration: 120 },
     } as any;
   }, [ganttTasks, ganttLinks, ganttBaselines, ganttRange, settings, themeKey]);
@@ -704,7 +712,7 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
     </section>
 
     <div className="dashboard-grid">
-      <section className="panel gantt-panel" style={{overflow:"hidden"}}>
+      <section className="panel gantt-panel">
 
         {/* ── Toolbar (like demo) ── */}
         <div className="dashboard-gantt-toolbar">
@@ -720,23 +728,21 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
                 <button key={u} className={settings.unit===u?"active":""} onClick={()=>setSettings(s=>({...s,unit:u}))}>{u==="day"?"日":u==="week"?"周":"月"}</button>
               ))}
             </div>
-            <button className="btn icon-only" onClick={() => ganttRef.current?.jumpTo()} title="回到今天" aria-label="回到今天"><Icon name="dashboard" /></button>
-          </div>
-          <div className="dashboard-view-toggles">
-            {ganttLinks.length > 0 && <button className="btn" disabled={!selectedLink} onClick={deleteSelectedLink} title={selectedLink ? "删除选中的依赖线" : "请先点击一条依赖线"}><Icon name="x" />删除依赖</button>}
-            {(["showLinks","showProgress","showBaseline","showWeekend"] as any[]).map((key,i) => {
-              const icons = ["sync","clock","project","dashboard"] as const;
-              const labels = ["依赖","进度","基线","周末"];
-              return (
-                <label key={key} className="toggle-chip" title={key}>
-                  <input type="checkbox" checked={(settings as any)[key]} onChange={e=>setSettings(s=>({...s,[key]:e.target.checked}))} style={{display:"none"}} />
-                  <Icon name={icons[i]} /><span>{labels[i]}</span>
-                </label>
-              );
-            })}
-            <button className="toggle-chip as-button" onClick={() => setSettings(s => ({...s, density: s.density === "compact" ? "comfortable" : "compact"}))}>
-              <Icon name="dashboard" /><span>{settings.density === "compact" ? "紧凑" : "舒展"}</span>
-            </button>
+            <div className="gantt-view-menu-wrap">
+              <button className={`btn view-menu-trigger ${viewMenuOpen ? "active" : ""}`} onClick={() => setViewMenuOpen(open => !open)} aria-expanded={viewMenuOpen}><Icon name="filter" />视图</button>
+              {viewMenuOpen && <div className="gantt-view-menu">
+                <div className="gantt-view-menu-head"><strong>显示项</strong><span>控制甘特辅助信息</span></div>
+                {viewToggleMeta.map(([key, label, icon]) => (
+                  <label key={key} className="view-menu-row">
+                    <span><Icon name={icon as any} />{label}</span>
+                    <input type="checkbox" checked={(settings as any)[key]} onChange={e=>setSettings(s=>({...s,[key]:e.target.checked}))} />
+                  </label>
+                ))}
+                <button className="view-menu-row as-button" onClick={() => ganttRef.current?.jumpTo()}><span><Icon name="dashboard" />回到今天</span></button>
+                <button className="view-menu-row as-button" onClick={() => setSettings(s => ({...s, density: s.density === "compact" ? "comfortable" : "compact"}))}><span><Icon name="dashboard" />{settings.density === "compact" ? "舒展行高" : "紧凑行高"}</span></button>
+                {ganttLinks.length > 0 && <button className="view-menu-row as-button danger" disabled={!selectedLink} onClick={deleteSelectedLink}><span><Icon name="x" />删除依赖</span></button>}
+              </div>}
+            </div>
           </div>
         </div>
         <div className="gantt-fullapp-status">

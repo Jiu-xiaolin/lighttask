@@ -1350,12 +1350,23 @@ body[data-personalize="skins"] .personal-menu {
   background: var(--primary-soft); color: var(--primary); border-color: var(--primary);
 }
 
+/* Layer map: content < sticky controls < popovers < context menus < modal/toast. */
+:root {
+  --z-content: 1;
+  --z-toolbar: 30;
+  --z-popover: 140;
+  --z-context-menu: 180;
+  --z-modal: 240;
+  --z-toast: 320;
+}
+
 /* ── XGantt v12 redesign ── */
 .gantt-panel {
   position: relative;
+  isolation: isolate;
   min-height: 586px;
   padding: 14px;
-  overflow: hidden;
+  overflow: visible;
   border-color: color-mix(in srgb, var(--line) 78%, transparent);
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--paper) 92%, transparent), color-mix(in srgb, var(--surface) 86%, transparent)),
@@ -1370,15 +1381,18 @@ body[data-personalize="skins"] .personal-menu {
   pointer-events: none;
   background: repeating-linear-gradient(0deg, transparent 0 31px, color-mix(in srgb, var(--line) 18%, transparent) 31px 32px);
   opacity: 0.28;
+  z-index: 0;
 }
 
 .gantt-panel > * {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content);
 }
 
 .dashboard-gantt-toolbar {
-  grid-template-columns: minmax(220px, 1fr) auto auto;
+  position: relative;
+  z-index: var(--z-toolbar);
+  grid-template-columns: minmax(220px, 1fr) auto;
   gap: 10px;
   margin-bottom: 10px;
   padding: 0 0 12px;
@@ -1394,8 +1408,7 @@ body[data-personalize="skins"] .personal-menu {
   font-size: 18px;
 }
 
-.dashboard-gantt-actions,
-.dashboard-view-toggles {
+.dashboard-gantt-actions {
   gap: 6px;
 }
 
@@ -1411,6 +1424,102 @@ body[data-personalize="skins"] .personal-menu {
   border-radius: 8px;
   border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
   background: color-mix(in srgb, var(--paper) 80%, transparent);
+}
+
+.dashboard-gantt-toolbar .view-menu-trigger {
+  min-width: 78px;
+  justify-content: center;
+}
+
+.dashboard-gantt-toolbar .view-menu-trigger.active {
+  color: var(--primary);
+  border-color: color-mix(in srgb, var(--primary) 32%, var(--line));
+  background: color-mix(in srgb, var(--primary-soft) 76%, var(--paper));
+}
+
+.gantt-view-menu-wrap {
+  position: relative;
+  z-index: var(--z-toolbar);
+}
+
+.gantt-view-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: var(--z-popover);
+  width: 246px;
+  display: grid;
+  gap: 6px;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, var(--primary) 20%, var(--line));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--paper) 96%, white);
+  box-shadow: 0 18px 44px color-mix(in srgb, var(--ink) 12%, transparent);
+}
+
+.gantt-view-menu-head {
+  display: grid;
+  gap: 2px;
+  padding: 2px 4px 8px;
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 62%, transparent);
+}
+
+.gantt-view-menu-head strong {
+  color: var(--ink);
+  font-size: 13px;
+}
+
+.gantt-view-menu-head span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.view-menu-row {
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 8px;
+  color: color-mix(in srgb, var(--muted) 88%, var(--ink));
+  background: transparent;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.view-menu-row:hover {
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary-soft) 58%, transparent);
+}
+
+.view-menu-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.view-menu-row svg {
+  width: 14px;
+  height: 14px;
+}
+
+.view-menu-row input {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--primary);
+}
+
+.view-menu-row.as-button {
+  width: 100%;
+  border-top: 1px solid color-mix(in srgb, var(--line) 54%, transparent);
+  justify-content: flex-start;
+}
+
+.view-menu-row.danger {
+  color: var(--rose);
 }
 
 .dashboard-gantt-toolbar .btn.primary {
@@ -1493,11 +1602,13 @@ body[data-personalize="skins"] .personal-menu {
 }
 
 .gantt-panel .x-gantt-container {
+  position: relative;
+  z-index: var(--z-content);
   min-height: 500px;
   border: 1px solid color-mix(in srgb, var(--line) 64%, transparent);
   border-radius: 8px;
   overflow: hidden;
-  background: color-mix(in srgb, var(--paper) 84%, transparent);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
@@ -1507,25 +1618,25 @@ body[data-personalize="skins"] .personal-menu {
 }
 
 .gantt-panel .x-gantt {
-  --x-gantt-border-color: color-mix(in srgb, var(--line) 64%, transparent);
-  --x-gantt-row-hover-color: color-mix(in srgb, var(--primary) 6%, var(--paper));
-  --x-gantt-row-selected-color: color-mix(in srgb, var(--primary) 10%, var(--paper));
+  --x-gantt-border-color: color-mix(in srgb, var(--line) 46%, transparent);
+  --x-gantt-row-hover-color: color-mix(in srgb, var(--primary) 4%, var(--paper));
+  --x-gantt-row-selected-color: color-mix(in srgb, var(--primary) 7%, var(--paper));
   --x-gantt-cell-padding: 0 12px;
   color: var(--text);
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--paper) 94%, transparent), color-mix(in srgb, var(--bg) 18%, var(--paper)));
+    linear-gradient(180deg, color-mix(in srgb, var(--paper) 96%, transparent), color-mix(in srgb, var(--bg) 12%, var(--paper)));
 }
 
 .gantt-panel .x-gantt-table-container {
   width: auto;
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--paper) 96%, transparent), color-mix(in srgb, var(--paper) 82%, transparent));
-  border-right: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+    linear-gradient(180deg, color-mix(in srgb, var(--paper) 94%, transparent), color-mix(in srgb, var(--paper) 84%, transparent));
+  border-right: 1px solid color-mix(in srgb, var(--line) 38%, transparent);
 }
 
 .gantt-panel .x-gantt-table-header {
-  background: color-mix(in srgb, var(--paper) 96%, transparent);
-  border-bottom-color: color-mix(in srgb, var(--line) 76%, transparent) !important;
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--line) 58%, transparent) !important;
 }
 
 .gantt-panel .x-gantt-table-header-cell,
@@ -1540,7 +1651,7 @@ body[data-personalize="skins"] .personal-menu {
 .gantt-panel .x-gantt-table-header-cell.border,
 .gantt-panel .x-gantt-table-header-group.border > .x-gantt-table-header-cell.border,
 .gantt-panel .x-gantt-table-cell.border {
-  border-right-color: color-mix(in srgb, var(--line) 58%, transparent) !important;
+  border-right-color: color-mix(in srgb, var(--line) 36%, transparent) !important;
 }
 
 .gantt-panel .x-gantt-table-header-title,
@@ -1549,7 +1660,7 @@ body[data-personalize="skins"] .personal-menu {
 }
 
 .gantt-panel .x-gantt-table-body {
-  background: color-mix(in srgb, var(--paper) 82%, transparent);
+  background: color-mix(in srgb, var(--paper) 76%, transparent);
 }
 
 .gantt-panel .x-gantt-table-row {
@@ -1560,20 +1671,20 @@ body[data-personalize="skins"] .personal-menu {
   color: var(--text);
   font-size: 12px;
   line-height: 1.45;
-  border-bottom-color: color-mix(in srgb, var(--line) 44%, transparent) !important;
-  background: color-mix(in srgb, var(--paper) 68%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--line) 34%, transparent) !important;
+  background: color-mix(in srgb, var(--paper) 58%, transparent);
 }
 
 .gantt-panel .x-gantt-table-row:nth-child(2n) .x-gantt-table-cell {
-  background: color-mix(in srgb, var(--bg) 16%, var(--paper));
+  background: color-mix(in srgb, var(--bg) 10%, var(--paper));
 }
 
 .gantt-panel .x-gantt-table-row.hover > .x-gantt-table-cell {
-  background: color-mix(in srgb, var(--primary) 6%, var(--paper)) !important;
+  background: color-mix(in srgb, var(--primary) 4%, var(--paper)) !important;
 }
 
 .gantt-panel .x-gantt-table-row.selected > .x-gantt-table-cell {
-  background: color-mix(in srgb, var(--primary) 10%, var(--paper)) !important;
+  background: color-mix(in srgb, var(--primary) 7%, var(--paper)) !important;
   color: var(--ink);
 }
 
@@ -1590,7 +1701,7 @@ body[data-personalize="skins"] .personal-menu {
 .gantt-panel .x-gantt-chart,
 .gantt-panel .konvajs-content {
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--paper) 90%, transparent), color-mix(in srgb, var(--bg) 24%, var(--paper)));
+    linear-gradient(180deg, color-mix(in srgb, var(--paper) 93%, transparent), color-mix(in srgb, var(--bg) 14%, var(--paper)));
 }
 
 .gantt-panel .x-gantt-expand-icon {
@@ -1645,7 +1756,7 @@ body[data-personalize="skins"] .personal-menu {
 }
 
 .gantt-panel .gantt-scrollbar {
-  z-index: 30;
+  z-index: var(--z-toolbar);
 }
 
 .gantt-panel .gantt-scrollbar-thumb,
@@ -1675,7 +1786,7 @@ body[data-personalize="skins"] .personal-menu {
 
 /* ── Gantt context menu ── */
 .gantt-ctx-overlay {
-  position: fixed; inset: 0; z-index: 1000;
+  position: fixed; inset: 0; z-index: var(--z-context-menu);
 }
 .gantt-ctx-menu {
   position: fixed;
