@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { api } from "../lib/api";
 import { Icon } from "../lib/icons";
 
-export function Profile({ user: initialUser, theme, api: _api, refresh, setUser: setAppUser }: any) {
+export function Profile({ user: initialUser, theme, api, refresh, setUser: setAppUser, onProfileChanged }: any) {
   const [name, setName] = useState(initialUser.name || "");
   const [avatar, setAvatar] = useState(initialUser.avatar || "");
   const [signature, setSignature] = useState(initialUser.signature || "把复杂协作变成可推进的小步。");
@@ -19,6 +18,12 @@ export function Profile({ user: initialUser, theme, api: _api, refresh, setUser:
   const sigRef = useRef<HTMLTextAreaElement>(null);
   const isImageAvatar = avatar && (avatar.startsWith("/uploads/") || avatar.startsWith("http"));
 
+  useEffect(() => {
+    setName(initialUser.name || "");
+    setAvatar(initialUser.avatar || "");
+    setSignature(initialUser.signature || "把复杂协作变成可推进的小步。");
+  }, [initialUser.id, initialUser.name, initialUser.avatar, initialUser.signature]);
+
   function flash(text: string, ok: boolean) { setMsg({ text, ok }); setTimeout(() => setMsg(null), 2500); }
 
   async function handleAvatarUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -32,7 +37,12 @@ export function Profile({ user: initialUser, theme, api: _api, refresh, setUser:
       const res = await fetch("/api/profile/avatar", { method: "POST", headers: { authorization: `Bearer ${token}` }, body: form });
       if (!res.ok) { const err = await res.json(); throw new Error(err.message || "上传失败"); }
       const data = await res.json();
+      const updated = { ...initialUser, avatar: data.url };
       setAvatar(data.url);
+      setAppUser(updated);
+      localStorage.setItem("lt_user", JSON.stringify(updated));
+      onProfileChanged?.();
+      await refresh?.();
       flash("头像已更新", true);
     } catch (e: any) { flash(e.message || "上传失败", false); }
     finally { setUploading(false); }
@@ -45,6 +55,7 @@ export function Profile({ user: initialUser, theme, api: _api, refresh, setUser:
       const updated = { ...initialUser, name, avatar, signature };
       setAppUser(updated);
       localStorage.setItem("lt_user", JSON.stringify(updated));
+      onProfileChanged?.();
       flash("资料已保存", true);
     } catch (e: any) { flash(e.message || "保存失败", false); }
     finally { setSaving(false); }

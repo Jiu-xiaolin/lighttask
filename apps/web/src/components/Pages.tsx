@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { Icon } from "../lib/icons";
-import { mapTaskStatus, acceptanceText, type Project, type Task, type ProgressItem, type FileItem } from "./shared";
+import { mapTaskStatus, type Project, type Task, type ProgressItem, type FileItem } from "./shared";
+import { TaskEditModal } from "./TaskEditModal";
 import autoAnimate from "@formkit/auto-animate";
+import { getApiToken } from "../lib/api";
 
-export { mapTaskStatus, acceptanceText };
+export { mapTaskStatus };
 
 export function Login({ onLogin }: { onLogin: (username: string, password: string) => Promise<void> }) {
   const [username, setUsername] = React.useState("admin");
@@ -20,7 +22,170 @@ export function Login({ onLogin }: { onLogin: (username: string, password: strin
 
 export function ProjectList({ projects, setProjectId, setView, api, refresh, filter, setFilter }: any) {
   const filters = [["", "全部"], ["mine", "我负责"], ["risk", "有风险"], ["pending_acceptance", "待验收"], ["archived", "已归档"]];
-  return <><div className="toolbar-row"><div className="segmented">{filters.map(([key, label]) => <button key={key} className={filter === key ? "active" : ""} onClick={() => { setFilter(key); setTimeout(refresh, 50); }}>{label}</button>)}</div><div className="toolbar-actions"><button className="btn primary" onClick={async () => { await api("/projects", { method: "POST", body: JSON.stringify({ name: "新项目", group: "默认分组" }) }); setFilter(""); await refresh(); }}><Icon name="plus" />创建项目</button></div></div><div className="project-list-grid"><section className="panel project-board"><div className="panel-head"><div><h2>项目列表</h2><p>{filter === "risk" ? "存在延期或阻塞的项目" : filter === "pending_acceptance" ? "等待验收的项目" : filter === "archived" ? "已归档的项目" : "进行中的项目"}</p></div><span style={{fontSize:12,color:"var(--muted)"}}>{projects.length} 个项目</span></div><div className="project-cards">{projects.map((project: any) => <article key={project.id} className="project-card"><span className={`tag ${project.risk === "high" ? "danger" : project.risk === "medium" ? "warn" : "ok"}`}>{project.status === "ARCHIVED" ? "已归档" : project.risk === "high" ? "高风险" : project.risk === "medium" ? "需关注" : "正常"}</span><strong>{project.name}</strong><p>{project.group} · {project.memberCount || 0} 人 · {project.taskCount || 0} 个任务</p><div className="project-flags"><em>{project.progress}%</em><em>截止 {project.currentEnd}</em></div><progress value={project.progress} max="100" /><div><button onClick={() => { setProjectId(project.id); setView("workspace"); }}>进入工作台</button>{project.status !== "ARCHIVED" && <button className="link-btn" onClick={async () => { await api(`/projects/${project.id}/archive`, { method: "POST" }); await refresh(); }}>归档</button>}</div></article>)}</div></section><aside className="panel create-panel"><div className="panel-head slim"><h2>快速创建</h2></div><label>项目名称 <input id="quick-project-name" placeholder="新客户交付计划" /></label><label>项目分组 <input id="quick-project-group" placeholder="客户交付" /></label><button className="btn primary wide" onClick={async () => { const name = (document.querySelector("#quick-project-name") as HTMLInputElement)?.value || "新项目"; const group = (document.querySelector("#quick-project-group") as HTMLInputElement)?.value || "默认分组"; await api("/projects", { method: "POST", body: JSON.stringify({ name, group }) }); await refresh(); }}><Icon name="plus" />创建项目</button><div className="invite-box"><Icon name="user" /><span>创建后可邀请成员，自动生成成员进度和文件收集箱。</span></div></aside></div></>;
+  const [selectedId, setSelectedId] = React.useState(projects[0]?.id || "");
+  const [draft, setDraft] = React.useState<any>({});
+  const [quick, setQuick] = React.useState({ name: "", group: "" });
+  const [busy, setBusy] = React.useState("");
+  const [menuProjectId, setMenuProjectId] = React.useState("");
+  const [menuPanel, setMenuPanel] = React.useState<"actions" | "edit">("actions");
+  const selected = projects.find((project: any) => project.id === selectedId) || projects[0];
+  React.useEffect(() => {
+    if (!projects.some((project: any) => project.id === selectedId)) setSelectedId(projects[0]?.id || "");
+  }, [projects, selectedId]);
+  React.useEffect(() => {
+    if (!selected) return;
+    setDraft({
+      name: selected.name || "",
+      group: selected.group || "",
+      currentEnd: selected.currentEnd || "",
+      description: selected.description || "",
+      risk: selected.risk || "low",
+    });
+  }, [selected?.id]);
+
+  const copyDraft = (key: string, value: string) => setDraft((prev: any) => ({ ...prev, [key]: value }));
+  const openProjectMenu = (project: any) => {
+    const nextOpen = menuProjectId !== project.id;
+    setSelectedId(project.id);
+    setDraft({
+      name: project.name || "",
+      group: project.group || "",
+      currentEnd: project.currentEnd || "",
+      description: project.description || "",
+      risk: project.risk || "low",
+    });
+    setMenuProjectId(nextOpen ? project.id : "");
+    setMenuPanel("actions");
+  };
+  const createProject = async () => {
+    setBusy("create");
+    try {
+      await api("/projects", { method: "POST", body: JSON.stringify({ name: quick.name || "新项目", group: quick.group || "默认分组" }) });
+      setQuick({ name: "", group: "" });
+      setFilter("");
+      await refresh();
+    } finally {
+      setBusy("");
+    }
+  };
+  const saveProject = async () => {
+    if (!selected) return;
+    setBusy(`save-${selected.id}`);
+    try {
+      await api(`/projects/${selected.id}`, { method: "PATCH", body: JSON.stringify(draft) });
+      await refresh();
+      setMenuPanel("actions");
+    } finally {
+      setBusy("");
+    }
+  };
+  const archiveProject = async (project: any) => {
+    setBusy(`archive-${project.id}`);
+    try {
+      await api(`/projects/${project.id}/archive`, { method: "POST" });
+      await refresh();
+    } finally {
+      setBusy("");
+    }
+  };
+  const restoreProject = async (project: any) => {
+    setBusy(`restore-${project.id}`);
+    try {
+      await api(`/projects/${project.id}/restore`, { method: "POST" });
+      setFilter("");
+      await refresh();
+    } finally {
+      setBusy("");
+    }
+  };
+  const deleteProject = async (project: any) => {
+    const ok = window.confirm(`确定删除项目「${project.name}」吗？项目将从列表中移除。`);
+    if (!ok) return;
+    setBusy(`delete-${project.id}`);
+    try {
+      await api(`/projects/${project.id}`, { method: "DELETE" });
+      setSelectedId("");
+      await refresh();
+    } finally {
+      setBusy("");
+    }
+  };
+  const subtitle = filter === "risk" ? "存在延期或阻塞的项目" : filter === "pending_acceptance" ? "等待验收的项目" : filter === "archived" ? "已归档的项目" : "进行中的项目";
+
+  return <>
+    <div className="toolbar-row project-toolbar">
+      <div className="segmented">{filters.map(([key, label]) => <button key={key} className={filter === key ? "active" : ""} onClick={() => { setFilter(key); setTimeout(refresh, 50); }}>{label}</button>)}</div>
+      <div className="toolbar-actions"><button className="btn primary" disabled={busy === "create"} onClick={createProject}><Icon name="plus" />创建项目</button></div>
+    </div>
+    <div className="project-list-grid project-management-grid">
+      <section className="panel project-board project-board-managed">
+        <div className="panel-head">
+          <div><h2>项目列表</h2><p>{subtitle}</p></div>
+          <div className="project-board-summary"><span>{projects.length} 个项目</span><span>{projects.filter((p:any)=>p.risk !== "low").length} 个风险</span></div>
+        </div>
+        <div className="project-cards managed-project-cards">
+          {projects.map((project: any) => {
+            const completed = project.completedTaskCount ?? 0;
+            const total = project.taskCount || 0;
+            const riskTone = project.risk === "high" ? "risk" : project.risk === "medium" ? "warn" : "";
+            const statusText = project.status === "ARCHIVED" ? "已归档" : project.risk === "high" ? "高风险" : project.risk === "medium" ? "需关注" : "正常";
+            const menuOpen = menuProjectId === project.id;
+            return <article key={project.id} className={`project-card managed-project-card ${selected?.id === project.id ? "active" : ""} ${menuOpen ? "menu-open" : ""}`} onClick={() => setSelectedId(project.id)}>
+              <div className="project-card-top">
+                <span className={`tag ${project.status === "ARCHIVED" ? "" : project.risk === "high" ? "danger" : project.risk === "medium" ? "warn" : "ok"}`}>{statusText}</span>
+                <button className={`icon-btn ${menuOpen ? "active" : ""}`} title="管理项目" aria-label={`管理项目 ${project.name}`} onClick={(event) => { event.stopPropagation(); openProjectMenu(project); }}><Icon name="settings" /></button>
+              </div>
+              {menuOpen && <div className="project-card-menu" onClick={(event) => event.stopPropagation()}>
+                {menuPanel === "actions" ? <>
+                  <div className="project-card-menu-head"><strong>项目管理</strong><button className="icon-btn" aria-label="关闭项目管理菜单" onClick={() => setMenuProjectId("")}><Icon name="x" /></button></div>
+                  <button onClick={() => setMenuPanel("edit")}><Icon name="edit" /><span>修改项目信息</span></button>
+                  <button onClick={() => { setProjectId(project.id); setView("workspace"); }}><Icon name="project" /><span>进入工作台</span></button>
+                  {project.status === "ARCHIVED"
+                    ? <button disabled={busy === `restore-${project.id}`} onClick={() => restoreProject(project)}><Icon name="restore" /><span>恢复项目</span></button>
+                    : <button disabled={busy === `archive-${project.id}`} onClick={() => archiveProject(project)}><Icon name="archive" /><span>归档项目</span></button>}
+                  <button className="danger" disabled={busy === `delete-${project.id}`} onClick={() => deleteProject(project)}><Icon name="trash" /><span>删除项目</span></button>
+                </> : <>
+                  <div className="project-card-menu-head"><button className="link-btn" onClick={() => setMenuPanel("actions")}>返回</button><strong>项目信息</strong><button className="icon-btn" aria-label="关闭项目信息" onClick={() => setMenuProjectId("")}><Icon name="x" /></button></div>
+                  <div className="project-menu-form">
+                    <label>项目名称 <input value={draft.name || ""} onChange={event => copyDraft("name", event.target.value)} /></label>
+                    <label>项目分组 <input value={draft.group || ""} onChange={event => copyDraft("group", event.target.value)} /></label>
+                    <label>当前截止 <input type="date" value={draft.currentEnd || ""} onChange={event => copyDraft("currentEnd", event.target.value)} /></label>
+                    <label>风险等级 <select value={draft.risk || "low"} onChange={event => copyDraft("risk", event.target.value)}><option value="low">正常</option><option value="medium">需关注</option><option value="high">高风险</option></select></label>
+                    <label>项目说明 <textarea rows={3} value={draft.description || ""} onChange={event => copyDraft("description", event.target.value)} placeholder="补充交付范围、客户背景或风险说明" /></label>
+                    <button className="btn primary wide" disabled={busy === `save-${project.id}`} onClick={saveProject}><Icon name="save" />保存修改</button>
+                  </div>
+                </>}
+              </div>}
+              <strong>{project.name}</strong>
+              <p>{project.group} · {project.memberCount || 0} 人 · 截止 {project.currentEnd}</p>
+              <div className="project-card-metrics">
+                <span><b>{completed}</b>/{total} 任务</span>
+                <span><b>{project.progress || 0}%</b> 进度</span>
+                <span>{project.acceptanceStatus || "未验收"}</span>
+              </div>
+              <div className="progress-section"><div className="progress-row"><span className="progress-fraction"><span className={`done-num ${completed===0&&total>0?'risk':''}`}>{completed}</span><span className="sep">/</span><span className="total-num">{total}</span><span className="label">任务完成</span></span><strong className="progress-meter-value">{project.progress}%</strong></div><div className="progress-meter-track"><div className={`progress-meter-fill ${completed===total&&total>0?'done':riskTone}`} style={{width:`${Math.min(100,Math.max(0,project.progress||0))}%`}} /></div></div>
+              <div className="project-card-actions" onClick={(event) => event.stopPropagation()}>
+                <button onClick={() => { setProjectId(project.id); setView("workspace"); }}>进入工作台</button>
+                {project.status === "ARCHIVED" ? <button className="link-btn" disabled={busy === `restore-${project.id}`} onClick={() => restoreProject(project)}><Icon name="restore" />恢复</button> : <button className="link-btn" disabled={busy === `archive-${project.id}`} onClick={() => archiveProject(project)}><Icon name="archive" />归档</button>}
+                <button className="link-btn danger" disabled={busy === `delete-${project.id}`} onClick={() => deleteProject(project)}><Icon name="trash" />删除</button>
+              </div>
+            </article>;
+          })}
+          {!projects.length && <div className="project-empty-state"><Icon name="project" /><strong>暂无项目</strong><span>创建项目后可管理成员、任务、文件和验收节点。</span></div>}
+        </div>
+      </section>
+      <aside className="panel project-manager-panel">
+        <div className="panel-head slim"><h2>项目管理</h2><span>{selected ? selected.name : "未选择"}</span></div>
+        <div className="quick-create-box">
+          <strong>快速创建</strong>
+          <label>项目名称 <input value={quick.name} onChange={event => setQuick(prev => ({ ...prev, name: event.target.value }))} placeholder="新客户交付计划" /></label>
+          <label>项目分组 <input value={quick.group} onChange={event => setQuick(prev => ({ ...prev, group: event.target.value }))} placeholder="客户交付" /></label>
+          <button className="btn primary wide" disabled={busy === "create"} onClick={createProject}><Icon name="plus" />创建项目</button>
+        </div>
+        <div className="invite-box"><Icon name="user" /><span>项目管理支持编辑基本信息、调整风险、归档恢复和删除项目。</span></div>
+      </aside>
+    </div>
+  </>;
 }
 
 function TaskCreateModal({ project, api, refresh, members, tasks, onClose }: any) {
@@ -47,33 +212,40 @@ function TaskCreateModal({ project, api, refresh, members, tasks, onClose }: any
   async function handleCreate() {
     if (!title.trim()) return;
     setSaving(true);
-    const body: any = { title, priority, note, dependencyIds: deps };
-    if (baselineStart) body.baselineStart = baselineStart;
-    if (baselineEnd) body.baselineEnd = baselineEnd;
-    if (currentEnd) body.currentEnd = currentEnd;
-    const validAssignees = assignees.filter(Boolean);
-    if (validAssignees.length > 0) {
-      body.assignments = validAssignees.map(uid => ({
-        userId: uid,
-        planStart: baselineStart || today,
-        planEnd: baselineEnd || today,
-        currentEnd: currentEnd || baselineEnd || today
-      }));
+    try {
+      const body: any = { title, priority, note, dependencyIds: deps };
+      if (baselineStart) body.baselineStart = baselineStart;
+      if (baselineEnd) body.baselineEnd = baselineEnd;
+      if (currentEnd) body.currentEnd = currentEnd;
+      const validAssignees = assignees.filter(Boolean);
+      if (validAssignees.length > 0) {
+        body.assignments = validAssignees.map(uid => ({
+          userId: uid,
+          planStart: baselineStart || today,
+          planEnd: baselineEnd || today,
+          currentEnd: currentEnd || baselineEnd || today
+        }));
+      }
+      const res = await api(`/projects/${project.id}/tasks`, { method: "POST", body: JSON.stringify(body) });
+      if (files.length && res.task) {
+        const form = new FormData();
+        files.forEach(f => form.append("files", f));
+        const response = await fetch(`/api/projects/${project.id}/files/upload`, {
+          method: "POST",
+          headers: { authorization: `Bearer ${localStorage.getItem("lt_token")}` },
+          body: form
+        });
+        const text = await response.text();
+        const data = text ? JSON.parse(text) : null;
+        if (!response.ok) throw new Error(data?.message || "文件上传失败");
+      }
+      onClose();
+      await refresh();
+    } catch (error: any) {
+      alert(error.message || "创建任务失败");
+    } finally {
+      setSaving(false);
     }
-    // Create task
-    const res = await api(`/projects/${project.id}/tasks`, { method: "POST", body: JSON.stringify(body) });
-    // Upload files if any
-    if (files.length && res.task) {
-      const form = new FormData();
-      files.forEach(f => form.append('files', f));
-      await fetch(`/api/projects/${project.id}/files`, {
-        method: "POST",
-        headers: { authorization: `Bearer ${localStorage.getItem("lt_token")}` },
-        body: form
-      }).catch(() => {});
-    }
-    setSaving(false); onClose();
-    await refresh();
   }
 
   return <div className="modal-overlay" onClick={onClose}>
@@ -140,92 +312,10 @@ function TaskCreateModal({ project, api, refresh, members, tasks, onClose }: any
   </div>;
 }
 
-function TaskEditModal({ task, project, api, refresh, members, tasks, onClose }: any) {
-  const [title, setTitle] = React.useState(task.title || "");
-  const [priority, setPriority] = React.useState(task.priority || "medium");
-  const [baselineStart, setBaselineStart] = React.useState(task.baselineStart || "");
-  const [baselineEnd, setBaselineEnd] = React.useState(task.baselineEnd || "");
-  const [currentEnd, setCurrentEnd] = React.useState(task.currentEnd || "");
-  const [note, setNote] = React.useState(task.note || "");
-  const [deps, setDeps] = React.useState<string[]>(task.dependencyIds || []);
-  const [saving, setSaving] = React.useState(false);
-
-  function toggleDep(taskId: string) {
-    setDeps(prev => prev.includes(taskId) ? prev.filter(d => d !== taskId) : [...prev, taskId]);
-  }
-
-  async function handleSave() {
-    setSaving(true);
-    const body: any = { title, priority, note, dependencyIds: deps };
-    if (baselineStart) body.baselineStart = baselineStart;
-    if (baselineEnd) body.baselineEnd = baselineEnd;
-    if (currentEnd) body.currentEnd = currentEnd;
-    await api(`/tasks/${task.id}`, { method: "PATCH", body: JSON.stringify(body) });
-    setSaving(false); onClose();
-    await refresh();
-  }
-
-  async function handleDelete() {
-    if (!confirm("确定删除此任务？")) return;
-    await api(`/tasks/${task.id}`, { method: "DELETE" });
-    onClose();
-    await refresh();
-  }
-
-  return <div className="modal-overlay" onClick={onClose}>
-    <div className="modal-card" onClick={e => e.stopPropagation()}>
-      <div className="modal-head">
-        <strong>编辑任务</strong>
-        <span>{project.group} / {project.name}</span>
-      </div>
-      <div className="modal-body">
-        <label className="modal-field">任务名称
-          <input value={title} onChange={e => setTitle(e.target.value)} /></label>
-        <div className="modal-row">
-          <label className="modal-field">优先级
-            <select value={priority} onChange={e => setPriority(e.target.value)}>
-              <option value="high">高</option><option value="medium">中</option><option value="low">低</option>
-            </select></label>
-          <label className="modal-field">状态
-            <select value={task.status} onChange={async e => { await api(`/tasks/${task.id}`, { method: "PATCH", body: JSON.stringify({ status: e.target.value }) }); await refresh(); }}>
-              <option value="TODO">待处理</option><option value="DOING">进行中</option><option value="DONE">已完成</option><option value="BLOCKED">阻塞</option>
-            </select></label>
-        </div>
-        <div className="modal-row modal-row-3">
-          <label className="modal-field">原计划开始<input type="date" value={baselineStart} onChange={e => setBaselineStart(e.target.value)} /></label>
-          <label className="modal-field">原计划结束<input type="date" value={baselineEnd} onChange={e => setBaselineEnd(e.target.value)} /></label>
-          <label className="modal-field">当前计划结束<input type="date" value={currentEnd} onChange={e => setCurrentEnd(e.target.value)} /></label>
-        </div>
-        <div className="modal-field">
-          <span>依赖任务</span>
-          <div className="dep-list">
-            {tasks.filter((t: any) => t.id !== task.id && t.status !== "DELETED").map((t: any) => <label key={t.id} className="dep-chip">
-              <input type="checkbox" checked={deps.includes(t.id)} onChange={() => toggleDep(t.id)} />
-              <span>{t.title}</span>
-            </label>)}
-          </div>
-        </div>
-        <label className="modal-field">备注
-          <textarea value={note} onChange={e => setNote(e.target.value)} rows={2} /></label>
-      </div>
-      <div className="modal-foot" style={{justifyContent:"space-between"}}>
-        <button className="btn danger" onClick={handleDelete}>删除任务</button>
-        <div style={{display:"flex",gap:8}}>
-          <button className="btn" onClick={onClose}>取消</button>
-          <button className="btn primary" onClick={handleSave} disabled={saving || !title.trim()}>
-            <Icon name="save" />{saving ? "保存中..." : "保存"}
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>;
-}
-
-export function Workspace({ project, tasks, api, refresh, setView }: any) {
+export function Workspace({ project, tasks, api, refresh, setView, refreshStamp }: any) {
   const [wsTab, setWsTab] = React.useState("overview");
   const [timeline, setTimeline] = React.useState<any[]>([]);
   const [projectDetail, setProjectDetail] = React.useState<any>(null);
-  const [fileCollection, setFileCollection] = React.useState<any>(null);
   const [showNewTask, setShowNewTask] = React.useState(false);
   const [editingTask, setEditingTask] = React.useState<any>(null);
   const timelineRef = React.useRef<HTMLDivElement>(null);
@@ -263,18 +353,17 @@ export function Workspace({ project, tasks, api, refresh, setView }: any) {
     const oldStatus = task.status;
     task.status = newStatus;
     setTimeline(prev => [{ id: 'opt_' + Date.now(), projectId: project.id, type: 'task.status_changed', actorName: '你', message: `任务状态变更：${task.title} → ${col}`, color: 'blue', createdAt: new Date().toISOString() }, ...prev]);
-    api(`/tasks/${taskId}`, { method: "PATCH", body: JSON.stringify({ status: newStatus }) }).catch(() => { task.status = oldStatus; refresh(); });
+    api(`/tasks/${taskId}`, { method: "PATCH", body: JSON.stringify({ status: newStatus }) }).then(() => refresh()).catch(() => { task.status = oldStatus; refresh(); });
   }
 
   React.useEffect(() => {
     if (!project?.id) return;
     api(`/projects/${project.id}`).then((d: any) => { setProjectDetail(d); setTimeline(d.timeline || []); }).catch(() => {});
-    api(`/projects/${project.id}/file-collection`).then((d: any) => setFileCollection(d)).catch(() => {});
-  }, [project?.id]);
+  }, [project?.id, refreshStamp]);
 
   const members = projectDetail?.members || [];
   const tl = timeline.length ? timeline : [];
-  const tabs = [["overview","概览"],["tasks","任务"],["progress","成员进度"],["submissions","提交物"],["files","资料"],["acceptance","验收"]];
+  const tabs = [["overview","概览"],["tasks","任务"]];
 
   if (!project) return null;
   return <div className="workspace-layout"><section className="panel workspace-main"><div className="project-title"><div><span>{project.group} / {project.name}</span><h2>项目工作台</h2></div><div className="toolbar-actions"><button className="btn"><Icon name="user" />邀请</button><button className="btn" onClick={() => setView("files")}><Icon name="paperclip" />资料</button><button className="btn primary" onClick={() => setShowNewTask(true)}><Icon name="plus" />任务</button></div></div>
@@ -284,7 +373,7 @@ export function Workspace({ project, tasks, api, refresh, setView }: any) {
     {editingTask && <TaskEditModal task={editingTask} project={project} api={api} refresh={refresh} members={members} tasks={tasks} onClose={() => setEditingTask(null)} />}
 
     <div className="workspace-content">
-      {wsTab === "overview" && <div className="focus-card"><span>项目概览</span><strong>{project.risk === "medium" || project.risk === "high" ? "存在延期或阻塞风险" : "项目进展正常"}</strong><p>{project.description || ""}</p><div className="delivery-steps"><i className="done">原计划 {project.baselineEnd}</i><i className="active">当前计划 {project.currentEnd}</i><i>实际节点</i><i>验收</i></div><div className="acceptance-mini"><strong>项目统计</strong><em>任务 {projectDetail?.stats?.tasks || 0} · 文件 {projectDetail?.stats?.files || 0} · 验收项 {projectDetail?.stats?.acceptance || 0} · 成员 {members.length}</em></div></div>}
+      {wsTab === "overview" && (() => { const stats = projectDetail?.stats || {}; const progressPercent = stats.progressPercent ?? 0; const completed = stats.completedTasks || 0; const total = stats.tasks || 0; const riskTone = project.risk === "high" ? "risk" : project.risk === "medium" ? "warn" : ""; const circumference = 2 * Math.PI * 40; const offset = circumference * (1 - progressPercent / 100); return <div style={{display:"grid",gap:12}}><div className="overview-progress-hero"><div className="hero-left"><span>项目进度总览</span><strong>{progressPercent}%</strong><p>{project.risk === "high" ? "风险项目，需要立即介入" : project.risk === "medium" ? "存在延期风险，持续关注" : total === 0 ? "暂无任务，创建第一个任务开始推进" : completed === total ? "所有任务已完成！准备验收" : "按计划推进中"}</p></div><div className="hero-right"><svg className="overview-progress-ring" viewBox="0 0 96 96"><circle className="bg" cx="48" cy="48" r="40"/><circle className={`fill ${riskTone} ${completed===total&&total>0?'done':''}`} cx="48" cy="48" r="40" strokeDasharray={`${circumference} ${circumference}`} strokeDashoffset={offset}/></svg><span className="hero-right-text">{completed}<span style={{fontSize:14,color:"var(--muted)",fontWeight:400}}>/{total}</span></span></div></div><div className="overview-stats-grid"><article className="overview-stat-card accent-teal"><span>任务完成</span><strong>{completed}/{total}</strong><em>已完成 / 全部任务</em></article><article className="overview-stat-card accent-blue"><span>项目文件</span><strong>{stats.files || 0}</strong><em>文档、表格、附件</em></article><article className="overview-stat-card accent-violet"><span>验收项</span><strong>{stats.acceptance || 0}</strong><em>待验收 / 已通过</em></article><article className="overview-stat-card accent-amber"><span>项目成员</span><strong>{members.length}</strong><em>协同推进项目</em></article></div><div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}><div className="progress-meter"><div className="progress-meter-track"><div className={`progress-meter-fill ${riskTone} ${completed===total&&total>0?'done':''}`} style={{width:`${Math.min(100,Math.max(0,progressPercent))}%`}} /></div></div><div className="delivery-steps"><i className="done">原计划 {project.baselineEnd}</i><i className="active">当前计划 {project.currentEnd}</i><i>实际节点</i><i>验收</i></div></div>{project.description && <p style={{margin:0,color:"var(--muted)",fontSize:13,lineHeight:1.7}}>{project.description}</p>}</div>; })()}
 
       {wsTab === "tasks" && <div className="task-columns drag-board" ref={kanbanRef}>{["待处理", "进行中", "阻塞", "已完成"].map(status => { const columnTasks = tasks.filter((t: Task) => mapTaskStatus(t.status) === status); return <article key={status} className={`drop-col ${dragOverCol === status ? "drag-over" : ""}`} onDragOver={handleDragOver} onDragEnter={e => handleDragEnter(e, status)} onDragLeave={e => handleDragLeave(e, status)} onDrop={e => handleDrop(e, status)}><h3>{status} <span>{columnTasks.length}</span></h3>{columnTasks.map((task: Task) => <div className={`task ${dragTask === task.id ? "dragging" : ""} ${task.status === "DONE" ? "done" : task.status === "BLOCKED" ? "danger" : ""}`} key={task.id} draggable onDragStart={e => handleDragStart(e, task.id)} onDragEnd={() => setDragTask(null)} onMouseDown={e => handleTaskDown(e, task.id)} onMouseUp={e => handleTaskUp(task, e)}>
   <div className="task-head"><strong>{task.title}</strong></div>
@@ -297,25 +386,7 @@ export function Workspace({ project, tasks, api, refresh, setView }: any) {
   {task.note && <div className="task-note">{task.note}</div>}
 </div>)}</article>})}</div>}
 
-      {wsTab === "progress" && <div className="progress-list">
-        {tasks.flatMap((t: Task) => (t.progressItems || []).map((p: ProgressItem) => ({ ...p, taskTitle: t.title }))).map((item: any) => {
-          const member = members.find((m: any) => m.userId === item.userId);
-          const deltaLabel = item.deltaDays ? (item.deltaDays > 0 ? `+${item.deltaDays}天` : `${item.deltaDays}天`) : "—";
-          return <article key={item.id} className={item.status === "DELAYED" || item.status === "BLOCKED" ? "warn" : ""}>
-            <div className="progress-member"><strong>{member?.user?.name || item.userId}</strong><em>{item.taskTitle}</em></div>
-            <div className="progress-detail"><span>{item.planEnd} → {item.currentEnd}</span><b className={item.deltaDays && item.deltaDays > 0 ? "slow" : "fast"}>{deltaLabel}</b><em>{item.status} · {item.progress}%</em></div>
-          </article>;
-        })}
-      </div>}
-
-      {wsTab === "submissions" && <div>
-        {fileCollection ? <div>{fileCollection.collection?.map((member: any) => <article key={member.userId} className="submission-card"><strong>{member.userName}</strong><span>已交 {member.submitted}/{member.count} · {member.items?.map((i: any) => i.name).join(', ')}</span></article>)}</div> : <p style={{color:"var(--muted)"}}>暂无提交物数据</p>}
-      </div>}
-
-      {wsTab === "files" && <div><p style={{color:"var(--muted)"}}>项目文件请点击顶部"资料"按钮查看完整文件管理界面。</p></div>}
-
-      {wsTab === "acceptance" && <div className="acceptance-report compact-deferred"><div className="block-head"><strong>验收统计</strong></div><div className="acceptance-metrics"><article><span>项目状态</span><strong>{project.acceptanceStatus === "approved" ? "已通过" : project.acceptanceStatus === "in_review" ? "验收中" : "待验收"}</strong><em>{acceptanceText(project)}</em></article></div><div><button className="btn primary" onClick={async () => { await api(`/projects/${project.id}/acceptance/start`, { method: "POST" }); await refresh(); }}>发起验收</button></div></div>}
-    </div></section>
+          </div></section>
 
     <aside className="panel timeline" ref={timelineRef}>
       <div className="panel-head slim"><h2>项目成员</h2><span style={{fontSize:11,color:"var(--muted)"}}>{members.length} 人</span></div>
@@ -335,9 +406,79 @@ export function Workspace({ project, tasks, api, refresh, setView }: any) {
 }
 
 export function Files({ project, files, api, refresh }: any) {
+  const [activeId, setActiveId] = useState(files[0]?.id || "");
+  const [busy, setBusy] = useState("");
+  const uploadRef = useRef<HTMLInputElement>(null);
+  const active = useMemo(() => files.find((file: FileItem) => file.id === activeId) || files[0], [files, activeId]);
   if (!project) return null;
-  const active = files[0];
-  return <div className="editor-shell"><aside className="doc-tree"><div className="file-tree-head"><h3>项目文件</h3><button onClick={async () => { await api(`/projects/${project.id}/files`, { method: "POST", body: JSON.stringify({ name: "新协作文档", content: "# 新协作文档" }) }); await refresh(); }}><Icon name="plus" /></button></div><div className="file-actions"><button><Icon name="plus" /><span>新建</span></button><button><Icon name="import" /><span>上传</span></button><button><Icon name="export" /><span>导出</span></button></div>{files.map((file: FileItem, index: number) => <button key={file.id} className={`file-item ${index === 0 ? "active" : ""}`}><Icon name={file.type === "SHEET" ? "sheet" : "doc"} /><span><strong>{file.name}</strong><em>{file.type} · v{file.version}</em></span></button>)}<button className="file-item collection"><Icon name="project" /><span><strong>文件收集箱</strong><em>按成员和任务归集</em></span></button></aside><section className="editor-main"><div className="editor-title file-title"><span>{project.name} / 项目文件</span><strong>{active?.name || "Webpack利用.docx"}</strong><em>已保存最新版本 · 关联任务 · 点击左侧表格文件可直接切换编辑</em><div className="file-meta-pills"><b>Word</b><b>可编辑</b><b>版本 v{active?.version || 18}</b></div></div><div className="icon-ribbon">{["save", "import", "export", "comment", "more"].map(icon => <button key={icon}><Icon name={icon as any} /></button>)}<span /></div><article className="paper"><h1>{active?.name || "Webpack利用"}</h1><h2>1. 项目协作文档</h2><p>{active?.content || "团队可以在块编辑器中直接输入内容，并通过评论、修订、版本回溯和项目时间线保持协同痕迹。"}</p><blockquote>协作说明：提交物、版本、评论与验收记录均由后端保存和授权。</blockquote><pre>npm run build\nnpx prisma validate</pre><table><tbody><tr><th>模块</th><th>协作行为</th><th>导出</th></tr><tr><td>标题</td><td>生成大纲</td><td>md/html</td></tr><tr><td>代码块</td><td>评论锚点</td><td>保留语言</td></tr></tbody></table></article></section><aside className="doc-aside"><div className="panel-head slim"><h2>辅助栏</h2><button className="link-btn">折叠</button></div><div className="aside-tabs"><button className="active">大纲</button><button>评论</button><button>版本</button><button>属性</button><button>提交物</button></div><article className="file-property"><strong>{active?.name || "项目文档"}</strong><span>创建者 林初 · 最后保存 12:30</span><div><button>重命名</button><button className="danger">删除</button></div></article><ol><li className="active">项目协作文档</li><li>提交物</li><li>参考资料</li></ol><article className="submission-card"><strong>任务提交物</strong><span>提交、补交、撤回和验收均通过后端权限控制。</span><button>打开收集箱</button></article></aside></div>;
+
+  async function createDoc() {
+    setBusy("create");
+    try {
+      await api(`/projects/${project.id}/files`, { method: "POST", body: JSON.stringify({ name: "新协作文档", type: "WORD_DOC", content: "# 新协作文档" }) });
+      await refresh();
+    } finally {
+      setBusy("");
+    }
+  }
+
+  async function uploadFiles(fileList: FileList | null) {
+    if (!fileList?.length) return;
+    const form = new FormData();
+    Array.from(fileList).forEach((file) => form.append("files", file));
+    setBusy("upload");
+    try {
+      const response = await fetch(`/api/projects/${project.id}/files/upload`, {
+        method: "POST",
+        headers: { authorization: `Bearer ${getApiToken()}` },
+        body: form,
+      });
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.message || "上传失败");
+      }
+      await refresh();
+    } finally {
+      setBusy("");
+      if (uploadRef.current) uploadRef.current.value = "";
+    }
+  }
+
+  async function downloadActive() {
+    if (!active) return;
+    setBusy("download");
+    try {
+      const response = await fetch(`/api/project-files/${active.id}/download`, {
+        headers: { authorization: `Bearer ${getApiToken()}` },
+      });
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.message || "下载失败");
+      }
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = active.name || "project-file";
+      link.click();
+      URL.revokeObjectURL(url);
+    } finally {
+      setBusy("");
+    }
+  }
+
+  async function deleteActive() {
+    if (!active) return;
+    setBusy("delete");
+    try {
+      await api(`/project-files/${active.id}`, { method: "PATCH", body: JSON.stringify({ deleted: true }) });
+      await refresh();
+    } finally {
+      setBusy("");
+    }
+  }
+
+  return <div className="editor-shell"><aside className="doc-tree"><div className="file-tree-head"><h3>项目文件</h3><button disabled={busy === "create"} onClick={createDoc}><Icon name="plus" /></button></div><div className="file-actions"><button disabled={busy === "create"} onClick={createDoc}><Icon name="plus" /><span>新建</span></button><button disabled={busy === "upload"} onClick={() => uploadRef.current?.click()}><Icon name="import" /><span>{busy === "upload" ? "上传中" : "上传"}</span></button><button disabled={!active || busy === "download"} onClick={downloadActive}><Icon name="export" /><span>导出</span></button><input ref={uploadRef} type="file" multiple style={{display:"none"}} onChange={(event) => uploadFiles(event.target.files)} /></div>{files.map((file: FileItem) => <button key={file.id} className={`file-item ${active?.id === file.id ? "active" : ""}`} onClick={() => setActiveId(file.id)}><Icon name={file.type === "SHEET" ? "sheet" : "doc"} /><span><strong>{file.name}</strong><em>{file.type} · v{file.version}</em></span></button>)}<button className="file-item collection"><Icon name="project" /><span><strong>文件收集箱</strong><em>按成员和任务归集</em></span></button></aside><section className="editor-main"><div className="editor-title file-title"><span>{project.name} / 项目文件</span><strong>{active?.name || "暂无文件"}</strong><em>已保存最新版本 · 关联任务 · 点击左侧表格文件可直接切换编辑</em><div className="file-meta-pills"><b>{active?.type === "SHEET" ? "表格" : active?.type === "ATTACHMENT" ? "附件" : "Word"}</b><b>可编辑</b><b>版本 v{active?.version || 0}</b></div></div><div className="icon-ribbon"><button><Icon name="save" /></button><button onClick={() => uploadRef.current?.click()}><Icon name="import" /></button><button disabled={!active || busy === "download"} onClick={downloadActive}><Icon name="export" /></button><button><Icon name="comment" /></button><button><Icon name="more" /></button><span /></div><article className="paper"><h1>{active?.name || "暂无项目文件"}</h1><h2>1. 项目协作文档</h2><p>{active?.content || "团队可以在块编辑器中直接输入内容，并通过评论、修订、版本回溯和项目时间线保持协同痕迹。"}</p><blockquote>协作说明：提交物、版本、评论与验收记录均由后端保存和授权。</blockquote><pre>npm run build\nnpx prisma validate</pre><table><tbody><tr><th>模块</th><th>协作行为</th><th>导出</th></tr><tr><td>标题</td><td>生成大纲</td><td>md/html</td></tr><tr><td>代码块</td><td>评论锚点</td><td>保留语言</td></tr></tbody></table></article></section><aside className="doc-aside"><div className="panel-head slim"><h2>辅助栏</h2><button className="link-btn">折叠</button></div><div className="aside-tabs"><button className="active">大纲</button><button>评论</button><button>版本</button><button>属性</button><button>提交物</button></div><article className="file-property"><strong>{active?.name || "项目文档"}</strong><span>创建者 当前用户 · 版本 v{active?.version || 0}</span><div><button disabled={!active}>重命名</button><button className="danger" disabled={!active || busy === "delete"} onClick={deleteActive}>删除</button></div></article><ol><li className="active">项目协作文档</li><li>提交物</li><li>参考资料</li></ol><article className="submission-card"><strong>任务提交物</strong><span>提交、补交、撤回和验收均通过后端权限控制。</span><button>打开收集箱</button></article></aside></div>;
 }
 
 export function Messages({ notifications, api, refresh }: any) {

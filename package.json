@@ -14,11 +14,7 @@
     "start": "npm run start -w apps/api",
     "test": "npm run test -w apps/api",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev",
-    "legacy:start": "node --preserve-symlinks --preserve-symlinks-main app/run-server.cjs",
-    "legacy:test": "node --preserve-symlinks --preserve-symlinks-main -e \"require('./tests/lighttask-api.test.cjs')\"",
-    "legacy:smoke": "node --preserve-symlinks --preserve-symlinks-main -e \"require('./scripts/smoke-test-lighttask.cjs')\"",
-    "legacy:smoke:ui": "node --preserve-symlinks --preserve-symlinks-main -e \"require('./scripts/visual-smoke-lighttask.cjs')\""
+    "prisma:migrate": "prisma migrate dev"
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",

@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+/* === Design Tokens (letter theme default) === */
+:root {
+  --bg: #f5f3ee;
+  --paper: #fdfcfa;
+  --surface: rgba(255,255,255,0.58);
+  --ink: #162033;
+  --text: #3a4a5c;
+  --muted: #718095;
+  --line: rgba(180,170,155,0.22);
+  --primary: #315f8d;
+  --teal: #2b7e7a;
+  --blue: #4a7fb5;
+  --violet: #6b5e9c;
+  --amber: #c2853a;
+  --rose: #b84c6b;
+  --shadow: 0 1px 3px rgba(22,32,51,0.06), 0 4px 16px rgba(22,32,51,0.04);
+  --tight-shadow: 0 1px 2px rgba(22,32,51,0.06);
+  --card-gradient-left: rgba(250,248,243,0.85);
+  --card-text-color: #162033;
+}
+
+/* === Theme Variants === */
+[data-theme="love"] {
+  --bg: #fdf5f7; --paper: #fffafb; --surface: rgba(255,245,248,0.62);
+  --text: #4a2a35; --muted: #9b7d85; --line: rgba(210,180,185,0.28);
+  --primary: #b84c6b; --teal: #5b9b93; --blue: #8b6b8b; --violet: #9b6b8b;
+  --amber: #c28b4a; --rose: #d46b85; --card-gradient-left: rgba(255,245,248,0.85);
+}
+
+[data-theme="windbell"] {
+  --bg: #f6f4fc; --paper: #fdfcff; --surface: rgba(250,248,255,0.55);
+  --text: #3a3050; --muted: #8b80a5; --line: rgba(190,180,215,0.25);
+  --primary: #7b6fae; --teal: #5b8b85; --blue: #6b7fae; --violet: #8b6bae;
+  --amber: #b89b5b; --rose: #ae6b7b; --card-gradient-left: rgba(250,248,255,0.85);
+}
+
+/* === Glassmorphism Utilities === */
+.glass-panel {
+  background: var(--surface);
+  backdrop-filter: blur(12px) saturate(120%);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+.glass-card {
+  background: var(--surface);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--tight-shadow);
+}
+
+/* === Layout === */
+html, body, #root { height: 100%; margin: 0; }
+body { font-family: Inter, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: var(--bg); color: var(--text); }
+.app-shell { display: grid; grid-template-columns: var(--side, 236px) 1fr; height: 100vh; }
+.app-shell[data-sidebar="compact"] { --side: 68px; }
+.sidebar { background: var(--paper); border-right: 1px solid var(--line); display: flex; flex-direction: column; }
+
+/* Page visibility — kept for backward compat with existing components */
+.page { display: none; }
+.page.active { display: block; }
+
+/* Login screen */
+.login-screen {
+  display: none; min-height: 100vh; align-items: center; justify-content: center;
+  background: var(--bg);
+}
+body[data-view="login"] .login-screen { display: flex; }
+body[data-view="login"] .app-shell { display: none; }
+
+/* === Gantt theme integration === */
+.gantt-panel {
+  background: var(--surface) !important;
+  backdrop-filter: blur(12px) saturate(120%);
+  border: 1px solid var(--line) !important;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+/* Gantt progress bar — theme color */
+.x-gantt-bar-progress {
+  background: color-mix(in srgb, var(--ink) 18%, transparent) !important;
+}
+
+/* Weekend stripes */
+.x-gantt-weekend {
+  fill: color-mix(in srgb, var(--ink) 5%, transparent) !important;
+}
+
+/* Today line */
+.x-gantt-today-line {
+  stroke: var(--rose) !important;
+}
+
+/* Metric cards — theme integration */
+.metrics article {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(8px);
+}
+.metrics strong { color: var(--ink); }
+.metrics span { color: var(--muted); }
+
+/* Progress meter */
+.progress-meter-track { background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.progress-meter-fill { background: var(--teal); }
+.progress-meter-fill.warn { background: var(--amber); }
+.progress-meter-fill.risk { background: var(--rose); }
+.progress-meter-fill.done { background: var(--teal); }
+.progress-meter-value { color: var(--ink); }
+
+/* Stat chips */
+.stat-chip {
+  padding: 2px 10px; border-radius: 99px; font-size: 11px; font-weight: 600;
+}
+
+/* Toggle chips */
+.toggle-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 600;
+  cursor: pointer; border: 1px solid var(--line); background: color-mix(in srgb, var(--paper) 60%, transparent);
+  transition: background 140ms;
+}
+.toggle-chip:has(input:checked) {
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+/* Queue panel */
+.queue-panel article { background: var(--surface); border: 1px solid var(--line); }
+.queue-panel strong { color: var(--ink); }
+.queue-panel button { background: color-mix(in srgb, var(--primary) 10%, transparent); color: var(--primary); }
+
+/* Progress list */
+.progress-list article { background: var(--surface); border: 1px solid var(--line); }
+.progress-list article:hover { background: color-mix(in srgb, var(--paper) 90%, transparent); }

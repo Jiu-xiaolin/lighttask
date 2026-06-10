@@ -5,15 +5,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { Module } from "@nestjs/common";
-import { AppController } from "./app.controller.js";
-import { AppService } from "./app.service.js";
-import { PrismaService } from "./prisma.service.js";
+import { PrismaModule } from "./prisma/prisma.module.js";
+import { AuthModule } from "./modules/auth/auth.module.js";
+import { ProjectModule } from "./modules/project/project.module.js";
+import { TaskModule } from "./modules/task/task.module.js";
+import { DashboardModule } from "./modules/dashboard/dashboard.module.js";
+import { FileModule } from "./modules/file/file.module.js";
+import { ProfileModule } from "./modules/profile/profile.module.js";
+import { AdminModule } from "./modules/admin/admin.module.js";
+import { EventModule } from "./common/events/event.module.js";
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     Module({
-        controllers: [AppController],
-        providers: [AppService, PrismaService]
+        imports: [PrismaModule, EventModule, AuthModule, ProjectModule, TaskModule, DashboardModule, FileModule, ProfileModule, AdminModule],
     })
 ], AppModule);
 export { AppModule };
