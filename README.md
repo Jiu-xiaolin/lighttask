@@ -46,3 +46,10 @@ chmod +x ./deploy-docker.sh
 cd source
 .\start-dev.cmd
 ```
+
+Linux 部署后配置公网访问地址：
+
+```bash
+cd /opt/lighttask/source
+./scripts/configure-public-url.sh http://106.13.121.148:8080
+```
