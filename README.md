@@ -15,6 +15,18 @@ npm run build
 
 Docker 一键部署：
 
+Linux 服务器从 GitHub 拉取并自动部署：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Jiu-xiaolin/lighttask/main/install-linux.sh | bash
+```
+
+指定安装目录：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Jiu-xiaolin/lighttask/main/install-linux.sh | bash -s -- --dir /opt/lighttask
+```
+
 ```powershell
 cd source
 .\deploy-docker.cmd

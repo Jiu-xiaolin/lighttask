@@ -2,6 +2,20 @@
 
 ## 快速启动
 
+Linux 服务器从 GitHub 拉取并自动部署：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Jiu-xiaolin/lighttask/main/install-linux.sh | bash
+```
+
+指定目录、分支或查看日志：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Jiu-xiaolin/lighttask/main/install-linux.sh | bash -s -- --dir /opt/lighttask --branch main --logs
+```
+
+脚本会把仓库部署到 `/opt/lighttask`，目录已存在且是 Git 仓库时会自动拉取 `main` 最新代码并重新部署。
+
 Windows:
 
 ```powershell
