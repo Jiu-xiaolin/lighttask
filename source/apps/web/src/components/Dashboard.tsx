@@ -164,6 +164,17 @@ function fmtDate(value: any) {
     return "";
   }
 }
+function fmtTodayMinute(value: Date) {
+  const hh = String(value.getHours()).padStart(2, "0");
+  const mm = String(value.getMinutes()).padStart(2, "0");
+  return `今天 ${hh}:${mm}`;
+}
+function isoDateWithDays(value: any, days: number) {
+  const date = new Date(value);
+  if (!Number.isFinite(date.getTime())) return value;
+  date.setDate(date.getDate() + days);
+  return date.toISOString();
+}
 function flattenTasks(groups: any[]) {
   return groups.flatMap((group: any) => group.children || []);
 }
@@ -263,6 +274,7 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
   const [themeKey, setThemeKey] = useState(() => document.body.dataset.theme || "default");
   const [viewMenuOpen, setViewMenuOpen] = useState(false);
   const [ganttViewportWidth, setGanttViewportWidth] = useState(680);
+  const [nowMinute, setNowMinute] = useState(() => new Date());
   const ganttRef = useRef<XGanttReactRef>(null);
   const ganttPanelRef = useRef<HTMLElement | null>(null);
   const fetchIdRef = useRef(0);
@@ -276,6 +288,20 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
     const observer = new MutationObserver(() => setThemeKey(document.body.dataset.theme || "default"));
     observer.observe(document.body, { attributes: true, attributeFilter: ["data-theme"] });
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const syncMinute = () => setNowMinute(new Date());
+    const delay = Math.max(1000, 61000 - (Date.now() % 60000));
+    const timeout = window.setTimeout(() => {
+      syncMinute();
+      const interval = window.setInterval(syncMinute, 60000);
+      (syncMinute as any).interval = interval;
+    }, delay);
+    return () => {
+      window.clearTimeout(timeout);
+      if ((syncMinute as any).interval) window.clearInterval((syncMinute as any).interval);
+    };
   }, []);
 
   useEffect(() => {
@@ -410,17 +436,37 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
     };
   }, [myProgress, statsData?.statusCounts]);
   const ganttRange = useMemo(() => {
+    const labelTailDays = settings.unit === "month" ? 20 : settings.unit === "week" ? 10 : 4;
     const dates = [
       ...flatGanttTasks.flatMap((t:any) => [t.startTime, t.endTime]),
       ...ganttBaselines.flatMap((b:any) => [b.startTime, b.endTime]),
-    ].filter(Boolean).sort();
+      ...ganttBaselines.map((b:any) => isoDateWithDays(b.endTime, labelTailDays)),
+      nowMinute.toISOString(),
+    ].map(dateValue).filter((value): value is number => value != null).sort((a, b) => a - b);
     if (!dates.length) return {};
-    const start = new Date(`${dates[0]}T00:00:00Z`);
-    const end = new Date(`${dates[dates.length - 1]}T00:00:00Z`);
+    const start = new Date(dates[0]);
+    const end = new Date(dates[dates.length - 1]);
     start.setDate(start.getDate() - 3);
-    end.setDate(end.getDate() + 8);
-    return { startTime: start.toISOString().slice(0, 10), endTime: end.toISOString().slice(0, 10) };
-  }, [flatGanttTasks, ganttBaselines]);
+    end.setDate(end.getDate() + 6);
+    return { startTime: start.toISOString(), endTime: end.toISOString() };
+  }, [flatGanttTasks, ganttBaselines, nowMinute, settings.unit]);
+
+  const visibleBaselines = useMemo(() => {
+    const labelTailDays = settings.unit === "month" ? 10 : settings.unit === "week" ? 5 : 2;
+    return ganttBaselines.flatMap((baseline: any) => {
+      const line = { ...baseline, name: "" };
+      const label = {
+        ...baseline,
+        id: `${baseline.id || baseline.taskId}-label`,
+        startTime: baseline.endTime,
+        endTime: isoDateWithDays(baseline.endTime, labelTailDays),
+        name: "原计划",
+        highlight: false,
+        target: false,
+      };
+      return [line, label];
+    });
+  }, [ganttBaselines, settings.unit]);
 
   const applyLocalGanttPatch = useCallback((payload: any) => {
     const moves = Array.isArray(payload?.moves) ? payload.moves : [];
@@ -719,16 +765,16 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
       },
       baselines: {
         show: settings.showBaseline && ganttBaselines.length > 0,
-        data: ganttBaselines,
+        data: visibleBaselines,
         taskKey: "taskId",
         fields: { startTime: "startTime", endTime: "endTime", name: "name", id: "id", highlight: "highlight", target: "target" },
         mode: "line",
-        height: 2,
-        offset: 2,
+        height: 1.25,
+        offset: 6,
         position: "bottom",
         backgroundColor: skin.baseline,
         color: skin.baseline,
-        opacity: 0.58,
+        opacity: 0.54,
         radius: 999,
         label: { show: adaptive.baselineLabel, field: "name", color: skin.baseline, fontSize: 9, fontFamily: "Inter,PingFang SC,Microsoft YaHei,sans-serif", position: "right", forceDisplay: true },
         compare: {
@@ -777,10 +823,10 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
         hover: { backgroundColor: tk.p, opacity: 0.04 },
         select: { backgroundColor: tk.p, opacity: 0.07 },
       },
-      today: { show: true, type: "line", backgroundColor: tk.r, opacity: 0.58, width: 1.2, text: { show: true, color: tk.paper, backgroundColor: tk.r, opacity: 0.78, fontSize: 9, fontFamily: "Inter" } },
+      today: { show: true, type: "line", backgroundColor: tk.r, opacity: 0.62, width: 1.2, text: { show: true, content: fmtTodayMinute(nowMinute), color: tk.paper, backgroundColor: tk.r, opacity: 0.78, fontSize: 9, fontFamily: "Inter" } },
       scrollbar: { showHorizontal: true, showVertical: true, track: { size: 10, radius: 999, color: alpha(tk.p, 0.04) }, thumb: { size: 34, radius: 999, color: mix(tk.p, tk.paper, 0.22) }, showDelay: 0, hideDelay: 900, showDuration: 160, hideDuration: 200, animationDuration: 120 },
     } as any;
-  }, [ganttTasks, ganttLinks, ganttBaselines, ganttRange, flatGanttTasks, ganttViewportWidth, settings, themeKey]);
+  }, [ganttTasks, ganttLinks, ganttBaselines, visibleBaselines, ganttRange, flatGanttTasks, ganttViewportWidth, settings, themeKey, nowMinute]);
 
   const onModalClose = useCallback(() => { setEditingTask(null); fetchGantt(); fetchDashboardStats(); }, [fetchDashboardStats, fetchGantt]);
 
