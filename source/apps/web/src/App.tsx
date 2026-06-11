@@ -85,8 +85,17 @@ export default function App() {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ username, password }),
     });
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.message || "登录失败");
+    const text = await response.text();
+    let data: any = null;
+    try {
+      data = text ? JSON.parse(text) : null;
+    } catch {
+      data = { message: text };
+    }
+    if (!response.ok) {
+      const fallback = response.status >= 500 ? "服务器暂时不可用，请查看 API 日志" : "登录失败";
+      throw new Error(data?.message || fallback);
+    }
     storeLogin(data.token, data.user);
     if (data.user.theme) {
       setTheme(data.user.theme);
