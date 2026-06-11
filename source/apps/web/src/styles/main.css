@@ -1613,11 +1613,11 @@ body[data-personalize="skins"] .personal-menu {
 .gantt-now-marker {
   position: absolute;
   width: 0;
-  border-left: 1.5px solid color-mix(in srgb, var(--rose) 88%, transparent);
+  border-left: 1px solid color-mix(in srgb, var(--rose) 76%, transparent);
   opacity: 0;
   pointer-events: none;
-  z-index: calc(var(--z-toolbar) + 1);
-  filter: drop-shadow(0 1px 4px color-mix(in srgb, var(--rose) 22%, transparent));
+  z-index: calc(var(--z-toolbar) + 3);
+  filter: drop-shadow(0 1px 2px color-mix(in srgb, var(--rose) 16%, transparent));
   transition: opacity 120ms ease;
 }
 
@@ -1633,24 +1633,25 @@ body[data-personalize="skins"] .personal-menu {
   width: 0;
   height: 0;
   transform: translate(-50%, -1px);
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 8px solid var(--rose);
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 7px solid color-mix(in srgb, var(--rose) 78%, transparent);
 }
 
 .gantt-now-marker span {
   position: absolute;
-  top: 8px;
+  top: 9px;
   left: 0;
   transform: translateX(-50%);
   min-width: max-content;
-  padding: 3px 7px;
-  border-radius: 6px;
-  color: var(--paper);
-  background: color-mix(in srgb, var(--rose) 88%, #7a2840);
-  box-shadow: 0 7px 18px color-mix(in srgb, var(--rose) 18%, transparent);
+  padding: 2px 6px;
+  border: 1px solid color-mix(in srgb, var(--rose) 22%, var(--line));
+  border-radius: 5px;
+  color: color-mix(in srgb, var(--rose) 86%, var(--ink));
+  background: color-mix(in srgb, var(--rose-soft) 62%, var(--paper));
+  box-shadow: 0 4px 10px color-mix(in srgb, var(--rose) 8%, transparent);
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.2;
   white-space: nowrap;
 }
@@ -1668,29 +1669,35 @@ body[data-personalize="skins"] .personal-menu {
   z-index: calc(var(--z-toolbar) - 1);
   display: inline-flex;
   align-items: center;
-  height: 16px;
-  padding: 0 5px;
-  border: 1px solid color-mix(in srgb, var(--amber) 22%, transparent);
-  border-radius: 999px;
-  color: color-mix(in srgb, var(--amber) 74%, var(--muted));
-  background: color-mix(in srgb, var(--paper) 86%, transparent);
-  box-shadow: 0 3px 8px color-mix(in srgb, var(--amber) 9%, transparent);
+  height: 15px;
+  padding: 0 4px;
+  border: 1px solid color-mix(in srgb, var(--amber) 16%, transparent);
+  border-radius: 4px;
+  color: color-mix(in srgb, var(--amber) 68%, var(--muted));
+  background: color-mix(in srgb, var(--paper) 76%, transparent);
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--amber) 6%, transparent);
   font-size: 9px;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1;
   white-space: nowrap;
   pointer-events: none;
   opacity: 0;
-  transform: translate(0, -50%);
+  transform: translateY(-50%);
   transition: opacity 120ms ease;
 }
 
-.gantt-baseline-label.is-visible {
-  opacity: 0.9;
+.gantt-baseline-label::before {
+  content: "";
+  width: 3px;
+  height: 3px;
+  margin-right: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.78;
 }
 
-.gantt-baseline-label[data-edge="right"] {
-  transform: translate(calc(-100% - 8px), -50%);
+.gantt-baseline-label.is-visible {
+  opacity: 0.88;
 }
 
 .gantt-panel .segmented {

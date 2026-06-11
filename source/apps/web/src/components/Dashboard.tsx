@@ -2,13 +2,19 @@ import React, { useEffect, useRef, useState, useMemo, useCallback, Suspense, laz
 import { Icon } from "../lib/icons";
 import { api } from "../lib/api";
 import { TaskEditModal } from "./TaskEditModal";
+import {
+  computeBaselineLabel,
+  computeTodayMarker,
+  getBaselineLabelTailDays,
+  type BaselineLabelPosition,
+  type GanttTimelineUnit,
+} from "./ganttOverlay";
 
 const XGanttReact = lazy(() => import("@xpyjs/gantt-react").then(m => ({ default: m.XGanttReact })));
 import "@xpyjs/gantt-core/style.css";
 import type { XGanttReactRef } from "@xpyjs/gantt-react";
 
-type GanttTimelineUnit = "minute" | "day" | "week" | "month";
-type GanttBaselineLabel = { id: string; left: number; top: number; visible: boolean; edge: "center" | "right" };
+type GanttBaselineLabel = BaselineLabelPosition & { id: string };
 
 /* ── Design tokens (theme-aware via CSS variables) ── */
 function Tk() {
@@ -236,7 +242,7 @@ function buildAdaptiveTimeline(unit: GanttTimelineUnit, tasks: any[], baselines:
       labelMode: "progress",
       linkOpacity: 0.34,
       baselineLabel: false,
-      compareLabel: false,
+      compareLabel: true,
     };
   }
 
@@ -471,7 +477,8 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
     };
   }, [myProgress, statsData?.statusCounts]);
   const ganttRange = useMemo(() => {
-    const labelTailDays = settings.unit === "minute" ? 0.25 : settings.unit === "month" ? 20 : settings.unit === "week" ? 10 : 4;
+    const minDayWidth = settings.unit === "minute" ? 58 * 24 : settings.unit === "day" ? 34 : 8;
+    const labelTailDays = getBaselineLabelTailDays(settings.unit, minDayWidth);
     if (settings.unit === "minute") {
       const { start, end } = localDayRange(nowMinute, 1, 1);
       const labelEnds = ganttBaselines.map((b:any) => dateValue(isoDateWithDays(b.endTime, labelTailDays))).filter((value): value is number => value != null);
@@ -515,35 +522,29 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
         return;
       }
 
-      const start = axis.getStartTime?.();
-      const startMs = typeof start?.valueOf === "function" ? Number(start.valueOf()) : new Date(start).getTime();
-      const cellWidth = Number(axis.getCellWidth?.());
-      if (!Number.isFinite(startMs) || !Number.isFinite(cellWidth) || cellWidth <= 0) {
-        setTodayMarker((prev) => prev.visible ? { ...prev, visible: false } : prev);
-        return;
-      }
-
       const scrollbar = instance?.context?.getScrollbar?.();
       const scroll = scrollbar?.getScrollPosition?.() || {};
       const scrollX = Number(scroll.x || scroll.scrollLeft || 0);
       const scrollY = Number(scroll.y || scroll.scrollTop || 0);
-      const unit = axis.getCellUnit?.() === "hour" ? "hour" : "day";
-      const secondsPerPixel = (unit === "hour" ? 60 * 60 : DAY_MS / 1000) / cellWidth;
-      const rawLeft = ((nowMinute.getTime() - startMs) / 1000) / secondsPerPixel;
       const panelRect = panel.getBoundingClientRect();
       const chartRect = chart.getBoundingClientRect();
       const chartLeft = chartRect.left - panelRect.left;
       const chartRight = chartRect.right - panelRect.left;
-      const left = chartLeft + rawLeft - scrollX;
-      const visible = left >= chartLeft - 1 && left <= chartRight + 1;
-      const edge = left - chartLeft < 86 ? "left" : chartRight - left < 86 ? "right" : "center";
-      const next = {
-        left: Math.round(left * 10) / 10,
-        top: Math.round((chartRect.top - panelRect.top) * 10) / 10,
-        height: Math.round(chartRect.height * 10) / 10,
-        visible,
-        edge: edge as "left" | "center" | "right",
-      };
+      const chartTop = chartRect.top - panelRect.top;
+      const chartBottom = chartRect.bottom - panelRect.top;
+      const next = computeTodayMarker({
+        axis,
+        now: nowMinute,
+        chartLeft,
+        chartRight,
+        chartTop,
+        chartHeight: chartRect.height,
+        scrollX,
+      });
+      if (!next) {
+        setTodayMarker((prev) => prev.visible ? { ...prev, visible: false } : prev);
+        return;
+      }
       setTodayMarker((prev) => (
         Math.abs(prev.left - next.left) < 0.5 &&
         Math.abs(prev.top - next.top) < 0.5 &&
@@ -554,24 +555,34 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
 
       const dataManager = instance?.context?.store?.getDataManager?.();
       const visibleTasks = dataManager?.getVisibleTasks?.() || [];
-      const rowHeight = Number(instance?.context?.getOptions?.()?.row?.height || 40);
-      const headerHeight = Number(instance?.context?.getOptions?.()?.header?.height || 70);
+      const options = instance?.context?.getOptions?.() || {};
+      const rowHeight = Number(options?.row?.height || 40);
+      const headerHeight = Number(options?.header?.height || 70);
+      const baselineHeight = Number(options?.baselines?.height || 1.25);
+      const baselineOffset = Number(options?.baselines?.offset || 0);
       const nextLabels = settings.showBaseline
         ? ganttBaselines.map((baseline: any) => {
             const task = visibleTasks.find((item: any) => item?.id === baseline.taskId || item?.data?.id === baseline.taskId);
             const taskIndex = Number.isFinite(Number(task?.flatIndex)) ? Number(task.flatIndex) : visibleTasks.findIndex((item: any) => item?.id === baseline.taskId || item?.data?.id === baseline.taskId);
-            const endMs = dateValue(baseline.endTime);
-            if (taskIndex < 0 || endMs == null) return null;
-            const rawEndLeft = ((endMs - startMs) / 1000) / secondsPerPixel;
-            const left = chartLeft + rawEndLeft - scrollX + 8;
-            const lineY = chartRect.top - panelRect.top + headerHeight + (rowHeight * taskIndex) + rowHeight - 7 - scrollY;
-            const visible = left >= chartLeft - 4 && left <= chartRight + 72 && lineY >= chartRect.top - panelRect.top + headerHeight - 16 && lineY <= chartRect.bottom - panelRect.top + 16;
+            const position = computeBaselineLabel({
+              axis,
+              endTime: baseline.endTime,
+              chartLeft,
+              chartRight,
+              chartTop,
+              chartBottom,
+              headerHeight,
+              rowHeight,
+              taskIndex,
+              scrollX,
+              scrollY,
+              baselineOffset,
+              baselineHeight,
+            });
+            if (!position) return null;
             return {
               id: String(baseline.id || baseline.taskId),
-              left: Math.round(left * 10) / 10,
-              top: Math.round(lineY * 10) / 10,
-              visible,
-              edge: chartRight - left < 58 ? "right" : "center",
+              ...position,
             } as GanttBaselineLabel;
           }).filter(Boolean) as GanttBaselineLabel[]
         : [];
@@ -582,8 +593,7 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
             item.id === nextItem.id &&
             Math.abs(item.left - nextItem.left) < 0.5 &&
             Math.abs(item.top - nextItem.top) < 0.5 &&
-            item.visible === nextItem.visible &&
-            item.edge === nextItem.edge;
+            item.visible === nextItem.visible;
         })) return prev;
         return nextLabels;
       });
@@ -1105,7 +1115,6 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
           <span
             key={label.id}
             className={`gantt-baseline-label ${label.visible ? "is-visible" : ""}`}
-            data-edge={label.edge}
             style={{ left: label.left, top: label.top }}
             aria-hidden="true"
           >
