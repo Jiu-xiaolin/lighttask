@@ -1669,17 +1669,17 @@ body[data-personalize="skins"] .personal-menu {
   z-index: calc(var(--z-toolbar) - 1);
   display: inline-flex;
   align-items: center;
-  height: 15px;
-  padding: 0 4px;
-  border: 1px solid color-mix(in srgb, var(--amber) 16%, transparent);
-  border-radius: 4px;
-  color: color-mix(in srgb, var(--amber) 68%, var(--muted));
-  background: color-mix(in srgb, var(--paper) 76%, transparent);
-  box-shadow: 0 2px 6px color-mix(in srgb, var(--amber) 6%, transparent);
+  height: 12px;
+  padding: 0 3px;
+  border-radius: 3px;
+  color: color-mix(in srgb, var(--amber) 72%, var(--muted));
+  background: color-mix(in srgb, var(--paper) 96%, var(--bg));
   font-size: 9px;
   font-weight: 700;
   line-height: 1;
   white-space: nowrap;
+  overflow: visible;
+  max-width: none;
   pointer-events: none;
   opacity: 0;
   transform: translateY(-50%);
@@ -1697,7 +1697,7 @@ body[data-personalize="skins"] .personal-menu {
 }
 
 .gantt-baseline-label.is-visible {
-  opacity: 0.88;
+  opacity: 0.82;
 }
 
 .gantt-panel .segmented {

@@ -21,9 +21,9 @@ const BASELINE_LABEL_TAIL_DAYS: Record<GanttTimelineUnit, number> = {
   month: 20,
 };
 
-const BASELINE_LABEL_TAIL_PX = 78;
-const BASELINE_LABEL_GAP_PX = 10;
-const BASELINE_LABEL_WIDTH_PX = 48;
+const BASELINE_LABEL_TAIL_PX = 112;
+const BASELINE_LABEL_GAP_PX = 14;
+const BASELINE_LABEL_WIDTH_PX = 58;
 
 function roundPixel(value: number) {
   return Math.round(value * 10) / 10;

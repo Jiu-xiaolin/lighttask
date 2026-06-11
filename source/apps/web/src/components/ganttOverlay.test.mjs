@@ -57,7 +57,7 @@ test("keeps the baseline label after the line end on the same y-axis", () => {
     scrollY: 0,
   });
 
-  assert.equal(label.left, 430);
+  assert.equal(label.left, 434);
   assert.equal(label.top, 231.4);
   assert.equal(label.visible, true);
 });
@@ -67,5 +67,5 @@ test("extends the timeline enough for a lightweight baseline label", () => {
   assert.equal(helpers.getBaselineLabelTailDays("day", 38), 4);
   assert.equal(helpers.getBaselineLabelTailDays("week", 13), 10);
   assert.equal(helpers.getBaselineLabelTailDays("month", 10), 20);
-  assert.ok(helpers.getBaselineLabelTailDays("day", 12) > 6);
+  assert.ok(helpers.getBaselineLabelTailDays("day", 12) > 9);
 });
