@@ -11,7 +11,7 @@ usage() {
 Configure LightTask public URL for Docker deployment.
 
 Usage:
-  ./scripts/configure-public-url.sh http://106.13.121.148:8080
+  ./scripts/configure-public-url.sh http://your-server-ip:8080
 
 The script updates .env.docker:
   CORS_ORIGINS=<public-url>

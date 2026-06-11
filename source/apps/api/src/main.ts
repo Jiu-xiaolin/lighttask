@@ -23,7 +23,7 @@ async function bootstrap() {
       if (!origin) return callback(null, true);
       if (config.corsOrigins.includes(origin)) return callback(null, true);
       if (!config.isProduction && /^https?:\/\/(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+)(:\d+)?$/.test(origin)) return callback(null, true);
-      return callback(new Error("CORS origin not allowed"), false);
+      return callback(null, false);
     },
   });
   app.setGlobalPrefix("api");

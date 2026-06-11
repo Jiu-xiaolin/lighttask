@@ -51,5 +51,5 @@ Linux 部署后配置公网访问地址：
 
 ```bash
 cd /opt/lighttask/source
-./scripts/configure-public-url.sh http://106.13.121.148:8080
+./scripts/configure-public-url.sh http://your-server-ip:8080
 ```
