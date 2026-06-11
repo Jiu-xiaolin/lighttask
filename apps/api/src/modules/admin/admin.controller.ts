@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from "@nestjs/common";
 import { AdminService } from "./admin.service.js";
 import { AuthGuard } from "../../common/guards/auth.guard.js";
-import { CurrentUser } from "../../common/decorators/index.js";
+import { CurrentUser, Public } from "../../common/decorators/index.js";
 
 @Controller()
 @UseGuards(AuthGuard)
@@ -57,6 +57,13 @@ export class AdminController {
   @Delete("admin/notification-keys/:keyId") deleteKey(@CurrentUser() u: any, @Param("keyId") id: string) { return this.admin.deleteKey(u, id); }
   @Post("notification-logs/:logId/retry") retryNotification(@CurrentUser() u: any, @Param("logId") id: string) { return this.admin.retry(u, id); }
   @Post("admin/notification-test") testNotification(@CurrentUser() u: any, @Body() b: any) { return this.admin.testNotification(u, b); }
+  @Post("admin/notification-daily-report") saveDailyReport(@CurrentUser() u: any, @Body() b: any) { return this.admin.saveDailyReportRule(u, b); }
+  @Get("admin/notification-daily-report/preview") dailyReportPreview(@CurrentUser() u: any) { return this.admin.dailyReportPreview(u); }
+  @Post("admin/notification-daily-report/send") sendDailyReport(@CurrentUser() u: any, @Body() b: any) { return this.admin.sendDailyReport(u, b); }
+  @Post("admin/notification-reminders/bootstrap") bootstrapReminderRules(@CurrentUser() u: any) { return this.admin.bootstrapReminderRules(u); }
+  @Post("admin/notification-callback/check") checkFeishuCallback(@CurrentUser() u: any) { return this.admin.checkFeishuCallback(u); }
+  @Public()
+  @Post("feishu/card-callback") feishuCardCallback(@Body() b: any) { return this.admin.handleFeishuCardCallback(b); }
 
   // Acceptance
   @Get("projects/:projectId/acceptance") acceptance(@CurrentUser() u: any, @Param("projectId") pid: string) { return this.admin.acceptance(u, pid); }

@@ -11,7 +11,7 @@ import { Dashboard } from "./components/Dashboard";
 import { Login, ProjectList, Workspace, Files, Messages, Support } from "./components/Pages";
 
 export default function App() {
-  const { token, user, login: storeLogin, logout: storeLogout } = useAuthStore();
+  const { token, user, login: storeLogin, logout: storeLogout, setUser: storeSetUser } = useAuthStore();
   const { view, projectId, theme, compact, personalize, toast,
     setView, setProjectId, setTheme, setCompact, setPersonalize, setToast,
     projectFilter, setProjectFilter, projectGroup, setProjectGroup,
@@ -38,6 +38,15 @@ export default function App() {
     document.body.dataset.personalize = personalize ? "skins" : "closed";
     document.body.dataset.view = token ? view : "login";
   }, [theme, compact, personalize, view, token]);
+
+  useEffect(() => {
+    if (!token) return;
+    api("/auth/me")
+      .then((data) => {
+        if (data?.user) storeSetUser(data.user);
+      })
+      .catch(() => {});
+  }, [token, storeSetUser]);
 
   useEffect(() => {
     if (theme === "custom") {
@@ -188,11 +197,14 @@ export default function App() {
         projectGroups={projectGroups} setProjectFilter={setProjectFilter} projectGroup={projectGroup}
         setProjectGroup={setProjectGroup} compact={compact} setCompact={setCompact}
         personalize={personalize} setPersonalize={setPersonalize} theme={theme} setTheme={setTheme}
-        logout={() => storeLogout()}
+        logout={async () => {
+          try { await api("/auth/logout", { method: "POST" }); } catch {}
+          storeLogout();
+        }}
       />
       <main className="main">
         <header className="topbar">
-          <div><p>LightTask v12 / 闭环精简版</p><h1>{titles[view as PageKey]}</h1></div>
+          <div className="topbar-title"><h1>{titles[view as PageKey]}</h1></div>
           <label className="search">
             <Icon name="search" />
             <input

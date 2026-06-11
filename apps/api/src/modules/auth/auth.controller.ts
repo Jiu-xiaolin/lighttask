@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Headers, Post, Req } from "@nestjs/common";
 import { AuthService } from "./auth.service.js";
 import { Public } from "../../common/decorators/index.js";
+import { LoginDto } from "../../common/dto/auth.dto.js";
 
 @Controller()
 export class AuthController {
@@ -8,7 +9,7 @@ export class AuthController {
 
   @Public()
   @Post("auth/login")
-  login(@Body() body: any, @Req() req: any) {
+  login(@Body() body: LoginDto, @Req() req: any) {
     return this.auth.login(body, this.auth.getClientIp(req.headers, req.socket?.remoteAddress), String(req.headers["user-agent"] || ""));
   }
 

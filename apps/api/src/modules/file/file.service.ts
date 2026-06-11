@@ -2,32 +2,65 @@ import { Injectable, ForbiddenException, NotFoundException, BadRequestException 
 import { PrismaService } from "../../prisma/prisma.service.js";
 import { genId } from "../../common/utils/index.js";
 import { EventService } from "../../common/events/event.service.js";
+import { RedisService } from "../../redis/redis.service.js";
 
 @Injectable()
 export class FileService {
-  constructor(private prisma: PrismaService, private events: EventService) {}
+  constructor(private prisma: PrismaService, private events: EventService, private redis: RedisService) {}
+
+  private memberKey(userId: string, projectId: string) {
+    return `access:member:${userId}:${projectId}`;
+  }
+
+  private editKey(userId: string, projectId: string) {
+    return `access:edit:${userId}:${projectId}`;
+  }
+
+  private scopeKey(userId: string, projectId: string, scope: string) {
+    return `access:scope:${userId}:${projectId}:${scope}`;
+  }
 
   async checkAccess(user: any, projectId: string) {
     if (user.role === "SUPER_ADMIN") return true;
+    const cacheKey = this.memberKey(user.id, projectId);
+    const cached = await this.redis.getJson<any>(cacheKey);
+    if (cached && typeof cached === "object") return cached;
     const m = await this.prisma.projectMember.findUnique({ where: { projectId_userId: { projectId, userId: user.id } } });
     if (!m) throw new NotFoundException("项目不存在或无权限");
+    await this.redis.setJson(cacheKey, { id: m.id, projectId: m.projectId, userId: m.userId, role: m.role }, 60);
     return m;
   }
 
   async canEdit(user: any, projectId: string) {
     if (user.role === "SUPER_ADMIN") return true;
+    const cacheKey = this.editKey(user.id, projectId);
+    const cached = await this.redis.getJson<boolean>(cacheKey);
+    if (typeof cached === "boolean") return cached;
     const m = await this.checkAccess(user, projectId);
     if (typeof m === "boolean") return false;
-    return m.role === "owner" || m.role === "admin" || m.role === "editor";
+    const canEdit = m.role === "owner" || m.role === "admin" || m.role === "editor";
+    await this.redis.setJson(cacheKey, canEdit, 60);
+    return canEdit;
   }
 
   async hasScope(user: any, projectId: string, scope: string) {
     if (user.role === "SUPER_ADMIN") return true;
+    const cacheKey = this.scopeKey(user.id, projectId, scope);
+    const cached = await this.redis.getJson<boolean>(cacheKey);
+    if (typeof cached === "boolean") return cached;
     const m = await this.prisma.projectMember.findUnique({ where: { projectId_userId: { projectId, userId: user.id } } }).catch(() => null);
-    if (!m) return false;
-    if (m.role === "owner" || m.role === "admin") return true;
+    if (!m) {
+      await this.redis.setJson(cacheKey, false, 60);
+      return false;
+    }
+    if (m.role === "owner" || m.role === "admin") {
+      await this.redis.setJson(cacheKey, true, 60);
+      return true;
+    }
     const template = await this.prisma.roleTemplate.findFirst({ where: { role: m.role } });
-    return template ? (template.permissions as string[]).includes(scope) : false;
+    const allowed = template ? (template.permissions as string[]).includes(scope) : false;
+    await this.redis.setJson(cacheKey, allowed, 60);
+    return allowed;
   }
 
   async filesOf(user: any, projectId: string) {

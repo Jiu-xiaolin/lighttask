@@ -1,10 +1,16 @@
 import { Injectable, ForbiddenException, BadRequestException } from "@nestjs/common";
 import bcrypt from "bcryptjs";
 import { PrismaService } from "../../prisma/prisma.service.js";
+import { RedisService } from "../../redis/redis.service.js";
 
 @Injectable()
 export class ProfileService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, private redis: RedisService) {}
+
+  private async invalidateUserSessions(userId: string) {
+    const sessions = await this.prisma.session.findMany({ where: { userId }, select: { tokenHash: true } });
+    await Promise.all(sessions.map((session) => this.redis.del(`session:${session.tokenHash}`)));
+  }
 
   async updateProfile(user: any, body: any) {
     const updateData: any = {};
@@ -19,6 +25,7 @@ export class ProfileService {
       updateData.themeConfig = config;
     }
     const updated = await this.prisma.user.update({ where: { id: user.id }, data: updateData });
+    await this.invalidateUserSessions(user.id);
     return {
       user: {
         id: updated.id, username: updated.username, name: updated.name, role: updated.role,
@@ -33,6 +40,7 @@ export class ProfileService {
     const dbUser = await this.prisma.user.findUnique({ where: { id: user.id } });
     if (!dbUser || !bcrypt.compareSync(String(body.currentPassword || ""), dbUser.passwordHash)) throw new ForbiddenException("当前密码错误");
     await this.prisma.user.update({ where: { id: user.id }, data: { passwordHash: bcrypt.hashSync(body.newPassword, 10) } });
+    await this.invalidateUserSessions(user.id);
     return { ok: true };
   }
 }

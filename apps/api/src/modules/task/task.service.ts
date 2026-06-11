@@ -2,22 +2,40 @@ import { Injectable, ForbiddenException, NotFoundException } from "@nestjs/commo
 import { PrismaService } from "../../prisma/prisma.service.js";
 import { genId, today, deltaDays } from "../../common/utils/index.js";
 import { EventService } from "../../common/events/event.service.js";
+import { RedisService } from "../../redis/redis.service.js";
 
 @Injectable()
 export class TaskService {
-  constructor(private prisma: PrismaService, private events: EventService) {}
+  constructor(private prisma: PrismaService, private events: EventService, private redis: RedisService) {}
+
+  private memberKey(userId: string, projectId: string) {
+    return `access:member:${userId}:${projectId}`;
+  }
+
+  private editKey(userId: string, projectId: string) {
+    return `access:edit:${userId}:${projectId}`;
+  }
 
   async checkAccess(user: any, projectId: string) {
     if (user.role === "SUPER_ADMIN") return;
+    const cacheKey = this.memberKey(user.id, projectId);
+    const cached = await this.redis.getJson<any>(cacheKey);
+    if (cached && typeof cached === "object") return cached;
     const m = await this.prisma.projectMember.findUnique({ where: { projectId_userId: { projectId, userId: user.id } } });
     if (!m) throw new NotFoundException("项目不存在或无权限");
+    await this.redis.setJson(cacheKey, { id: m.id, projectId: m.projectId, userId: m.userId, role: m.role }, 60);
     return m;
   }
 
   async canEdit(user: any, projectId: string) {
     if (user.role === "SUPER_ADMIN") return true;
+    const cacheKey = this.editKey(user.id, projectId);
+    const cached = await this.redis.getJson<boolean>(cacheKey);
+    if (typeof cached === "boolean") return cached;
     const m = await this.checkAccess(user, projectId);
-    return m && (m.role === "owner" || m.role === "admin" || m.role === "editor");
+    const canEdit = !!m && (m.role === "owner" || m.role === "admin" || m.role === "editor");
+    await this.redis.setJson(cacheKey, canEdit, 60);
+    return canEdit;
   }
 
   async tasksOf(user: any, projectId: string) {
@@ -89,6 +107,18 @@ export class TaskService {
       if (typeof data[f] === "string") data[f] = new Date(`${data[f]}T00:00:00Z`);
     }
     const updated = await this.prisma.task.update({ where: { id: taskId }, data });
+    if (typeof body?.status === "string") {
+      const progressPatchByStatus: Record<string, any> = {
+        DONE: { status: "COMPLETED" as any, progress: 100, actualEnd: new Date(`${today()}T00:00:00Z`) },
+        TODO: { status: "TODO" as any, progress: 0, actualStart: null, actualEnd: null },
+        DOING: { status: "DOING" as any, actualStart: new Date(`${today()}T00:00:00Z`) },
+        BLOCKED: { status: "BLOCKED" as any },
+      };
+      const progressPatch = progressPatchByStatus[body.status];
+      if (progressPatch) {
+        await this.prisma.taskProgress.updateMany({ where: { taskId }, data: progressPatch });
+      }
+    }
     await this.events.record({ type: "task.updated", actor: user, projectId: task.projectId, message: `更新任务：${updated.title}`, color: "amber", metadata: { taskId, fields: Object.keys(body || {}) } });
     return { task: updated };
   }

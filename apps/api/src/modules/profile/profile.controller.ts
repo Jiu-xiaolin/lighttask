@@ -32,10 +32,10 @@ export class ProfileController {
       if (!file.mimetype.match(/^image\/(jpeg|png|gif|webp)$/)) { cb(new Error("仅支持 jpg/png/gif/webp 图片"), false); } else { cb(null, true); }
     },
   }))
-  uploadAvatar(@CurrentUser() user: any, @UploadedFile() file: Express.Multer.File) {
+  async uploadAvatar(@CurrentUser() user: any, @UploadedFile() file: Express.Multer.File) {
     if (!file) throw new BadRequestException("请选择图片文件");
     const url = `/uploads/avatars/${file.filename}`;
-    this.profile.updateProfile(user, { avatar: url });
+    await this.profile.updateProfile(user, { avatar: url });
     return { url, filename: file.filename, size: file.size };
   }
 }

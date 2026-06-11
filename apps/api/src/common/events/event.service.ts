@@ -2,6 +2,7 @@ import { Injectable, Logger } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
 import { PrismaService } from "../../prisma/prisma.service.js";
 import { genId } from "../utils/index.js";
+import { RedisService } from "../../redis/redis.service.js";
 
 type AppEventInput = {
   type: string;
@@ -18,7 +19,7 @@ type AppEventInput = {
 export class EventService {
   private readonly logger = new Logger(EventService.name);
 
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, private redis: RedisService) {}
 
   async record(input: AppEventInput) {
     const actorId = input.actor?.id || "system";
@@ -54,6 +55,15 @@ export class EventService {
 
     await Promise.all(writes).catch((error) => {
       this.logger.warn(`Failed to record event ${input.type}: ${error?.message || error}`);
+    });
+    await this.redis.invalidateBusinessCaches();
+    await this.redis.publish("lighttask:events", {
+      type: input.type,
+      projectId: input.projectId || null,
+      actorId,
+      message: input.message,
+      metadata,
+      at: new Date().toISOString(),
     });
   }
 }

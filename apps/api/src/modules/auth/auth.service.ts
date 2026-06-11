@@ -7,10 +7,30 @@ import { randomBytes } from "node:crypto";
 import bcrypt from "bcryptjs";
 import { PrismaService } from "../../prisma/prisma.service.js";
 import { sha256, clientIp, ipInCidr, genId } from "../../common/utils/index.js";
+import { RedisService } from "../../redis/redis.service.js";
 
 @Injectable()
 export class AuthService {
-  constructor(private prisma: PrismaService) {}
+  private readonly sessionTtlSeconds = 24 * 60 * 60;
+
+  constructor(private prisma: PrismaService, private redis: RedisService) {}
+
+  private sessionKey(tokenHash: string) {
+    return `session:${tokenHash}`;
+  }
+
+  private async cacheSession(tokenHash: string, session: any) {
+    await this.redis.setJson(this.sessionKey(tokenHash), {
+      id: session.id,
+      tokenHash,
+      userId: session.userId,
+      ip: session.ip,
+      userAgent: session.userAgent,
+      lastActivityAt: session.lastActivityAt instanceof Date ? session.lastActivityAt.toISOString() : session.lastActivityAt,
+      revoked: session.revoked,
+      revokedReason: session.revokedReason,
+    }, this.sessionTtlSeconds);
+  }
 
   // ---- IP helpers ----
   getClientIp(headers: Record<string, any>, remoteAddress = "127.0.0.1") {
@@ -44,6 +64,7 @@ export class AuthService {
         lastActivityAt: new Date(),
       },
     });
+    await this.cacheSession(tokenHash, session);
     return { token, session };
   }
 
@@ -91,6 +112,7 @@ export class AuthService {
       where: { id: session.id },
       data: { revoked: true, revokedReason: "user_logout" },
     });
+    await this.redis.del(this.sessionKey(sha256(raw)));
     return { ok: true };
   }
 
@@ -118,6 +140,7 @@ export class AuthService {
       where: { id: session.id },
       data: { lastActivityAt: new Date() },
     });
+    await this.cacheSession(sha256(raw), updatedSession);
 
     return {
       user: {

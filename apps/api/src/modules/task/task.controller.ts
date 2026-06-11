@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from "@n
 import { TaskService } from "./task.service.js";
 import { AuthGuard } from "../../common/guards/auth.guard.js";
 import { CurrentUser } from "../../common/decorators/index.js";
+import { CreateTaskDto, UpdateTaskDto } from "../../common/dto/task.dto.js";
 
 @Controller()
 @UseGuards(AuthGuard)
@@ -14,7 +15,7 @@ export class TaskController {
   }
 
   @Post("projects/:projectId/tasks")
-  createTask(@CurrentUser() user: any, @Param("projectId") projectId: string, @Body() body: any) {
+  createTask(@CurrentUser() user: any, @Param("projectId") projectId: string, @Body() body: CreateTaskDto) {
     return this.task.createTask(user, projectId, body);
   }
 
@@ -24,7 +25,7 @@ export class TaskController {
   }
 
   @Patch("tasks/:taskId")
-  updateTask(@CurrentUser() user: any, @Param("taskId") taskId: string, @Body() body: any) {
+  updateTask(@CurrentUser() user: any, @Param("taskId") taskId: string, @Body() body: UpdateTaskDto) {
     return this.task.updateTask(user, taskId, body);
   }
 

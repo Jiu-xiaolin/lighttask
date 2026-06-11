@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Patch, Sse, UseGuards } from "@nestjs/common";
 import { DashboardService } from "./dashboard.service.js";
 import { AuthGuard } from "../../common/guards/auth.guard.js";
 import { CurrentUser } from "../../common/decorators/index.js";
@@ -26,6 +26,11 @@ export class DashboardController {
   @Get("dashboard/gantt-v2")
   ganttV2(@CurrentUser() user: any) {
     return this.dashboard.ganttV2(user);
+  }
+
+  @Sse("dashboard/events")
+  events(@CurrentUser() user: any) {
+    return this.dashboard.events(user);
   }
 
   @Patch("dashboard/gantt-sync")

@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } f
 import { ProjectService } from "./project.service.js";
 import { AuthGuard } from "../../common/guards/auth.guard.js";
 import { CurrentUser } from "../../common/decorators/index.js";
+import { CreateProjectDto, InviteProjectMemberDto, UpdateProjectDto, UpdateProjectMemberDto } from "../../common/dto/project.dto.js";
 
 @Controller()
 @UseGuards(AuthGuard)
@@ -14,7 +15,7 @@ export class ProjectController {
   }
 
   @Post("projects")
-  createProject(@CurrentUser() user: any, @Body() body: any) {
+  createProject(@CurrentUser() user: any, @Body() body: CreateProjectDto) {
     return this.project.createProject(user, body);
   }
 
@@ -24,7 +25,7 @@ export class ProjectController {
   }
 
   @Patch("projects/:projectId")
-  updateProject(@CurrentUser() user: any, @Param("projectId") projectId: string, @Body() body: any) {
+  updateProject(@CurrentUser() user: any, @Param("projectId") projectId: string, @Body() body: UpdateProjectDto) {
     return this.project.updateProject(user, projectId, body);
   }
 
@@ -49,12 +50,12 @@ export class ProjectController {
   }
 
   @Post("projects/:projectId/members")
-  invite(@CurrentUser() user: any, @Param("projectId") projectId: string, @Body() body: any) {
+  invite(@CurrentUser() user: any, @Param("projectId") projectId: string, @Body() body: InviteProjectMemberDto) {
     return this.project.invite(user, projectId, body);
   }
 
   @Patch("projects/:projectId/members/:memberId")
-  updateMember(@CurrentUser() user: any, @Param("projectId") projectId: string, @Param("memberId") memberId: string, @Body() body: any) {
+  updateMember(@CurrentUser() user: any, @Param("projectId") projectId: string, @Param("memberId") memberId: string, @Body() body: UpdateProjectMemberDto) {
     return this.project.updateMember(user, projectId, memberId, body);
   }
 

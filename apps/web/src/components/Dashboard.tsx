@@ -39,10 +39,26 @@ function cell(text: string, style: Partial<CSSStyleDeclaration>) {
   Object.assign(span.style, style);
   return span;
 }
-function rName(r:any,tk:any){const d=r.data||{};const s=d.type==="summary";return cell(d.name||"", { fontSize:s?"13px":"12px", color:s?tk.i:tk.t, fontWeight:s?"700":"500" });}
+function rTaskInfo(r:any,tk:any,compact=false){
+  const d=r.data||{};
+  const s=d.type==="summary";
+  const wrap=document.createElement("div");
+  const title=document.createElement("div");
+  const meta=document.createElement("div");
+  const childCount=d.children?.length?`${d.children.length} 项任务`:"无子任务";
+  const owner=d.assignee||"未分配";
+  title.textContent=d.name||"未命名任务";
+  meta.textContent=s?childCount:owner;
+  title.title=d.name||"";
+  Object.assign(wrap.style,{display:"flex",flexDirection:"column",justifyContent:"center",gap:"2px",minWidth:"0",height:"100%",lineHeight:"1.25"});
+  Object.assign(title.style,{fontSize:s?"13px":"12px",color:s?tk.i:tk.t,fontWeight:s?"700":"600",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",maxWidth:"100%"});
+  Object.assign(meta.style,{display:compact?"block":"none",fontSize:"10px",color:tk.m,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",maxWidth:"100%",fontWeight:"500"});
+  wrap.append(title,meta);
+  return wrap;
+}
+function rName(r:any,tk:any){return rTaskInfo(r,tk,false);}
 function rAss(r:any,tk:any){const d=r.data||{};if(d.type==="summary")return cell(d.children?.length?`${d.children.length} 项任务`:"无", { fontSize:"10px", color:tk.m });return cell(d.assignee||"-", { fontSize:"11px", color:tk.m });}
-function rProg(r:any,tk:any){const d=r.data||{};const p=d.progress??0;const s=d.type==="summary";const c=p>=100?tk.g:p>60?tk.b:tk.m;return cell(`${p}%`, { fontSize:s?"13px":"11px", color:c, fontWeight:"700" });}
-function rStat(r:any,tk:any){const d=r.data||{};if(d.type==="summary")return cell("", {});const v=d.status||"";const bg:Record<string,string>={DONE:`color-mix(in srgb, ${tk.g} 12%, transparent)`,DOING:`color-mix(in srgb, ${tk.b} 10%, transparent)`,BLOCKED:`color-mix(in srgb, ${tk.r} 8%, transparent)`,TODO:`rgba(255,255,255,.5)`};const fg:Record<string,string>={DONE:tk.g,DOING:tk.b,BLOCKED:tk.r,TODO:tk.m};return cell(CN[v]||v, { fontSize:"10px", padding:"3px 7px", borderRadius:"99px", background:bg[v]||bg.TODO, color:fg[v]||tk.m, fontWeight:"700" });}
+function rStat(r:any,tk:any){const d=r.data||{};if(d.type==="summary"){const p=d.progress??0;const c=p>=100?tk.g:p>0?tk.b:tk.m;return cell(`${p}% 进度`, { fontSize:"10px", padding:"3px 7px", borderRadius:"99px", background:`color-mix(in srgb, ${c} 10%, transparent)`, color:c, fontWeight:"700" });}const v=d.status||"";const bg:Record<string,string>={DONE:`color-mix(in srgb, ${tk.g} 12%, transparent)`,DOING:`color-mix(in srgb, ${tk.b} 10%, transparent)`,BLOCKED:`color-mix(in srgb, ${tk.r} 8%, transparent)`,TODO:`rgba(255,255,255,.5)`};const fg:Record<string,string>={DONE:tk.g,DOING:tk.b,BLOCKED:tk.r,TODO:tk.m};return cell(CN[v]||v, { fontSize:"10px", padding:"3px 7px", borderRadius:"99px", background:bg[v]||bg.TODO, color:fg[v]||tk.m, fontWeight:"700" });}
 function rgb(value: string, fallback = "#315f8d") {
   const color = (value || fallback).trim();
   const hex = color.startsWith("#") ? color.slice(1) : fallback.slice(1);
@@ -204,7 +220,7 @@ function buildAdaptiveTimeline(unit: "day"|"week"|"month", tasks: any[], baselin
     labelMode: density === "dense" ? "progress" : "full",
     linkOpacity: density === "dense" ? 0.32 : density === "balanced-scroll" ? 0.4 : 0.46,
     baselineLabel: density !== "dense",
-    compareLabel: density === "balanced",
+    compareLabel: true,
   };
 }
 function withUpdatedSummaries(groups: any[]) {
@@ -338,6 +354,37 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
 
   useEffect(() => { fetchGantt(); }, [fetchGantt, refreshStamp]);
 
+  useEffect(() => {
+    if (!token || view !== "dashboard") return;
+    const events = new EventSource(`/api/dashboard/events?token=${encodeURIComponent(token)}`);
+    let timer: number | null = null;
+    const scheduleRefresh = (withGantt: boolean) => {
+      if (timer) window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        fetchDashboardStats();
+        if (withGantt) fetchGantt();
+      }, 180);
+    };
+
+    events.onmessage = (message) => {
+      try {
+        const event = JSON.parse(message.data);
+        if (event.type === "connected" || event.type === "heartbeat") return;
+        const needsGantt = /^(gantt|task|project|file|admin\.project|project\.member)/.test(event.type || "");
+        scheduleRefresh(needsGantt);
+      } catch {
+        scheduleRefresh(false);
+      }
+    };
+    events.onerror = () => {
+      setSyncNote("实时同步重连中");
+    };
+    return () => {
+      if (timer) window.clearTimeout(timer);
+      events.close();
+    };
+  }, [token, view, fetchDashboardStats, fetchGantt]);
+
   /* ── Stats ── */
   const totalTasks = useMemo(() => ganttTasks.reduce((s:number,p:any)=>s+(p.children?.length||0),0), [ganttTasks]);
   const doneTasks = useMemo(() => ganttTasks.reduce((s:number,p:any)=>s+(p.children?.filter((t:any)=>t.status==="DONE").length||0),0), [ganttTasks]);
@@ -378,18 +425,23 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
   const applyLocalGanttPatch = useCallback((payload: any) => {
     const moves = Array.isArray(payload?.moves) ? payload.moves : [];
     const links = Array.isArray(payload?.links) ? payload.links : [];
+    const progresses = Array.isArray(payload?.progresses) ? payload.progresses : [];
 
-    if (moves.length) {
+    if (moves.length || progresses.length) {
       const moveMap = new Map(moves.map((move: any) => [move.id || move.taskId, move]));
+      const progressMap = new Map(progresses.map((item: any) => [item.id || item.taskId, item]));
       setGanttTasks(prev => withUpdatedSummaries(prev.map((project: any) => ({
         ...project,
         children: (project.children || []).map((task: any) => {
           const move = moveMap.get(task.id) as any;
-          if (!move) return task;
+          const progressItem = progressMap.get(task.id) as any;
+          if (!move && !progressItem) return task;
           const next = {
             ...task,
-            startTime: move.currentStart || move.startTime || task.startTime,
-            endTime: move.currentEnd || move.endTime || task.endTime,
+            startTime: move?.currentStart || move?.startTime || task.startTime,
+            endTime: move?.currentEnd || move?.endTime || task.endTime,
+            progress: progressItem?.progress ?? task.progress,
+            status: progressItem?.progress >= 100 ? "DONE" : progressItem?.progress > 0 && task.status === "TODO" ? "DOING" : task.status,
           };
           if (selectedTask?.id === task.id) setSelectedTask(next);
           return next;
@@ -558,13 +610,25 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
 
   const handleMove = useCallback((result: any) => {
     const rows = Array.isArray(result) ? result : [result];
-    const moves = rows
-      .map((item:any) => item?.row || item)
-      .filter((row:any) => row?.id && row.type !== "summary")
+    const changedRows = rows
+      .map((item:any) => ({ row: item?.row || item, old: item?.old || item?.oldRow || item?.oldData }))
+      .filter((item:any) => item.row?.id && item.row.type !== "summary")
+      .map((item:any) => ({ ...item, row: item.row }));
+    const moves = changedRows
+      .map((item:any) => item.row)
       .map((row:any) => ({ id: row.id, currentStart: fmtDate(row.startTime), currentEnd: fmtDate(row.endTime) }))
       .filter((move:any) => move.currentStart && move.currentEnd);
-    if (!moves.length) return;
-    syncGantt({ moves }, moves.length > 1 ? `${moves.length} 个任务已同步` : "任务时间已同步");
+    const progresses = changedRows
+      .map((item:any) => {
+        const progress = Math.max(0, Math.min(100, Math.round(Number(item.row?.progress))));
+        const oldProgress = item.old?.progress === undefined ? undefined : Math.round(Number(item.old.progress));
+        if (!Number.isFinite(progress)) return null;
+        if (oldProgress !== undefined && oldProgress === progress) return null;
+        return { id: item.row.id, progress };
+      })
+      .filter(Boolean);
+    if (!moves.length && !progresses.length) return;
+    syncGantt({ moves, progresses }, progresses.length ? "任务进度已同步" : moves.length > 1 ? `${moves.length} 个任务已同步` : "任务时间已同步");
   }, [syncGantt]);
 
   /* ── Toolbar actions ── */
@@ -584,21 +648,18 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
     const skin = ganttSkin(themeKey, tk);
     const adaptive = buildAdaptiveTimeline(settings.unit, flatGanttTasks, ganttBaselines, ganttRange, ganttViewportWidth);
     const compactTable = settings.unit === "month" || adaptive.density !== "balanced";
-    const tableWidth = compactTable ? 372 : 420;
+    const tableWidth = compactTable ? 336 : 388;
     const columns = compactTable
       ? [
-          { field: "name", label: "任务", width: 174, headerAlign: "left" as any, render: (r:any)=>rName(r,tk) },
-          { field: "assignee", label: "负责人", width: 60, align: "center" as any, render: (r:any)=>rAss(r,tk) },
-          { field: "progress", label: "进度", width: 52, align: "center" as any, render: (r:any)=>rProg(r,tk) },
-          { field: "status", label: "状态", width: 66, align: "center" as any, render: (r:any)=>rStat(r,tk) },
+          { field: "name", label: "任务信息", width: 238, headerAlign: "left" as any, render: (r:any)=>rTaskInfo(r,tk,true) },
+          { field: "status", label: "状态", width: 98, align: "center" as any, render: (r:any)=>rStat(r,tk) },
         ]
       : [
-          { field: "name", label: "任务", width: 198, headerAlign: "left" as any, render: (r:any)=>rName(r,tk) },
-          { field: "assignee", label: "负责人", width: 66, align: "center" as any, render: (r:any)=>rAss(r,tk) },
-          { field: "progress", label: "进度", width: 58, align: "center" as any, render: (r:any)=>rProg(r,tk) },
-          { field: "status", label: "状态", width: 74, align: "center" as any, render: (r:any)=>rStat(r,tk) },
+          { field: "name", label: "任务", width: 222, headerAlign: "left" as any, render: (r:any)=>rName(r,tk) },
+          { field: "assignee", label: "负责人", width: 78, align: "center" as any, render: (r:any)=>rAss(r,tk) },
+          { field: "status", label: "状态", width: 88, align: "center" as any, render: (r:any)=>rStat(r,tk) },
         ];
-    const rowHeight = settings.density === "comfortable" ? 48 : adaptive.density === "dense" ? 38 : 40;
+    const rowHeight = settings.density === "comfortable" ? 50 : compactTable ? 44 : adaptive.density === "dense" ? 38 : 40;
     const scaleUnit: any = settings.unit === "day" ? [
       { unit: "month", format: "YYYY年 M月", height: 24 },
       { unit: "week", format: "第ww周", height: 22 },
@@ -706,8 +767,8 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
         fontFamily: "Inter,PingFang SC,Microsoft YaHei,sans-serif",
         align: "center",
         move: { enabled: (row:any) => row?.data?.type !== "summary", byUnit: true, single: { left: true, right: true, backgroundColor: alpha(tk.paper, 0.58), opacity: 0.74 }, link: { child: "none", parent: "expand" } },
-        label: (row:any)=>{const d=row.data||{};if(d.type==="summary") return ""; const p=d.progress!=null?`${d.progress}%`:""; if(adaptive.labelMode==="progress") return p; const w=d.assignee||"";return w?`${w} · ${p}`:p;},
-        progress: { show: settings.showProgress, backgroundColor: skin.progress, color: tk.paper, opacity: 0.66, radius: 7, textAlign: "inside", fontSize: 10 },
+        label: (row:any)=>{const d=row.data||{};if(d.type==="summary") return "";return d.name||d.title||"";},
+        progress: { show: (row:any)=>settings.showProgress && row?.data?.type === "summary" && row?.data?.expanded === false, backgroundColor: skin.progress, color: tk.paper, opacity: 0.66, radius: 7, textAlign: "inside", fontSize: 10 },
       },
       row: {
         height: rowHeight,
@@ -810,6 +871,8 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
                 <button key={u} className={settings.unit===u?"active":""} onClick={()=>setSettings(s=>({...s,unit:u}))}>{u==="day"?"日":u==="week"?"周":"月"}</button>
               ))}
             </div>
+            <button className="btn" onClick={() => ganttRef.current?.jumpTo()}><Icon name="dashboard" />今天</button>
+            {ganttLinks.length > 0 && <button className="btn danger" disabled={!selectedLink} onClick={deleteSelectedLink}><Icon name="x" />删除依赖</button>}
             <div className="gantt-view-menu-wrap">
               <button className={`btn view-menu-trigger ${viewMenuOpen ? "active" : ""}`} onClick={() => setViewMenuOpen(open => !open)} aria-expanded={viewMenuOpen}><Icon name="filter" />视图</button>
               {viewMenuOpen && <div className="gantt-view-menu">
@@ -820,9 +883,7 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
                     <input type="checkbox" checked={(settings as any)[key]} onChange={e=>setSettings(s=>({...s,[key]:e.target.checked}))} />
                   </label>
                 ))}
-                <button className="view-menu-row as-button" onClick={() => ganttRef.current?.jumpTo()}><span><Icon name="dashboard" />回到今天</span></button>
                 <button className="view-menu-row as-button" onClick={() => setSettings(s => ({...s, density: s.density === "compact" ? "comfortable" : "compact"}))}><span><Icon name="dashboard" />{settings.density === "compact" ? "舒展行高" : "紧凑行高"}</span></button>
-                {ganttLinks.length > 0 && <button className="view-menu-row as-button danger" disabled={!selectedLink} onClick={deleteSelectedLink}><span><Icon name="x" />删除依赖</span></button>}
               </div>}
             </div>
           </div>
@@ -862,6 +923,5 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
       </aside>
     </div>
 
-    <section className="panel progress-panel dashboard-projects-panel"><div className="panel-head slim"><h2>重点项目</h2><button className="link-btn" onClick={()=>{setProjectFilter("risk");setView("project-list");}}>风险</button></div><div className="progress-list">{(projects.length?projects:[]).slice(0,4).map((project:any)=>{const riskTone=project.risk==="high"?"risk":project.risk==="medium"?"warn":"";return <article key={project.id} className={riskTone} onClick={()=>{setProjectId(project.id);setView("workspace");}}><div className="progress-meter"><div className="progress-meter-track"><div className={`progress-meter-fill ${riskTone}`} style={{width:`${Math.min(100,Math.max(0,project.progress||0))}%`}} /></div><strong className="progress-meter-value">{project.progress||0}%</strong></div><div className="dashboard-project-row"><strong>{project.name}</strong><span className={`task-counter ${(project.completedTaskCount??0)===0&&(project.taskCount||0)>0?"empty":""} ${(project.completedTaskCount??0)>0?"check":""}`}>{project.completedTaskCount??0}<span className="sep">/</span><span className="total">{project.taskCount||0}</span></span></div></article>;})}</div></section>
   </>;
 }

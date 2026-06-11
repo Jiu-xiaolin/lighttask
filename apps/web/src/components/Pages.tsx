@@ -7,6 +7,23 @@ import { getApiToken } from "../lib/api";
 
 export { mapTaskStatus };
 
+function shortDate(value?: string) {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    const [year, month, day] = value.slice(0, 10).split("-");
+    return year && month && day ? `${year}年${Number(month)}月${Number(day)}日` : value;
+  }
+  return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+}
+
+function taskDateRange(task: Task) {
+  if (!task.baselineStart) return "";
+  const start = shortDate(task.baselineStart);
+  const end = task.baselineEnd && task.baselineEnd !== task.baselineStart ? shortDate(task.baselineEnd) : "";
+  return end ? `${start} - ${end}` : start;
+}
+
 export function Login({ onLogin }: { onLogin: (username: string, password: string) => Promise<void> }) {
   const [username, setUsername] = React.useState("admin");
   const [password, setPassword] = React.useState("admin123");
@@ -376,12 +393,11 @@ export function Workspace({ project, tasks, api, refresh, setView, refreshStamp 
       {wsTab === "overview" && (() => { const stats = projectDetail?.stats || {}; const progressPercent = stats.progressPercent ?? 0; const completed = stats.completedTasks || 0; const total = stats.tasks || 0; const riskTone = project.risk === "high" ? "risk" : project.risk === "medium" ? "warn" : ""; const circumference = 2 * Math.PI * 40; const offset = circumference * (1 - progressPercent / 100); return <div style={{display:"grid",gap:12}}><div className="overview-progress-hero"><div className="hero-left"><span>项目进度总览</span><strong>{progressPercent}%</strong><p>{project.risk === "high" ? "风险项目，需要立即介入" : project.risk === "medium" ? "存在延期风险，持续关注" : total === 0 ? "暂无任务，创建第一个任务开始推进" : completed === total ? "所有任务已完成！准备验收" : "按计划推进中"}</p></div><div className="hero-right"><svg className="overview-progress-ring" viewBox="0 0 96 96"><circle className="bg" cx="48" cy="48" r="40"/><circle className={`fill ${riskTone} ${completed===total&&total>0?'done':''}`} cx="48" cy="48" r="40" strokeDasharray={`${circumference} ${circumference}`} strokeDashoffset={offset}/></svg><span className="hero-right-text">{completed}<span style={{fontSize:14,color:"var(--muted)",fontWeight:400}}>/{total}</span></span></div></div><div className="overview-stats-grid"><article className="overview-stat-card accent-teal"><span>任务完成</span><strong>{completed}/{total}</strong><em>已完成 / 全部任务</em></article><article className="overview-stat-card accent-blue"><span>项目文件</span><strong>{stats.files || 0}</strong><em>文档、表格、附件</em></article><article className="overview-stat-card accent-violet"><span>验收项</span><strong>{stats.acceptance || 0}</strong><em>待验收 / 已通过</em></article><article className="overview-stat-card accent-amber"><span>项目成员</span><strong>{members.length}</strong><em>协同推进项目</em></article></div><div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}><div className="progress-meter"><div className="progress-meter-track"><div className={`progress-meter-fill ${riskTone} ${completed===total&&total>0?'done':''}`} style={{width:`${Math.min(100,Math.max(0,progressPercent))}%`}} /></div></div><div className="delivery-steps"><i className="done">原计划 {project.baselineEnd}</i><i className="active">当前计划 {project.currentEnd}</i><i>实际节点</i><i>验收</i></div></div>{project.description && <p style={{margin:0,color:"var(--muted)",fontSize:13,lineHeight:1.7}}>{project.description}</p>}</div>; })()}
 
       {wsTab === "tasks" && <div className="task-columns drag-board" ref={kanbanRef}>{["待处理", "进行中", "阻塞", "已完成"].map(status => { const columnTasks = tasks.filter((t: Task) => mapTaskStatus(t.status) === status); return <article key={status} className={`drop-col ${dragOverCol === status ? "drag-over" : ""}`} onDragOver={handleDragOver} onDragEnter={e => handleDragEnter(e, status)} onDragLeave={e => handleDragLeave(e, status)} onDrop={e => handleDrop(e, status)}><h3>{status} <span>{columnTasks.length}</span></h3>{columnTasks.map((task: Task) => <div className={`task ${dragTask === task.id ? "dragging" : ""} ${task.status === "DONE" ? "done" : task.status === "BLOCKED" ? "danger" : ""}`} key={task.id} draggable onDragStart={e => handleDragStart(e, task.id)} onDragEnd={() => setDragTask(null)} onMouseDown={e => handleTaskDown(e, task.id)} onMouseUp={e => handleTaskUp(task, e)}>
-  <div className="task-head"><strong>{task.title}</strong></div>
+  <div className="task-head"><strong>{task.title}</strong><b className={`task-status-dot ${task.status === "DONE" ? "ok" : task.status === "BLOCKED" ? "warn" : ""}`}>{task.status === "TODO" ? "待处理" : task.status === "DOING" ? "进行中" : task.status === "DONE" ? "已完成" : "阻塞"}</b></div>
   <div className="task-meta">
-    {task.baselineStart && <span className="task-date">{task.baselineStart}{task.baselineEnd !== task.baselineStart ? ` → ${task.baselineEnd}` : ''}</span>}
-    <b className={`task-status-dot ${task.status === "DONE" ? "ok" : task.status === "BLOCKED" ? "warn" : ""}`}>{task.status === "TODO" ? "待处理" : task.status === "DOING" ? "进行中" : task.status === "DONE" ? "已完成" : "阻塞"}</b>
+    {task.baselineStart && <span className="task-date"><Icon name="clock" />{taskDateRange(task)}</span>}
+    {task.currentEnd && task.baselineEnd && task.currentEnd > task.baselineEnd && <span className="task-delay">延至 {shortDate(task.currentEnd)}</span>}
   </div>
-  {task.currentEnd && task.baselineEnd && task.currentEnd > task.baselineEnd && <div className="task-delay">延迟至：{task.currentEnd}</div>}
   {(task.progressItems || []).length > 0 && <div className="task-members">{(task.progressItems || []).map((p: ProgressItem) => { const member = members.find((m: any) => m.userId === p.userId); const name = member?.user?.name || p.userId; return <span key={p.id} className="task-member-tag">{name} · {p.progress}%</span>; })}</div>}
   {task.note && <div className="task-note">{task.note}</div>}
 </div>)}</article>})}</div>}
@@ -482,7 +498,240 @@ export function Files({ project, files, api, refresh }: any) {
 }
 
 export function Messages({ notifications, api, refresh }: any) {
-  return <div className="message-grid"><section className="panel"><div className="panel-head"><div><h2>消息同步</h2><p>任务下发、成员完成/延期、文件提交和项目完成可定向提醒指定成员。</p></div><button className="btn primary" onClick={async () => { await api("/admin/notification-rules", { method: "POST", body: JSON.stringify({ event: "task.progress_remind", channel: "feishu" }) }); await refresh(); }}><Icon name="plus" />新建规则</button></div><div className="channel-row"><article><Icon name="sync" /><strong>飞书机器人</strong><span>已启用 · 支持指定成员</span><b className="ok-dot">正常</b></article><article><Icon name="sync" /><strong>微信公众号</strong><span>项目完成通知</span><b className="warn-dot">需关注</b></article></div><div className="collapsed-rule-editor"><strong>定向提醒已收起</strong><span>编辑规则时展开：全部成员、负责人、创建者、自定义成员、不提醒。</span><button>编辑当前规则</button></div><table className="clean-table"><thead><tr><th>规则</th><th>提醒对象</th><th>触发</th><th>状态</th><th>最后发送</th></tr></thead><tbody>{(notifications?.rules || []).map((rule: any) => <tr key={rule.id}><td>{rule.event}</td><td>{rule.targetMode}</td><td>{rule.channel}</td><td>{rule.enabled ? "启用" : "停用"}</td><td>待触发</td></tr>)}</tbody></table></section><aside className="panel log-panel"><div className="panel-head slim"><h2>发送日志</h2><button className="link-btn">筛选</button></div>{(notifications?.logs || []).map((log: any) => <article className="log ok" key={log.id}>{log.event}：{log.message}</article>)}<article className="log warn">微信失败：张宁未关注公众号</article></aside></div>;
+  const [appId, setAppId] = useState("cli_aaa33790a1785bee");
+  const [appSecret, setAppSecret] = useState("");
+  const [creatorContact, setCreatorContact] = useState("");
+  const [contactType, setContactType] = useState("mobile");
+  const [dailyTime, setDailyTime] = useState("18:00");
+  const [dailyPreview, setDailyPreview] = useState<any>(null);
+  const [testText, setTestText] = useState("LightTask 飞书机器人测试消息");
+  const [busy, setBusy] = useState("");
+  const [note, setNote] = useState("");
+  const feishuChannel = notifications?.channels?.find((item: any) => item.type === "feishu" || item.id === "nc_feishu");
+  const feishuAppKey = notifications?.keys?.find((item: any) => (item.channelId === feishuChannel?.id || item.channelId === "nc_feishu") && item.type === "feishu_app");
+  const feishuWebhookKey = notifications?.keys?.find((item: any) => (item.channelId === feishuChannel?.id || item.channelId === "nc_feishu") && item.type === "webhook");
+  const feishuKey = feishuAppKey || feishuWebhookKey;
+  const logs = notifications?.logs || [];
+  const callback = notifications?.callback || {};
+  const dailyRule = notifications?.rules?.find((rule: any) => rule.event === "daily.report");
+  const upcomingRules = [
+    ["task.near_due", "任务临期提醒", "即将到期前提醒负责人"],
+    ["task.due", "任务到期提醒", "到期当天提醒处理"],
+    ["task.overdue", "任务过期提醒", "逾期后持续提示风险"],
+    ["project.invite", "邀请加入项目", "成员加入项目时通知"],
+  ];
+  const parseDailyConfig = () => {
+    try { return JSON.parse(dailyRule?.targets?.[0] || "{}"); } catch { return {}; }
+  };
+  const dailyConfig = parseDailyConfig();
+
+  React.useEffect(() => {
+    if (feishuChannel?.config?.appId) setAppId(feishuChannel.config.appId);
+    if (feishuChannel?.config?.creatorContact) setCreatorContact(feishuChannel.config.creatorContact);
+    if (feishuChannel?.config?.contactType) setContactType(feishuChannel.config.contactType);
+  }, [feishuChannel?.config?.appId, feishuChannel?.config?.creatorContact, feishuChannel?.config?.contactType]);
+
+  React.useEffect(() => {
+    if (dailyConfig.sendTime) setDailyTime(dailyConfig.sendTime);
+    if (dailyConfig.creatorContact) setCreatorContact(dailyConfig.creatorContact);
+    if (dailyConfig.contactType) setContactType(dailyConfig.contactType);
+  }, [dailyRule?.id, dailyRule?.updatedAt]);
+
+  React.useEffect(() => {
+    let active = true;
+    api("/admin/notification-daily-report/preview")
+      .then((data: any) => { if (active) setDailyPreview(data); })
+      .catch(() => undefined);
+    return () => { active = false; };
+  }, [notifications?.logs?.[0]?.id]);
+
+  async function saveFeishuApp() {
+    setBusy("save");
+    setNote("");
+    try {
+      const body = { name: "飞书应用凭据", channelId: feishuChannel?.id || "nc_feishu", channel: "feishu", type: "feishu_app", appId, secret: appSecret, creatorContact, contactType };
+      if (feishuAppKey?.id) await api(`/admin/notification-keys/${feishuAppKey.id}`, { method: "PATCH", body: JSON.stringify(body) });
+      else await api("/admin/notification-keys", { method: "POST", body: JSON.stringify(body) });
+      setAppSecret("");
+      setNote("飞书应用凭据已保存");
+      await refresh();
+    } catch (error: any) {
+      setNote(error.message || "保存失败");
+    } finally {
+      setBusy("");
+    }
+  }
+
+  async function sendTest() {
+    setBusy("test");
+    setNote("");
+    try {
+      await api("/admin/notification-test", { method: "POST", body: JSON.stringify({ channel: "feishu", mode: "app", message: testText, creatorContact, contactType }) });
+      setNote("测试消息已发送给创建者");
+      await refresh();
+    } catch (error: any) {
+      setNote(error.message || "验证失败");
+      await refresh();
+    } finally {
+      setBusy("");
+    }
+  }
+
+  async function saveDailyReport() {
+    setBusy("daily-save");
+    setNote("");
+    try {
+      await api("/admin/notification-daily-report", { method: "POST", body: JSON.stringify({ sendTime: dailyTime, creatorContact, contactType, enabled: true }) });
+      setNote("日报推送规则已保存");
+      await refresh();
+    } catch (error: any) {
+      setNote(error.message || "保存日报规则失败");
+    } finally {
+      setBusy("");
+    }
+  }
+
+  async function sendDailyReport() {
+    setBusy("daily-send");
+    setNote("");
+    try {
+      const data = await api("/admin/notification-daily-report/send", { method: "POST", body: JSON.stringify({ sendTime: dailyTime, creatorContact, contactType }) });
+      setDailyPreview(data);
+      setNote("日报已发送给创建者");
+      await refresh();
+    } catch (error: any) {
+      setNote(error.message || "日报发送失败");
+      await refresh();
+    } finally {
+      setBusy("");
+    }
+  }
+
+  async function bootstrapReminderRules() {
+    setBusy("bootstrap");
+    setNote("");
+    try {
+      await api("/admin/notification-reminders/bootstrap", { method: "POST", body: JSON.stringify({}) });
+      setNote("任务提醒和邀请规则已启用");
+      await refresh();
+    } catch (error: any) {
+      setNote(error.message || "启用提醒规则失败");
+    } finally {
+      setBusy("");
+    }
+  }
+
+  async function checkCallback() {
+    setBusy("callback-check");
+    setNote("");
+    try {
+      const data = await api("/admin/notification-callback/check", { method: "POST", body: JSON.stringify({}) });
+      setNote(data.ok ? "回调接口自检通过，下一步请在飞书后台填写公网 HTTPS 回调地址" : "回调接口自检失败");
+      await refresh();
+    } catch (error: any) {
+      setNote(error.message || "回调自检失败");
+    } finally {
+      setBusy("");
+    }
+  }
+
+  async function copyCallbackUrl() {
+    const text = callback.url || `${window.location.origin.replace(/\/$/, "")}/api/feishu/card-callback`;
+    await navigator.clipboard?.writeText(text);
+    setNote("回调地址已复制");
+  }
+
+  const report = dailyPreview?.report || {};
+  const previewText = dailyPreview?.text || "日报预览会根据当前项目、任务、进度和文件提交情况实时生成。";
+
+  return <div className="message-grid">
+    <section className="message-main">
+      <div className="message-hero panel">
+        <div><h2>消息推送</h2><p>统一管理飞书机器人、日报和后续任务提醒规则。</p></div>
+        <button className="btn primary" onClick={saveDailyReport}><Icon name="save" />保存日报规则</button>
+      </div>
+
+      <div className="message-layout">
+        <section className="panel message-channel-panel">
+          <div className="panel-head slim"><div><h2>飞书通道</h2><p>{feishuAppKey ? `应用凭据 ${feishuAppKey.secretMasked}` : "配置应用凭据后可发送给创建者"}</p></div><b className={feishuKey && feishuChannel?.enabled !== false ? "ok-dot" : "warn-dot"}>{feishuKey ? "已配置" : "待配置"}</b></div>
+          <div className="feishu-config compact">
+            <label>App ID<input value={appId} onChange={event => setAppId(event.target.value)} placeholder="cli_xxx" /></label>
+            <label>App Secret<input type="password" value={appSecret} onChange={event => setAppSecret(event.target.value)} placeholder={feishuAppKey ? "留空表示沿用已保存密钥" : "输入飞书 App Secret"} /></label>
+            <label>创建者手机号或邮箱<input value={creatorContact} onChange={event => setCreatorContact(event.target.value)} placeholder="用于自动获取 open_id" /></label>
+            <label>识别方式<select value={contactType} onChange={event => setContactType(event.target.value)}>
+              <option value="mobile">手机号</option>
+              <option value="email">邮箱</option>
+            </select></label>
+            <label className="span-2">测试内容<input value={testText} onChange={event => setTestText(event.target.value)} /></label>
+            <div className="span-2">
+              <button disabled={!appId || !appSecret || !creatorContact || busy === "save"} onClick={saveFeishuApp}>{busy === "save" ? "保存中" : "保存凭据"}</button>
+              <button disabled={(!feishuAppKey && !appSecret) || !creatorContact || busy === "test"} onClick={sendTest}>{busy === "test" ? "发送中" : "发送测试"}</button>
+            </div>
+            {note && <em className="span-2">{note}</em>}
+          </div>
+        </section>
+
+        <section className="panel daily-report-panel">
+          <div className="panel-head slim"><div><h2>日报推送</h2><p>按当前任务条、进度和提交物实时生成日报。</p></div><b className={dailyRule?.enabled !== false ? "ok-dot" : "warn-dot"}>{dailyRule ? "已启用" : "未保存"}</b></div>
+          <div className="daily-report-grid">
+            <div className="daily-report-settings">
+              <label>推送时间<input type="time" value={dailyTime} onChange={event => setDailyTime(event.target.value)} /></label>
+              <label>接收人<input value={creatorContact} onChange={event => setCreatorContact(event.target.value)} placeholder="手机号或邮箱" /></label>
+              <label>识别方式<select value={contactType} onChange={event => setContactType(event.target.value)}><option value="mobile">手机号</option><option value="email">邮箱</option></select></label>
+              <div><button className="btn primary" disabled={!creatorContact || busy === "daily-send"} onClick={sendDailyReport}><Icon name="sync" />{busy === "daily-send" ? "发送中" : "立即发送日报"}</button><button disabled={busy === "daily-save"} onClick={saveDailyReport}>保存设置</button></div>
+            </div>
+            <div className="daily-report-summary">
+              <article><span>今日待处理</span><strong>{report.pendingToday ?? "-"}</strong></article>
+              <article><span>整体进度</span><strong>{report.overallProgress ?? "-"}%</strong></article>
+              <article><span>风险项目</span><strong>{report.riskProjects ?? "-"}</strong></article>
+              <article><span>待收集文件</span><strong>{report.pendingFiles ?? "-"}</strong></article>
+            </div>
+            <pre>{previewText}</pre>
+          </div>
+        </section>
+      </div>
+
+      <section className="panel callback-panel">
+        <div className="panel-head slim">
+          <div><h2>飞书卡片回调</h2><p>配置后，飞书卡片按钮才会回写系统数据。</p></div>
+          <b className={callback.configured ? "ok-dot" : "warn-dot"}>{callback.configured ? "公网已配置" : "待配置公网地址"}</b>
+        </div>
+        <div className="callback-config-grid">
+          <div>
+            <span>回调请求地址</span>
+            <strong>{callback.url || "未配置 PUBLIC_BASE_URL"}</strong>
+            <em>{callback.hint || "飞书无法访问 localhost，需要公网 HTTPS 域名。"}</em>
+          </div>
+          <div className="callback-actions">
+            <button onClick={copyCallbackUrl} disabled={!callback.url}>复制地址</button>
+            <button onClick={checkCallback} disabled={busy === "callback-check"}>{busy === "callback-check" ? "检测中" : "本地自检"}</button>
+          </div>
+        </div>
+        <div className="callback-steps">
+          <span>1. 部署后配置 `PUBLIC_BASE_URL=https://你的公网域名`</span>
+          <span>2. 飞书开放平台进入应用的“事件与回调 / 卡片回调”</span>
+          <span>3. 填写上方回调请求地址并保存发布</span>
+        </div>
+      </section>
+
+      <section className="panel notification-rule-panel">
+        <div className="panel-head slim"><div><h2>推送规则</h2><p>日报、任务提醒和邀请通知共用同一套飞书通道与日志。</p></div><button className="btn" disabled={busy === "bootstrap"} onClick={bootstrapReminderRules}><Icon name="plus" />{busy === "bootstrap" ? "启用中" : "启用提醒规则"}</button></div>
+        <div className="rule-cards">
+          <article className="rule-card active"><span>已接入</span><strong>日报推送</strong><em>{dailyRule ? `每天 ${dailyConfig.sendTime || dailyTime} 发送给创建者` : "保存后启用"}</em></article>
+          {upcomingRules.map(([event, title, desc]) => {
+            const rule = notifications?.rules?.find((item: any) => item.event === event);
+            return <article className={`rule-card ${rule?.enabled ? "active" : "muted"}`} key={event}><span>{rule?.enabled ? "已接入" : "待启用"}</span><strong>{title}</strong><em>{rule?.enabled ? "飞书交互卡片已启用" : desc}</em></article>;
+          })}
+        </div>
+        <table className="clean-table compact-table"><thead><tr><th>规则</th><th>提醒对象</th><th>通道</th><th>状态</th><th>配置</th></tr></thead><tbody>{(notifications?.rules || []).map((rule: any) => <tr key={rule.id}><td>{rule.event}</td><td>{rule.targetMode}</td><td>{rule.channel}</td><td>{rule.enabled ? "启用" : "停用"}</td><td>{rule.event === "daily.report" ? `${dailyConfig.sendTime || dailyTime} 日报` : "待触发"}</td></tr>)}</tbody></table>
+      </section>
+    </section>
+    <aside className="panel log-panel">
+      <div className="panel-head slim"><h2>发送日志</h2><button className="link-btn">筛选</button></div>
+      {logs.length === 0 && <p className="dashboard-empty">暂无发送日志</p>}
+      {logs.map((log: any) => <article className={`log ${log.status === "success" ? "ok" : "warn"}`} key={log.id}><strong>{log.event}</strong><span>{log.message}</span><time>{log.createdAt ? new Date(log.createdAt).toLocaleString("zh-CN", { hour12: false }) : ""}</time></article>)}
+    </aside>
+  </div>;
 }
 
 export function Support({ admin }: any) {

@@ -6,12 +6,17 @@ import { Reflector } from "@nestjs/core";
 import { IS_PUBLIC_KEY } from "../decorators/public.decorator.js";
 import { PrismaService } from "../../prisma/prisma.service.js";
 import { sha256, clientIp, ipInCidr } from "../utils/index.js";
+import { RedisService } from "../../redis/redis.service.js";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   private readonly logger = new Logger(AuthGuard.name);
 
-  constructor(private reflector: Reflector, private prisma: PrismaService) {}
+  constructor(private reflector: Reflector, private prisma: PrismaService, private redis: RedisService) {}
+
+  private sessionKey(tokenHash: string) {
+    return `session:${tokenHash}`;
+  }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
@@ -21,19 +26,39 @@ export class AuthGuard implements CanActivate {
     if (isPublic) return true;
 
     const request = context.switchToHttp().getRequest();
-    const token = (request.headers.authorization || "").replace(/^Bearer\s+/i, "").trim();
+    const queryToken = typeof request.query?.token === "string" ? request.query.token : "";
+    const token = (request.headers.authorization || "").replace(/^Bearer\s+/i, "").trim() || queryToken.trim();
     if (!token) throw new UnauthorizedException("请先登录");
 
     const ip = clientIp(request.headers || {}, request.socket?.remoteAddress || "127.0.0.1");
     const tokenHash = sha256(token);
 
-    // Validate session
     let session;
-    try {
-      session = await this.prisma.session.findUnique({ where: { tokenHash } });
-    } catch (err) {
-      this.logger.error(`Session lookup failed: ${err}`);
-      throw new ServiceUnavailableException("服务暂时不可用，请稍后重试");
+    const cachedSession = await this.redis.getJson<any>(this.sessionKey(tokenHash));
+    if (cachedSession) {
+      session = {
+        ...cachedSession,
+        lastActivityAt: new Date(cachedSession.lastActivityAt),
+      };
+    } else {
+      try {
+        session = await this.prisma.session.findUnique({ where: { tokenHash } });
+        if (session) {
+          await this.redis.setJson(this.sessionKey(tokenHash), {
+            id: session.id,
+            tokenHash,
+            userId: session.userId,
+            ip: session.ip,
+            userAgent: session.userAgent,
+            lastActivityAt: session.lastActivityAt.toISOString(),
+            revoked: session.revoked,
+            revokedReason: session.revokedReason,
+          }, 24 * 60 * 60);
+        }
+      } catch (err) {
+        this.logger.error(`Session lookup failed: ${err}`);
+        throw new ServiceUnavailableException("服务暂时不可用，请稍后重试");
+      }
     }
 
     if (!session) {
@@ -94,6 +119,10 @@ export class AuthGuard implements CanActivate {
       where: { id: session.id },
       data: { lastActivityAt: new Date() },
     }).catch((err) => this.logger.warn(`Failed to bump activity: ${err.message}`));
+    this.redis.setJson(this.sessionKey(tokenHash), {
+      ...session,
+      lastActivityAt: new Date().toISOString(),
+    }, 24 * 60 * 60).catch(() => undefined);
 
     request.user = user;
     request.session = session;
