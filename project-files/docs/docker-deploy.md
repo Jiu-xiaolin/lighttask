@@ -16,7 +16,15 @@ cd source
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\deploy-docker.ps1 -Rebuild
 ```
 
-首次启动会自动复制 `.env.docker.example` 为 `.env.docker`，并生成 `JWT_SECRET` 与 `SECRET_ENCRYPTION_KEY`。
+Linux:
+
+```bash
+cd source
+chmod +x ./deploy-docker.sh
+./deploy-docker.sh --rebuild
+```
+
+Linux 脚本会在缺少 Docker 时尝试自动安装 Docker Engine，缺少 OpenSSL 时尝试通过系统包管理器安装。首次启动会自动复制 `.env.docker.example` 为 `.env.docker`，并生成 `POSTGRES_PASSWORD`、`JWT_SECRET` 与 `SECRET_ENCRYPTION_KEY`。
 如果你不用脚本，必须先手动准备 `.env.docker`，否则 compose 会因为缺少生产密钥而拒绝启动。
 
 ## 服务入口
@@ -51,6 +59,13 @@ docker compose --env-file .env.docker up -d --build
 ```powershell
 cd source
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\deploy-docker.ps1 -Logs
+```
+
+Linux:
+
+```bash
+cd source
+./deploy-docker.sh --logs
 ```
 
 ## 飞书回调

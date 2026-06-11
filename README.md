@@ -20,6 +20,14 @@ cd source
 .\deploy-docker.cmd
 ```
 
+Linux:
+
+```bash
+cd source
+chmod +x ./deploy-docker.sh
+./deploy-docker.sh --rebuild
+```
+
 本地开发环境：
 
 ```powershell
