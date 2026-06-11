@@ -7,6 +7,9 @@ const XGanttReact = lazy(() => import("@xpyjs/gantt-react").then(m => ({ default
 import "@xpyjs/gantt-core/style.css";
 import type { XGanttReactRef } from "@xpyjs/gantt-react";
 
+type GanttTimelineUnit = "minute" | "day" | "week" | "month";
+type GanttBaselineLabel = { id: string; left: number; top: number; visible: boolean; edge: "center" | "right" };
+
 /* ── Design tokens (theme-aware via CSS variables) ── */
 function Tk() {
   try {
@@ -186,13 +189,22 @@ function dateValue(value: any) {
 function clampValue(value: number, min: number, max: number) {
   return Math.max(min, Math.min(max, value));
 }
+function localDayRange(value: Date, beforeDays = 0, afterDays = 0) {
+  const start = new Date(value);
+  start.setHours(0, 0, 0, 0);
+  start.setDate(start.getDate() - beforeDays);
+  const end = new Date(value);
+  end.setHours(23, 59, 59, 999);
+  end.setDate(end.getDate() + afterDays);
+  return { start, end };
+}
 function daysBetween(start: any, end: any) {
   const a = dateValue(start);
   const b = dateValue(end);
   if (a == null || b == null) return 1;
   return Math.max(1, Math.round((b - a) / DAY_MS) + 1);
 }
-function buildAdaptiveTimeline(unit: "day"|"week"|"month", tasks: any[], baselines: any[], range: any, viewportWidth: number) {
+function buildAdaptiveTimeline(unit: GanttTimelineUnit, tasks: any[], baselines: any[], range: any, viewportWidth: number) {
   const visibleTasks = tasks.filter((task: any) => task?.startTime && task?.endTime);
   const dates = [
     ...visibleTasks.flatMap((task: any) => [task.startTime, task.endTime]),
@@ -208,6 +220,26 @@ function buildAdaptiveTimeline(unit: "day"|"week"|"month", tasks: any[], baselin
   const roomyRows = taskCount <= 5;
   const availableWidth = Math.max(420, viewportWidth || 680);
 
+  if (unit === "minute") {
+    const hourWidth = Math.round(clampValue(availableWidth / 8, 58, 92));
+    const totalWidth = hourWidth * 72;
+    const density = taskCount >= 24 || totalWidth > availableWidth * 3.2 ? "dense" : "balanced-scroll";
+    return {
+      dayWidth: hourWidth * 24,
+      hourWidth,
+      weekWidth: hourWidth * 24 * 7,
+      monthWidth: Math.round(hourWidth * 24 * 30.5),
+      spanDays,
+      taskCount,
+      shortRatio,
+      density,
+      labelMode: "progress",
+      linkOpacity: 0.34,
+      baselineLabel: false,
+      compareLabel: false,
+    };
+  }
+
   const minDayByUnit = unit === "day" ? 38 : unit === "week" ? 13 : 10;
   const maxDayByUnit = unit === "day" ? 58 : unit === "week" ? 24 : 18;
   const shortTaskBoost = shortRatio > 0.45 ? 4 : shortRatio > 0.2 ? 2 : 0;
@@ -222,6 +254,7 @@ function buildAdaptiveTimeline(unit: "day"|"week"|"month", tasks: any[], baselin
 
   return {
     dayWidth,
+    hourWidth: Math.max(8, Math.round(dayWidth / 4)),
     weekWidth: Math.round(dayWidth * 7),
     monthWidth: Math.round(dayWidth * 30.5),
     spanDays,
@@ -275,6 +308,8 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
   const [viewMenuOpen, setViewMenuOpen] = useState(false);
   const [ganttViewportWidth, setGanttViewportWidth] = useState(680);
   const [nowMinute, setNowMinute] = useState(() => new Date());
+  const [todayMarker, setTodayMarker] = useState({ left: 0, top: 0, height: 0, visible: false, edge: "center" as "left" | "center" | "right" });
+  const [baselineLabels, setBaselineLabels] = useState<GanttBaselineLabel[]>([]);
   const ganttRef = useRef<XGanttReactRef>(null);
   const ganttPanelRef = useRef<HTMLElement | null>(null);
   const fetchIdRef = useRef(0);
@@ -340,7 +375,7 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
 
   /* ── Settings (like demo) ── */
   const [settings, setSettings] = useState({
-    unit: "day" as "day"|"week"|"month",
+    unit: "minute" as GanttTimelineUnit,
     showLinks: true,
     showProgress: true,
     showBaseline: true,
@@ -436,7 +471,13 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
     };
   }, [myProgress, statsData?.statusCounts]);
   const ganttRange = useMemo(() => {
-    const labelTailDays = settings.unit === "month" ? 20 : settings.unit === "week" ? 10 : 4;
+    const labelTailDays = settings.unit === "minute" ? 0.25 : settings.unit === "month" ? 20 : settings.unit === "week" ? 10 : 4;
+    if (settings.unit === "minute") {
+      const { start, end } = localDayRange(nowMinute, 1, 1);
+      const labelEnds = ganttBaselines.map((b:any) => dateValue(isoDateWithDays(b.endTime, labelTailDays))).filter((value): value is number => value != null);
+      if (labelEnds.length) end.setTime(Math.max(end.getTime(), ...labelEnds));
+      return { startTime: start.toISOString(), endTime: end.toISOString() };
+    }
     const dates = [
       ...flatGanttTasks.flatMap((t:any) => [t.startTime, t.endTime]),
       ...ganttBaselines.flatMap((b:any) => [b.startTime, b.endTime]),
@@ -452,21 +493,120 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
   }, [flatGanttTasks, ganttBaselines, nowMinute, settings.unit]);
 
   const visibleBaselines = useMemo(() => {
-    const labelTailDays = settings.unit === "month" ? 10 : settings.unit === "week" ? 5 : 2;
-    return ganttBaselines.flatMap((baseline: any) => {
-      const line = { ...baseline, name: "" };
-      const label = {
-        ...baseline,
-        id: `${baseline.id || baseline.taskId}-label`,
-        startTime: baseline.endTime,
-        endTime: isoDateWithDays(baseline.endTime, labelTailDays),
-        name: "原计划",
-        highlight: false,
-        target: false,
+    return ganttBaselines.map((baseline: any) => ({ ...baseline, name: "" }));
+  }, [ganttBaselines]);
+
+  useEffect(() => {
+    if (!ganttLoaded || view !== "dashboard") {
+      setTodayMarker((prev) => prev.visible ? { ...prev, visible: false } : prev);
+      setBaselineLabels((prev) => prev.length ? [] : prev);
+      return;
+    }
+
+    let frame = 0;
+    const syncMarker = () => {
+      frame = 0;
+      const panel = ganttPanelRef.current;
+      const chart = panel?.querySelector<HTMLElement>(".x-gantt-chart");
+      const instance = ganttRef.current?.getInstance?.() as any;
+      const axis = instance?.context?.store?.getTimeAxis?.();
+      if (!panel || !chart || !axis) {
+        setTodayMarker((prev) => prev.visible ? { ...prev, visible: false } : prev);
+        return;
+      }
+
+      const start = axis.getStartTime?.();
+      const startMs = typeof start?.valueOf === "function" ? Number(start.valueOf()) : new Date(start).getTime();
+      const cellWidth = Number(axis.getCellWidth?.());
+      if (!Number.isFinite(startMs) || !Number.isFinite(cellWidth) || cellWidth <= 0) {
+        setTodayMarker((prev) => prev.visible ? { ...prev, visible: false } : prev);
+        return;
+      }
+
+      const scrollbar = instance?.context?.getScrollbar?.();
+      const scroll = scrollbar?.getScrollPosition?.() || {};
+      const scrollX = Number(scroll.x || scroll.scrollLeft || 0);
+      const scrollY = Number(scroll.y || scroll.scrollTop || 0);
+      const unit = axis.getCellUnit?.() === "hour" ? "hour" : "day";
+      const secondsPerPixel = (unit === "hour" ? 60 * 60 : DAY_MS / 1000) / cellWidth;
+      const rawLeft = ((nowMinute.getTime() - startMs) / 1000) / secondsPerPixel;
+      const panelRect = panel.getBoundingClientRect();
+      const chartRect = chart.getBoundingClientRect();
+      const chartLeft = chartRect.left - panelRect.left;
+      const chartRight = chartRect.right - panelRect.left;
+      const left = chartLeft + rawLeft - scrollX;
+      const visible = left >= chartLeft - 1 && left <= chartRight + 1;
+      const edge = left - chartLeft < 86 ? "left" : chartRight - left < 86 ? "right" : "center";
+      const next = {
+        left: Math.round(left * 10) / 10,
+        top: Math.round((chartRect.top - panelRect.top) * 10) / 10,
+        height: Math.round(chartRect.height * 10) / 10,
+        visible,
+        edge: edge as "left" | "center" | "right",
       };
-      return [line, label];
-    });
-  }, [ganttBaselines, settings.unit]);
+      setTodayMarker((prev) => (
+        Math.abs(prev.left - next.left) < 0.5 &&
+        Math.abs(prev.top - next.top) < 0.5 &&
+        Math.abs(prev.height - next.height) < 0.5 &&
+        prev.visible === next.visible &&
+        prev.edge === next.edge
+      ) ? prev : next);
+
+      const dataManager = instance?.context?.store?.getDataManager?.();
+      const visibleTasks = dataManager?.getVisibleTasks?.() || [];
+      const rowHeight = Number(instance?.context?.getOptions?.()?.row?.height || 40);
+      const headerHeight = Number(instance?.context?.getOptions?.()?.header?.height || 70);
+      const nextLabels = settings.showBaseline
+        ? ganttBaselines.map((baseline: any) => {
+            const task = visibleTasks.find((item: any) => item?.id === baseline.taskId || item?.data?.id === baseline.taskId);
+            const taskIndex = Number.isFinite(Number(task?.flatIndex)) ? Number(task.flatIndex) : visibleTasks.findIndex((item: any) => item?.id === baseline.taskId || item?.data?.id === baseline.taskId);
+            const endMs = dateValue(baseline.endTime);
+            if (taskIndex < 0 || endMs == null) return null;
+            const rawEndLeft = ((endMs - startMs) / 1000) / secondsPerPixel;
+            const left = chartLeft + rawEndLeft - scrollX + 8;
+            const lineY = chartRect.top - panelRect.top + headerHeight + (rowHeight * taskIndex) + rowHeight - 7 - scrollY;
+            const visible = left >= chartLeft - 4 && left <= chartRight + 72 && lineY >= chartRect.top - panelRect.top + headerHeight - 16 && lineY <= chartRect.bottom - panelRect.top + 16;
+            return {
+              id: String(baseline.id || baseline.taskId),
+              left: Math.round(left * 10) / 10,
+              top: Math.round(lineY * 10) / 10,
+              visible,
+              edge: chartRight - left < 58 ? "right" : "center",
+            } as GanttBaselineLabel;
+          }).filter(Boolean) as GanttBaselineLabel[]
+        : [];
+      setBaselineLabels((prev) => {
+        if (prev.length === nextLabels.length && prev.every((item, index) => {
+          const nextItem = nextLabels[index];
+          return nextItem &&
+            item.id === nextItem.id &&
+            Math.abs(item.left - nextItem.left) < 0.5 &&
+            Math.abs(item.top - nextItem.top) < 0.5 &&
+            item.visible === nextItem.visible &&
+            item.edge === nextItem.edge;
+        })) return prev;
+        return nextLabels;
+      });
+    };
+    const scheduleMarker = () => {
+      if (!frame) frame = window.requestAnimationFrame(syncMarker);
+    };
+
+    scheduleMarker();
+    const interval = window.setInterval(scheduleMarker, 250);
+    window.addEventListener("resize", scheduleMarker);
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.clearInterval(interval);
+      window.removeEventListener("resize", scheduleMarker);
+    };
+  }, [ganttLoaded, mountKey, nowMinute, settings.unit, settings.showBaseline, ganttRange, ganttBaselines, view]);
+
+  useEffect(() => {
+    if (!ganttLoaded || view !== "dashboard" || settings.unit !== "minute") return;
+    const id = window.setTimeout(() => ganttRef.current?.jumpTo(nowMinute), 140);
+    return () => window.clearTimeout(id);
+  }, [ganttLoaded, mountKey, settings.unit, view]);
 
   const applyLocalGanttPatch = useCallback((payload: any) => {
     const moves = Array.isArray(payload?.moves) ? payload.moves : [];
@@ -688,12 +828,19 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
     fetchDashboardStats();
   }, [ganttTasks, fetchDashboardStats, fetchGantt]);
 
+  const switchTimelineUnit = useCallback((unit: GanttTimelineUnit) => {
+    setSettings((s) => ({ ...s, unit }));
+    if (unit === "minute") {
+      window.setTimeout(() => ganttRef.current?.jumpTo(new Date()), 140);
+    }
+  }, []);
+
   /* ── Gantt options (like demo) ── */
   const ganttOptions = useMemo(() => {
     const tk = Tk();
     const skin = ganttSkin(themeKey, tk);
     const adaptive = buildAdaptiveTimeline(settings.unit, flatGanttTasks, ganttBaselines, ganttRange, ganttViewportWidth);
-    const compactTable = settings.unit === "month" || adaptive.density !== "balanced";
+    const compactTable = settings.unit === "minute" || settings.unit === "month" || adaptive.density !== "balanced";
     const tableWidth = compactTable ? 336 : 388;
     const columns = compactTable
       ? [
@@ -706,7 +853,10 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
           { field: "status", label: "状态", width: 88, align: "center" as any, render: (r:any)=>rStat(r,tk) },
         ];
     const rowHeight = settings.density === "comfortable" ? 50 : compactTable ? 44 : adaptive.density === "dense" ? 38 : 40;
-    const scaleUnit: any = settings.unit === "day" ? [
+    const scaleUnit: any = settings.unit === "minute" ? [
+      { unit: "day", format: "M月D日", height: 28 },
+      { unit: "hour", format: "HH:mm", cellWidth: adaptive.hourWidth, height: 34 },
+    ] : settings.unit === "day" ? [
       { unit: "month", format: "YYYY年 M月", height: 24 },
       { unit: "week", format: "第ww周", height: 22 },
       { unit: "day", format: "M/D", cellWidth: adaptive.dayWidth, height: 24 },
@@ -714,16 +864,18 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
       { unit: "year", format: "YYYY年", height: 24 },
       { unit: "month", format: "M月", height: 22 },
       { unit: "week", format: "第ww周", cellWidth: adaptive.weekWidth, height: 24 },
-    ] : [
+      ] : [
       { unit: "year", format: "YYYY年", height: 24 },
       { unit: "quarter", format: "Q[季度]", height: 22 },
       { unit: "month", format: "M月", cellWidth: adaptive.monthWidth, height: 24 },
     ];
+    const chartCellWidth = settings.unit === "minute" ? adaptive.hourWidth : adaptive.dayWidth;
+    const headerHeight = settings.unit === "minute" ? 62 : 70;
 
     return {
       data: ganttTasks,
       fields: { id: "id", startTime: "startTime", endTime: "endTime", name: "name", progress: "progress", children: "children", type: "type" },
-      unit: settings.unit,
+      unit: settings.unit === "minute" ? "hour" : settings.unit,
       primaryColor: tk.p,
       locale: "zh",
       dateFormat: "YYYY-MM-DD",
@@ -739,8 +891,8 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
         columns,
       },
       scaleUnit,
-      chart: { ...ganttRange, autoCellWidth: false, cellWidth: adaptive.dayWidth, backgroundColor: mix(tk.paper, tk.bg, 0.74), showVerticalLine: settings.unit !== "day" },
-      header: { height: 70, backgroundColor: mix(tk.paper, tk.bg, 0.94), color: tk.m, fontSize: 11, fontWeight: 700, fontFamily: "Inter,PingFang SC,Microsoft YaHei,sans-serif" },
+      chart: { ...ganttRange, autoCellWidth: false, cellWidth: chartCellWidth, backgroundColor: mix(tk.paper, tk.bg, 0.74), showVerticalLine: settings.unit !== "day" },
+      header: { height: headerHeight, backgroundColor: mix(tk.paper, tk.bg, 0.94), color: tk.m, fontSize: 11, fontWeight: 700, fontFamily: "Inter,PingFang SC,Microsoft YaHei,sans-serif" },
       expand: { show: true, enabled: true },
       selection: { enabled: true, includeSelf: true },
       drag: { enabled: (row:any) => row?.data?.type !== "summary", color: tk.m, targetBackgroundColor: tk.p, targetOpacity: 0.09, drop: { crossLevel: false } },
@@ -776,7 +928,7 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
         color: skin.baseline,
         opacity: 0.54,
         radius: 999,
-        label: { show: adaptive.baselineLabel, field: "name", color: skin.baseline, fontSize: 9, fontFamily: "Inter,PingFang SC,Microsoft YaHei,sans-serif", position: "right", forceDisplay: true },
+        label: { show: false, field: "name", color: skin.baseline, fontSize: 9, fontFamily: "Inter,PingFang SC,Microsoft YaHei,sans-serif", position: "right", forceDisplay: true },
         compare: {
           enabled: true,
           tolerance: 0.5,
@@ -823,7 +975,7 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
         hover: { backgroundColor: tk.p, opacity: 0.04 },
         select: { backgroundColor: tk.p, opacity: 0.07 },
       },
-      today: { show: true, type: "line", backgroundColor: tk.r, opacity: 0.62, width: 1.2, text: { show: true, content: fmtTodayMinute(nowMinute), color: tk.paper, backgroundColor: tk.r, opacity: 0.78, fontSize: 9, fontFamily: "Inter" } },
+      today: { show: false, type: "line", backgroundColor: tk.r, opacity: 0.62, width: 1.2, text: { show: false, content: fmtTodayMinute(nowMinute), color: tk.paper, backgroundColor: tk.r, opacity: 0.78, fontSize: 9, fontFamily: "Inter" } },
       scrollbar: { showHorizontal: true, showVertical: true, track: { size: 10, radius: 999, color: alpha(tk.p, 0.04) }, thumb: { size: 34, radius: 999, color: mix(tk.p, tk.paper, 0.22) }, showDelay: 0, hideDelay: 900, showDuration: 160, hideDuration: 200, animationDuration: 120 },
     } as any;
   }, [ganttTasks, ganttLinks, ganttBaselines, visibleBaselines, ganttRange, flatGanttTasks, ganttViewportWidth, settings, themeKey, nowMinute]);
@@ -913,8 +1065,8 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
           <div className="dashboard-gantt-actions">
             <button className="btn primary" onClick={handleAddTask}><Icon name="plus" />新建任务</button>
             <div className="segmented">
-              {(["day","week","month"] as Array<"day"|"week"|"month">).map(u => (
-                <button key={u} className={settings.unit===u?"active":""} onClick={()=>setSettings(s=>({...s,unit:u}))}>{u==="day"?"日":u==="week"?"周":"月"}</button>
+              {(["minute","day","week","month"] as GanttTimelineUnit[]).map(u => (
+                <button key={u} className={settings.unit===u?"active":""} onClick={()=>switchTimelineUnit(u)}>{u==="minute"?"分钟":u==="day"?"日":u==="week"?"周":"月"}</button>
               ))}
             </div>
             <button className="btn" onClick={() => ganttRef.current?.jumpTo()}><Icon name="dashboard" />今天</button>
@@ -935,11 +1087,31 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
           </div>
         </div>
         <div className="gantt-fullapp-status">
+          <span className="gantt-current-minute"><Icon name="clock" />{fmtTodayMinute(nowMinute)}</span>
           <span>{totalTasks} 个任务</span>
           <span>{ganttLinks.length} 条依赖</span>
           <span>{ganttBaselines.length} 条基线</span>
           {selectedTask && <strong>{selectedTask.name || selectedTask.title} · {selectedTask.progress || 0}%</strong>}
         </div>
+        <div
+          className={`gantt-now-marker ${todayMarker.visible ? "is-visible" : ""}`}
+          data-edge={todayMarker.edge}
+          style={{ left: todayMarker.left, top: todayMarker.top, height: todayMarker.height }}
+          aria-hidden="true"
+        >
+          <span>{fmtTodayMinute(nowMinute)}</span>
+        </div>
+        {baselineLabels.map((label) => (
+          <span
+            key={label.id}
+            className={`gantt-baseline-label ${label.visible ? "is-visible" : ""}`}
+            data-edge={label.edge}
+            style={{ left: label.left, top: label.top }}
+            aria-hidden="true"
+          >
+            原计划
+          </span>
+        ))}
 
         {/* ── Gantt chart ── */}
         {!ganttLoaded ? <div style={{height:460,display:"grid",placeItems:"center",color:"var(--muted)"}}>加载中…</div> :
