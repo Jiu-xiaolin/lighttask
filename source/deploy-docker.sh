@@ -8,6 +8,7 @@ REBUILD=0
 LOGS=0
 SKIP_INSTALL=0
 DOCKER_CMD=()
+COMPOSE_CMD=()
 
 usage() {
   cat <<'EOF'
@@ -94,7 +95,20 @@ setup_docker_cmd() {
     exit 1
   fi
 
-  "${DOCKER_CMD[@]}" compose version >/dev/null
+  if "${DOCKER_CMD[@]}" compose version >/dev/null 2>&1; then
+    COMPOSE_CMD=("${DOCKER_CMD[@]}" compose)
+  elif command -v docker-compose >/dev/null 2>&1; then
+    COMPOSE_CMD=(docker-compose)
+  elif command -v sudo >/dev/null 2>&1 && sudo docker-compose version >/dev/null 2>&1; then
+    COMPOSE_CMD=(sudo docker-compose)
+  else
+    echo "Docker Compose is not installed. Install docker-compose-plugin or docker-compose first." >&2
+    if command -v apt-get >/dev/null 2>&1; then
+      echo "Try: apt update && apt install -y docker-compose-plugin" >&2
+      echo "Fallback: apt install -y docker-compose" >&2
+    fi
+    exit 1
+  fi
 }
 
 install_openssl_if_missing() {
@@ -157,13 +171,13 @@ if [[ ! -f "$ENV_FILE" ]]; then
   echo "Generated .env.docker. Please update domain, Feishu and admin settings if needed."
 fi
 
-args=(compose --env-file .env.docker up -d)
+args=(--env-file .env.docker up -d)
 if [[ "$REBUILD" -eq 1 ]]; then
   args+=(--build)
 fi
 
 echo "Starting LightTask Docker environment..."
-"${DOCKER_CMD[@]}" "${args[@]}"
+"${COMPOSE_CMD[@]}" "${args[@]}"
 
 web_port="$(env_value WEB_PORT 8080)"
 api_port="$(env_value API_PORT 3000)"
@@ -178,5 +192,5 @@ Deployment complete:
 EOF
 
 if [[ "$LOGS" -eq 1 ]]; then
-  "${DOCKER_CMD[@]}" compose --env-file .env.docker logs -f
+  "${COMPOSE_CMD[@]}" --env-file .env.docker logs -f
 fi

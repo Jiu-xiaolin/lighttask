@@ -38,7 +38,7 @@ chmod +x ./deploy-docker.sh
 ./deploy-docker.sh --rebuild
 ```
 
-Linux 脚本会在缺少 Docker 时尝试自动安装 Docker Engine，缺少 OpenSSL 时尝试通过系统包管理器安装。首次启动会自动复制 `.env.docker.example` 为 `.env.docker`，并生成 `POSTGRES_PASSWORD`、`JWT_SECRET` 与 `SECRET_ENCRYPTION_KEY`。
+Linux 脚本会在缺少 Docker 时尝试自动安装 Docker Engine，优先使用 `docker compose`，如果系统只有旧版 `docker-compose` 也会自动兼容；缺少 OpenSSL 时会尝试通过系统包管理器安装。首次启动会自动复制 `.env.docker.example` 为 `.env.docker`，并生成 `POSTGRES_PASSWORD`、`JWT_SECRET` 与 `SECRET_ENCRYPTION_KEY`。
 如果你不用脚本，必须先手动准备 `.env.docker`，否则 compose 会因为缺少生产密钥而拒绝启动。
 
 ## 服务入口
