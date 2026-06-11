@@ -17,7 +17,7 @@ The script updates .env.docker:
   CORS_ORIGINS=<public-url>
   PUBLIC_BASE_URL=<public-url>
 
-Then it restarts api and web containers if Docker Compose is available.
+Then it recreates api and web containers so updated environment variables take effect.
 EOF
 }
 
@@ -62,12 +62,12 @@ echo "Updated $ENV_FILE:"
 grep -E '^(CORS_ORIGINS|PUBLIC_BASE_URL)=' "$ENV_FILE"
 
 if docker compose version >/dev/null 2>&1; then
-  docker compose --env-file .env.docker restart api web
+  docker compose --env-file .env.docker up -d --force-recreate api web
 elif command -v docker-compose >/dev/null 2>&1; then
-  docker-compose --env-file .env.docker restart api web
+  docker-compose --env-file .env.docker up -d --force-recreate api web
 else
   echo "Docker Compose not found. Restart manually after installing Compose." >&2
   exit 0
 fi
 
-echo "Restarted api and web. Visit: $PUBLIC_URL"
+echo "Recreated api and web. Visit: $PUBLIC_URL"
