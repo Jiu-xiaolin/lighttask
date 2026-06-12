@@ -8,6 +8,7 @@ source/node_modules/
 source/.env.example
 source/.env.docker.example
 source/apps/*/dist/
+source/.logs/
 source/apps/api/uploads/
 source/prisma/dev.db
 source/apps/web/tsconfig.tsbuildinfo

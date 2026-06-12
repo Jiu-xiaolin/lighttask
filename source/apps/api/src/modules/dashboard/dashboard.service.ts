@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 import { PrismaService } from "../../prisma/prisma.service.js";
 import { today as todayStr } from "../../common/utils/index.js";
 import { RedisService } from "../../redis/redis.service.js";
+import { dependencyTokensToLinks, normalizeLinkType, removeDependencyToken, upsertDependencyToken } from "./gantt-links.js";
 
 @Injectable()
 export class DashboardService {
@@ -70,7 +71,7 @@ export class DashboardService {
     return {
       from: link?.from || link?.source || link?.sourceId,
       to: link?.to || link?.target || link?.targetId,
-      type: link?.type || "FS",
+      type: normalizeLinkType(link?.type),
     };
   }
 
@@ -340,6 +341,7 @@ export class DashboardService {
 
     const baselines: any[] = [];
     const links: any[] = [];
+    const knownTaskIds = new Set(tasks.map(task => task.id));
 
     const data = projects.map(project => {
       const projectTasks = tasks.filter(t => t.projectId === project.id);
@@ -359,9 +361,7 @@ export class DashboardService {
           }
         }
 
-        (t.dependencyIds || []).forEach((depId: string) => {
-          if (tasks.find(dt => dt.id === depId)) links.push({ id: `ln_${depId}_${t.id}`, from: depId, to: t.id, type: "FS" });
-        });
+        links.push(...dependencyTokensToLinks(t.id, t.dependencyIds || [], knownTaskIds));
 
         return { id: t.id, name: t.title, startTime: se.start, endTime: se.end, progress: pct, type: "task", status: t.status, priority: t.priority, assignee, note: t.note || "" };
       });
@@ -413,7 +413,7 @@ export class DashboardService {
 
     for (const entry of links) {
       const action = entry?.action || "upsert";
-      const { from, to } = this.linkIds(entry);
+      const { from, to, type } = this.linkIds(entry);
       if (!from || !to || from === to) continue;
       const [sourceTask, targetTask] = await Promise.all([
         this.prisma.task.findUnique({ where: { id: from } }),
@@ -422,12 +422,12 @@ export class DashboardService {
       if (!sourceTask || !targetTask) throw new NotFoundException("依赖任务不存在");
       if (sourceTask.projectId !== targetTask.projectId) throw new ForbiddenException("暂不支持跨项目依赖");
       if (!(await this.canEditProject(user, targetTask.projectId))) throw new ForbiddenException("无甘特图编辑权限");
-      const deps = new Set(targetTask.dependencyIds || []);
-      if (action === "delete" || action === "remove") deps.delete(from);
-      else deps.add(from);
+      const nextDependencies = action === "delete" || action === "remove"
+        ? removeDependencyToken(targetTask.dependencyIds || [], from, type)
+        : upsertDependencyToken(targetTask.dependencyIds || [], from, type);
       await this.prisma.task.update({
         where: { id: to },
-        data: { dependencyIds: [...deps] },
+        data: { dependencyIds: nextDependencies },
       });
       touchedTaskIds.add(to);
     }

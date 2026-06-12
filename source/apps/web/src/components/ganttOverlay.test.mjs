@@ -57,7 +57,7 @@ test("keeps the baseline label after the line end on the same y-axis", () => {
     scrollY: 0,
   });
 
-  assert.equal(label.left, 434);
+  assert.equal(label.left, 410);
   assert.equal(label.top, 231.4);
   assert.equal(label.visible, true);
 });

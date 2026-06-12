@@ -204,6 +204,21 @@ function localDayRange(value: Date, beforeDays = 0, afterDays = 0) {
   end.setDate(end.getDate() + afterDays);
   return { start, end };
 }
+const LINK_TYPES = new Set(["FS", "SS", "FF", "SF"]);
+function normalizeLinkType(value: any) {
+  const type = String(value || "FS").toUpperCase();
+  return LINK_TYPES.has(type) ? type : "FS";
+}
+function linkParts(link: any) {
+  return {
+    from: link?.from || link?.source || link?.sourceId,
+    to: link?.to || link?.target || link?.targetId,
+    type: normalizeLinkType(link?.type),
+  };
+}
+function linkId(from: string, to: string, type: string) {
+  return `ln_${from}_${to}_${type}`;
+}
 function daysBetween(start: any, end: any) {
   const a = dateValue(start);
   const b = dateValue(end);
@@ -316,10 +331,17 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
   const [nowMinute, setNowMinute] = useState(() => new Date());
   const [todayMarker, setTodayMarker] = useState({ left: 0, top: 0, height: 0, visible: false, edge: "center" as "left" | "center" | "right" });
   const [baselineLabels, setBaselineLabels] = useState<GanttBaselineLabel[]>([]);
-  const ganttRef = useRef<XGanttReactRef>(null);
+  const [overlaySyncNonce, setOverlaySyncNonce] = useState(0);
+  const ganttRef = useRef<XGanttReactRef | null>(null);
   const ganttPanelRef = useRef<HTMLElement | null>(null);
+  const overlayFrameRef = useRef(0);
+  const overlayEventsRef = useRef<{ event: any; unbind: () => void } | null>(null);
   const fetchIdRef = useRef(0);
   const prevViewRef = useRef(view);
+  const handleGanttRef = useCallback((node: XGanttReactRef | null) => {
+    ganttRef.current = node;
+    if (node) window.setTimeout(() => setOverlaySyncNonce((value) => value + 1), 0);
+  }, []);
 
   useEffect(() => {
     if (data) setDashboardStats(data);
@@ -381,7 +403,7 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
 
   /* ── Settings (like demo) ── */
   const [settings, setSettings] = useState({
-    unit: "minute" as GanttTimelineUnit,
+    unit: "day" as GanttTimelineUnit,
     showLinks: true,
     showProgress: true,
     showBaseline: true,
@@ -503,114 +525,166 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
     return ganttBaselines.map((baseline: any) => ({ ...baseline, name: "" }));
   }, [ganttBaselines]);
 
-  useEffect(() => {
-    if (!ganttLoaded || view !== "dashboard") {
+  const syncGanttOverlays = useCallback(() => {
+    if (!ganttLoaded) {
       setTodayMarker((prev) => prev.visible ? { ...prev, visible: false } : prev);
       setBaselineLabels((prev) => prev.length ? [] : prev);
+      return null;
+    }
+
+    const panel = ganttPanelRef.current;
+    const chart = panel?.querySelector<HTMLElement>(".x-gantt-chart");
+    const instance = ganttRef.current?.getInstance?.() as any;
+    const axis = instance?.context?.store?.getTimeAxis?.();
+    if (!panel || !chart || !axis) {
+      setTodayMarker((prev) => prev.visible ? { ...prev, visible: false } : prev);
+      return null;
+    }
+
+    const scrollbar = instance?.context?.getScrollbar?.();
+    const scroll = scrollbar?.getScrollPosition?.() || {};
+    const scrollX = Number(scroll.x || scroll.scrollLeft || 0);
+    const scrollY = Number(scroll.y || scroll.scrollTop || 0);
+    const panelRect = panel.getBoundingClientRect();
+    const chartRect = chart.getBoundingClientRect();
+    const chartLeft = chartRect.left - panelRect.left;
+    const chartRight = chartRect.right - panelRect.left;
+    const chartTop = chartRect.top - panelRect.top;
+    const chartBottom = chartRect.bottom - panelRect.top;
+    const next = computeTodayMarker({
+      axis,
+      now: nowMinute,
+      chartLeft,
+      chartRight,
+      chartTop,
+      chartHeight: chartRect.height,
+      scrollX,
+    });
+    if (!next) {
+      setTodayMarker((prev) => prev.visible ? { ...prev, visible: false } : prev);
+      return instance;
+    }
+    setTodayMarker((prev) => (
+      Math.abs(prev.left - next.left) < 0.5 &&
+      Math.abs(prev.top - next.top) < 0.5 &&
+      Math.abs(prev.height - next.height) < 0.5 &&
+      prev.visible === next.visible &&
+      prev.edge === next.edge
+    ) ? prev : next);
+
+    const dataManager = instance?.context?.store?.getDataManager?.();
+    const visibleTasks = dataManager?.getVisibleTasks?.() || [];
+    const options = instance?.context?.getOptions?.() || {};
+    const rowHeight = Number(options?.row?.height || 40);
+    const headerHeight = Number(options?.header?.height || 70);
+    const baselineHeight = Number(options?.baselines?.height || 1.25);
+    const baselineOffset = Number(options?.baselines?.offset || 0);
+    const nextLabels = settings.showBaseline
+      ? ganttBaselines.map((baseline: any) => {
+          const task = visibleTasks.find((item: any) => item?.id === baseline.taskId || item?.data?.id === baseline.taskId);
+          const taskIndex = Number.isFinite(Number(task?.flatIndex)) ? Number(task.flatIndex) : visibleTasks.findIndex((item: any) => item?.id === baseline.taskId || item?.data?.id === baseline.taskId);
+          const position = computeBaselineLabel({
+            axis,
+            endTime: baseline.endTime,
+            chartLeft,
+            chartRight,
+            chartTop,
+            chartBottom,
+            headerHeight,
+            rowHeight,
+            taskIndex,
+            scrollX,
+            scrollY,
+            baselineOffset,
+            baselineHeight,
+          });
+          if (!position) return null;
+          return {
+            id: String(baseline.id || baseline.taskId),
+            ...position,
+          } as GanttBaselineLabel;
+        }).filter(Boolean) as GanttBaselineLabel[]
+      : [];
+    setBaselineLabels((prev) => {
+      if (prev.length === nextLabels.length && prev.every((item, index) => {
+        const nextItem = nextLabels[index];
+        return nextItem &&
+          item.id === nextItem.id &&
+          Math.abs(item.left - nextItem.left) < 0.5 &&
+          Math.abs(item.top - nextItem.top) < 0.5 &&
+          item.visible === nextItem.visible;
+      })) return prev;
+      return nextLabels;
+    });
+    return instance;
+  }, [ganttLoaded, nowMinute, settings.showBaseline, ganttBaselines]);
+
+  const scheduleOverlaySync = useCallback(() => {
+    if (overlayFrameRef.current) return;
+    overlayFrameRef.current = window.requestAnimationFrame(() => {
+      overlayFrameRef.current = 0;
+      syncGanttOverlays();
+    });
+  }, [syncGanttOverlays]);
+
+  const bindOverlayEvents = useCallback(() => {
+    const instance = ganttRef.current?.getInstance?.() as any;
+    const ganttEvent = instance?.context?.event;
+    if (!ganttEvent || overlayEventsRef.current?.event === ganttEvent) return;
+    if (overlayEventsRef.current) overlayEventsRef.current.unbind();
+    const eventNames = ["scroll", "view-update", "chart_offset_change", "options-update", "data-update", "toggle-collapse"];
+    const handler = () => scheduleOverlaySync();
+    eventNames.forEach((eventName) => ganttEvent.on(eventName, handler));
+    overlayEventsRef.current = {
+      event: ganttEvent,
+      unbind: () => eventNames.forEach((eventName) => ganttEvent.off(eventName, handler)),
+    };
+  }, [scheduleOverlaySync]);
+
+  const handleGanttLoaded = useCallback(() => {
+    setOverlaySyncNonce((value) => value + 1);
+    const run = () => {
+      syncGanttOverlays();
+      bindOverlayEvents();
+    };
+    run();
+    window.setTimeout(run, 0);
+    window.setTimeout(run, 120);
+  }, [bindOverlayEvents, syncGanttOverlays]);
+
+  useEffect(() => {
+    return () => {
+      if (overlayEventsRef.current) overlayEventsRef.current.unbind();
+      if (overlayFrameRef.current) window.cancelAnimationFrame(overlayFrameRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!ganttLoaded) {
+      syncGanttOverlays();
       return;
     }
 
     let frame = 0;
-    const syncMarker = () => {
+    function scheduleMarker() {
+      if (!frame) frame = window.requestAnimationFrame(runSync);
+    }
+    function runSync() {
       frame = 0;
-      const panel = ganttPanelRef.current;
-      const chart = panel?.querySelector<HTMLElement>(".x-gantt-chart");
-      const instance = ganttRef.current?.getInstance?.() as any;
-      const axis = instance?.context?.store?.getTimeAxis?.();
-      if (!panel || !chart || !axis) {
-        setTodayMarker((prev) => prev.visible ? { ...prev, visible: false } : prev);
-        return;
-      }
-
-      const scrollbar = instance?.context?.getScrollbar?.();
-      const scroll = scrollbar?.getScrollPosition?.() || {};
-      const scrollX = Number(scroll.x || scroll.scrollLeft || 0);
-      const scrollY = Number(scroll.y || scroll.scrollTop || 0);
-      const panelRect = panel.getBoundingClientRect();
-      const chartRect = chart.getBoundingClientRect();
-      const chartLeft = chartRect.left - panelRect.left;
-      const chartRight = chartRect.right - panelRect.left;
-      const chartTop = chartRect.top - panelRect.top;
-      const chartBottom = chartRect.bottom - panelRect.top;
-      const next = computeTodayMarker({
-        axis,
-        now: nowMinute,
-        chartLeft,
-        chartRight,
-        chartTop,
-        chartHeight: chartRect.height,
-        scrollX,
-      });
-      if (!next) {
-        setTodayMarker((prev) => prev.visible ? { ...prev, visible: false } : prev);
-        return;
-      }
-      setTodayMarker((prev) => (
-        Math.abs(prev.left - next.left) < 0.5 &&
-        Math.abs(prev.top - next.top) < 0.5 &&
-        Math.abs(prev.height - next.height) < 0.5 &&
-        prev.visible === next.visible &&
-        prev.edge === next.edge
-      ) ? prev : next);
-
-      const dataManager = instance?.context?.store?.getDataManager?.();
-      const visibleTasks = dataManager?.getVisibleTasks?.() || [];
-      const options = instance?.context?.getOptions?.() || {};
-      const rowHeight = Number(options?.row?.height || 40);
-      const headerHeight = Number(options?.header?.height || 70);
-      const baselineHeight = Number(options?.baselines?.height || 1.25);
-      const baselineOffset = Number(options?.baselines?.offset || 0);
-      const nextLabels = settings.showBaseline
-        ? ganttBaselines.map((baseline: any) => {
-            const task = visibleTasks.find((item: any) => item?.id === baseline.taskId || item?.data?.id === baseline.taskId);
-            const taskIndex = Number.isFinite(Number(task?.flatIndex)) ? Number(task.flatIndex) : visibleTasks.findIndex((item: any) => item?.id === baseline.taskId || item?.data?.id === baseline.taskId);
-            const position = computeBaselineLabel({
-              axis,
-              endTime: baseline.endTime,
-              chartLeft,
-              chartRight,
-              chartTop,
-              chartBottom,
-              headerHeight,
-              rowHeight,
-              taskIndex,
-              scrollX,
-              scrollY,
-              baselineOffset,
-              baselineHeight,
-            });
-            if (!position) return null;
-            return {
-              id: String(baseline.id || baseline.taskId),
-              ...position,
-            } as GanttBaselineLabel;
-          }).filter(Boolean) as GanttBaselineLabel[]
-        : [];
-      setBaselineLabels((prev) => {
-        if (prev.length === nextLabels.length && prev.every((item, index) => {
-          const nextItem = nextLabels[index];
-          return nextItem &&
-            item.id === nextItem.id &&
-            Math.abs(item.left - nextItem.left) < 0.5 &&
-            Math.abs(item.top - nextItem.top) < 0.5 &&
-            item.visible === nextItem.visible;
-        })) return prev;
-        return nextLabels;
-      });
-    };
-    const scheduleMarker = () => {
-      if (!frame) frame = window.requestAnimationFrame(syncMarker);
-    };
+      syncGanttOverlays();
+    }
 
     scheduleMarker();
+    const warmupTimers = [50, 160, 360, 800].map((delay) => window.setTimeout(scheduleMarker, delay));
     const interval = window.setInterval(scheduleMarker, 250);
     window.addEventListener("resize", scheduleMarker);
     return () => {
       if (frame) window.cancelAnimationFrame(frame);
+      warmupTimers.forEach((timer) => window.clearTimeout(timer));
       window.clearInterval(interval);
       window.removeEventListener("resize", scheduleMarker);
     };
-  }, [ganttLoaded, mountKey, nowMinute, settings.unit, settings.showBaseline, ganttRange, ganttBaselines, view]);
+  }, [ganttLoaded, mountKey, overlaySyncNonce, syncGanttOverlays]);
 
   useEffect(() => {
     if (!ganttLoaded || view !== "dashboard" || settings.unit !== "minute") return;
@@ -649,12 +723,14 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
       setGanttLinks(prev => {
         let next = [...prev];
         for (const link of links) {
-          const from = link.from || link.source;
-          const to = link.to || link.target;
+          const { from, to, type } = linkParts(link);
           if (!from || !to) continue;
-          next = next.filter((item: any) => (item.from || item.source) !== from || (item.to || item.target) !== to);
+          next = next.filter((item: any) => {
+            const current = linkParts(item);
+            return current.from !== from || current.to !== to || current.type !== type;
+          });
           if (link.action !== "delete" && link.action !== "remove") {
-            next.push({ id: link.id || `ln_${from}_${to}`, from, to, type: link.type || "FS" });
+            next.push({ id: link.id || linkId(from, to, type), from, to, type });
           }
         }
         return next;
@@ -762,11 +838,9 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
       return;
     }
     if (cancel && selectedLink) {
-      const selectedFrom = selectedLink.from || selectedLink.source;
-      const selectedTo = selectedLink.to || selectedLink.target;
-      const cancelFrom = cancel.from || cancel.source;
-      const cancelTo = cancel.to || cancel.target;
-      if (selectedFrom === cancelFrom && selectedTo === cancelTo) {
+      const selected = linkParts(selectedLink);
+      const cancelled = linkParts(cancel);
+      if (selected.from === cancelled.from && selected.to === cancelled.to && selected.type === cancelled.type) {
         setSelectedLink(all?.[all.length - 1] || null);
       }
       return;
@@ -782,26 +856,32 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
       window.setTimeout(() => setSyncState("idle"), 1300);
       return;
     }
-    const tId = l.to||l.target, fId = l.from||l.source;
-    setGanttLinks((prev:any[])=>prev.filter((x:any)=>(x.from||x.source)!==fId||(x.to||x.target)!==tId));
+    const { from: fId, to: tId, type } = linkParts(l);
+    setGanttLinks((prev:any[])=>prev.filter((x:any)=>{
+      const current = linkParts(x);
+      return current.from !== fId || current.to !== tId || current.type !== type;
+    }));
     setLinkCtx(null);
     setSelectedLink(null);
-    syncGantt({ links: [{ action: "delete", from: fId, to: tId }] }, "依赖已删除");
+    syncGantt({ links: [{ action: "delete", from: fId, to: tId, type }] }, "依赖已删除");
   }, [linkCtx, selectedLink, syncGantt]);
 
   const handleCreateLink = useCallback((link: any) => {
-    const tId = link.to||link.target, fId = link.from||link.source;
+    const { from: fId, to: tId, type } = linkParts(link);
     if (!tId||!fId||tId===fId) return;
-    const lk = { id: `ln_${fId}_${tId}`, from: fId, to: tId, type: link.type||"FS" };
+    const lk = { id: link.id || linkId(fId, tId, type), from: fId, to: tId, type };
     setSelectedLink(lk);
-    setGanttLinks((prev:any[]) => [...prev.filter((l:any)=>l.from!==fId||l.to!==tId), lk]);
+    setGanttLinks((prev:any[]) => [...prev.filter((l:any)=>{
+      const current = linkParts(l);
+      return current.from !== fId || current.to !== tId || current.type !== type;
+    }), lk]);
     syncGantt({ links: [{ action: "upsert", ...lk }] }, "依赖已同步");
   }, [syncGantt]);
 
   const handleUpdateLink = useCallback((link: any) => {
-    const tId = link.to||link.target, fId = link.from||link.source;
+    const { from: fId, to: tId, type } = linkParts(link);
     if (!tId||!fId||tId===fId) return;
-    syncGantt({ links: [{ action: "upsert", from: fId, to: tId, type: link.type||"FS" }] }, "依赖已更新");
+    syncGantt({ links: [{ action: "upsert", id: link.id || linkId(fId, tId, type), from: fId, to: tId, type }] }, "依赖已更新");
   }, [syncGantt]);
 
   const handleMove = useCallback((result: any) => {
@@ -931,12 +1011,12 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
         taskKey: "taskId",
         fields: { startTime: "startTime", endTime: "endTime", name: "name", id: "id", highlight: "highlight", target: "target" },
         mode: "line",
-        height: 1,
+        height: 2.25,
         offset: 6,
         position: "bottom",
-        backgroundColor: skin.baseline,
-        color: skin.baseline,
-        opacity: 0.38,
+        backgroundColor: mix(skin.baseline, tk.a, 0.72),
+        color: mix(skin.baseline, tk.a, 0.72),
+        opacity: 0.84,
         radius: 999,
         label: { show: false, field: "name", color: skin.baseline, fontSize: 9, fontFamily: "Inter,PingFang SC,Microsoft YaHei,sans-serif", position: "right", forceDisplay: true },
         compare: {
@@ -996,7 +1076,7 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
     {editingTask && <TaskEditModal task={editingTask} project={editingProject} api={api} refresh={()=>{fetchGantt();fetchDashboardStats();}} members={[]} tasks={[]} onClose={onModalClose} />}
     {linkCtx && <div className="gantt-ctx-overlay" onClick={()=>setLinkCtx(null)}>
       <div className="gantt-ctx-menu" style={{left:linkCtx.x,top:linkCtx.y}}>
-        <div className="gantt-ctx-head">依赖: {linkCtx.link.type||"FS"}</div>
+        <div className="gantt-ctx-head">依赖: {linkParts(linkCtx.link).type}</div>
         <button onClick={deleteSelectedLink} className="danger"><Icon name="x" /><span>删除依赖</span></button>
       </div>
     </div>}
@@ -1075,8 +1155,8 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
           <div className="dashboard-gantt-actions">
             <button className="btn primary" onClick={handleAddTask}><Icon name="plus" />新建任务</button>
             <div className="segmented">
-              {(["minute","day","week","month"] as GanttTimelineUnit[]).map(u => (
-                <button key={u} className={settings.unit===u?"active":""} onClick={()=>switchTimelineUnit(u)}>{u==="minute"?"分钟":u==="day"?"日":u==="week"?"周":"月"}</button>
+              {(["day","week","month"] as GanttTimelineUnit[]).map(u => (
+                <button key={u} className={settings.unit===u?"active":""} onClick={()=>switchTimelineUnit(u)}>{u==="day"?"日":u==="week"?"周":"月"}</button>
               ))}
             </div>
             <button className="btn" onClick={() => ganttRef.current?.jumpTo()}><Icon name="dashboard" />今天</button>
@@ -1097,7 +1177,6 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
           </div>
         </div>
         <div className="gantt-fullapp-status">
-          <span className="gantt-current-minute"><Icon name="clock" />{fmtTodayMinute(nowMinute)}</span>
           <span>{totalTasks} 个任务</span>
           <span>{ganttLinks.length} 条依赖</span>
           <span>{ganttBaselines.length} 条基线</span>
@@ -1125,7 +1204,7 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
         {/* ── Gantt chart ── */}
         {!ganttLoaded ? <div style={{height:460,display:"grid",placeItems:"center",color:"var(--muted)"}}>加载中…</div> :
           <Suspense fallback={<div style={{height:460,display:"grid",placeItems:"center",color:"var(--muted)"}}>加载组件中…</div>}>
-            <XGanttReact key={mountKey} ref={ganttRef} style={{height:500,width:"100%"}} options={ganttOptions}
+            <XGanttReact key={mountKey} ref={handleGanttRef} style={{height:500,width:"100%"}} options={ganttOptions}
               onClickRow={(_, row:any) => setSelectedTask(row?.data || row)}
               onClickSlider={(_, row:any) => setSelectedTask(row?.data || row)}
               onDoubleClickRow={(_, row:any) => openTaskFromGantt(row)}
@@ -1137,6 +1216,7 @@ export function Dashboard({ data, projects, setView, setProjectId, setProjectFil
               onUpdateLink={handleUpdateLink}
               onSelectLink={handleSelectLink}
               onContextMenuLink={handleContextMenuLink}
+              onLoaded={handleGanttLoaded}
               onError={(error:any, msg?:string) => { setSyncState("error"); setSyncNote(msg || error?.message || "甘特图操作失败"); }}
             />
           </Suspense>

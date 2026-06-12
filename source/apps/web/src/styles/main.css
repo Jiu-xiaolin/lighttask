@@ -1597,27 +1597,14 @@ body[data-personalize="skins"] .personal-menu {
   background: color-mix(in srgb, var(--primary-soft) 72%, transparent);
 }
 
-.gantt-fullapp-status .gantt-current-minute {
-  gap: 5px;
-  color: var(--rose);
-  border-color: color-mix(in srgb, var(--rose) 26%, var(--line));
-  background: color-mix(in srgb, var(--rose-soft) 54%, var(--paper));
-  font-weight: 800;
-}
-
-.gantt-current-minute svg {
-  width: 14px;
-  height: 14px;
-}
-
 .gantt-now-marker {
   position: absolute;
   width: 0;
-  border-left: 1px solid color-mix(in srgb, var(--rose) 76%, transparent);
+  border-left: 1px solid color-mix(in srgb, var(--rose) 62%, transparent);
   opacity: 0;
   pointer-events: none;
   z-index: calc(var(--z-toolbar) + 3);
-  filter: drop-shadow(0 1px 2px color-mix(in srgb, var(--rose) 16%, transparent));
+  filter: drop-shadow(0 1px 2px color-mix(in srgb, var(--rose) 10%, transparent));
   transition: opacity 120ms ease;
 }
 
@@ -1630,30 +1617,56 @@ body[data-personalize="skins"] .personal-menu {
   position: absolute;
   top: 0;
   left: 0;
-  width: 0;
-  height: 0;
+  width: 9px;
+  height: 1px;
   transform: translate(-50%, -1px);
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 7px solid color-mix(in srgb, var(--rose) 78%, transparent);
+  border: 0;
+  background: color-mix(in srgb, var(--rose) 60%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--paper) 82%, transparent);
+}
+
+.gantt-now-marker::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 0;
+  width: 3px;
+  height: 3px;
+  transform: translateX(-50%) rotate(45deg);
+  background: color-mix(in srgb, var(--rose) 66%, var(--paper));
 }
 
 .gantt-now-marker span {
   position: absolute;
-  top: 9px;
+  top: -15px;
   left: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   transform: translateX(-50%);
   min-width: max-content;
-  padding: 2px 6px;
-  border: 1px solid color-mix(in srgb, var(--rose) 22%, var(--line));
-  border-radius: 5px;
-  color: color-mix(in srgb, var(--rose) 86%, var(--ink));
-  background: color-mix(in srgb, var(--rose-soft) 62%, var(--paper));
-  box-shadow: 0 4px 10px color-mix(in srgb, var(--rose) 8%, transparent);
+  padding: 0 2px 3px;
+  border-bottom: 1px solid color-mix(in srgb, var(--rose) 30%, transparent);
+  color: color-mix(in srgb, var(--rose) 70%, var(--ink));
+  background: transparent;
+  text-shadow:
+    0 1px 0 color-mix(in srgb, var(--paper) 98%, transparent),
+    0 -1px 0 color-mix(in srgb, var(--paper) 98%, transparent),
+    1px 0 0 color-mix(in srgb, var(--paper) 98%, transparent),
+    -1px 0 0 color-mix(in srgb, var(--paper) 98%, transparent);
   font-size: 10px;
-  font-weight: 700;
-  line-height: 1.2;
+  font-weight: 650;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+.gantt-now-marker span::before {
+  content: "";
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--rose) 58%, transparent);
 }
 
 .gantt-now-marker[data-edge="left"] span {
@@ -1669,11 +1682,15 @@ body[data-personalize="skins"] .personal-menu {
   z-index: calc(var(--z-toolbar) - 1);
   display: inline-flex;
   align-items: center;
-  height: 12px;
-  padding: 0 3px;
-  border-radius: 3px;
-  color: color-mix(in srgb, var(--amber) 72%, var(--muted));
-  background: color-mix(in srgb, var(--paper) 96%, var(--bg));
+  height: 11px;
+  padding: 0 2px 0 6px;
+  color: color-mix(in srgb, var(--amber) 78%, var(--muted));
+  background: transparent;
+  text-shadow:
+    0 1px 0 color-mix(in srgb, var(--paper) 98%, transparent),
+    0 -1px 0 color-mix(in srgb, var(--paper) 98%, transparent),
+    1px 0 0 color-mix(in srgb, var(--paper) 98%, transparent),
+    -1px 0 0 color-mix(in srgb, var(--paper) 98%, transparent);
   font-size: 9px;
   font-weight: 700;
   line-height: 1;
@@ -1688,16 +1705,21 @@ body[data-personalize="skins"] .personal-menu {
 
 .gantt-baseline-label::before {
   content: "";
-  width: 3px;
-  height: 3px;
-  margin-right: 4px;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  margin-right: 0;
   border-radius: 50%;
   background: currentColor;
-  opacity: 0.78;
+  opacity: 0.86;
+  transform: translate(-50%, -50%);
+  z-index: 1;
 }
 
 .gantt-baseline-label.is-visible {
-  opacity: 0.82;
+  opacity: 0.9;
 }
 
 .gantt-panel .segmented {

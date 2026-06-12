@@ -22,7 +22,7 @@ const BASELINE_LABEL_TAIL_DAYS: Record<GanttTimelineUnit, number> = {
 };
 
 const BASELINE_LABEL_TAIL_PX = 112;
-const BASELINE_LABEL_GAP_PX = 14;
+const BASELINE_LABEL_END_CORRECTION_PX = 10;
 const BASELINE_LABEL_WIDTH_PX = 58;
 
 function roundPixel(value: number) {
@@ -125,7 +125,8 @@ export function computeBaselineLabel({
 }): BaselineLabelPosition | null {
   const rawEndLeft = getAxisTimeLeft(axis, endTime);
   if (rawEndLeft == null || taskIndex < 0) return null;
-  const left = chartLeft + rawEndLeft - scrollX + BASELINE_LABEL_GAP_PX;
+  const lineEndLeft = chartLeft + rawEndLeft - scrollX;
+  const left = lineEndLeft - BASELINE_LABEL_END_CORRECTION_PX;
   const lineY = chartTop + headerHeight + rowHeight * taskIndex + rowHeight - baselineHeight / 2 + baselineOffset - scrollY;
   const visible =
     left >= chartLeft - BASELINE_LABEL_WIDTH_PX &&
